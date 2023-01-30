@@ -1,3 +1,5 @@
+import "server-only";
+
 import { remark } from "remark";
 import html from "remark-html";
 import remarkPrism from "remark-prism";

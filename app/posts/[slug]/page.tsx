@@ -1,8 +1,8 @@
-import { getAllPosts } from "../../../lib/api";
+import { getAllPosts, getPostBySlug } from "@/lib/api";
+import markdownToHtml from "@/lib/markdownToHtml";
+
 import css from "./page.module.css";
 import "./prism-theme.css";
-
-const host = process.env.VERCEL_URL || "localhost:3000";
 
 export async function generateStaticParams() {
     const posts = getAllPosts(["slug"]);
@@ -21,9 +21,8 @@ export default async function Post({
 }: {
     params: { slug: string };
 }) {
-    const { post, content } = await fetch(
-        `https://${host}/api/blogs/${slug}`
-    ).then((res) => res.json());
+    const post = getPostBySlug(slug, ["title", "author", "content"]);
+    const content = await markdownToHtml(post.content || "");
 
     return (
         <main>

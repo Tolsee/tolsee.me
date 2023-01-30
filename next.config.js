@@ -2,6 +2,12 @@
 const nextConfig = {
     experimental: {
         appDir: true,
+        serverComponentsExternalPackages: [
+            "gray-matter",
+            "remark",
+            "remark-html",
+            "remark-prism",
+        ],
     },
 };
 
