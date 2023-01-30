@@ -3,6 +3,8 @@ const nextConfig = {
     experimental: {
         appDir: true,
         serverComponentsExternalPackages: [
+            "canvas",
+            "prism",
             "gray-matter",
             "remark",
             "remark-html",
