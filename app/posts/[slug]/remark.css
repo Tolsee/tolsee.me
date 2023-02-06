@@ -1,0 +1,64 @@
+table tr th {
+  border: var(--hr) solid 1px;
+  text-align: left;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+}
+
+table tr td {
+  border: var(--hr) solid 1px;
+  padding: 0.5rem 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 0.25rem;
+  border-style: hidden;
+  box-shadow: 0 0 0 1px var(--hr);
+}
+
+th {
+  border: var(--hr) solid 1px;
+  text-align: left;
+  font-weight: bold;
+  text-align: left;
+}
+
+caption {
+  padding: 10px 0;
+  margin-bottom: 1em;
+}
+
+tr,
+td,
+th {
+  vertical-align: middle;
+}
+
+code {
+  line-height: 1.5;
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  white-space: break-spaces;
+  background-color: var(--color-muted);
+  border-radius: 6px;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre,
+details {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}

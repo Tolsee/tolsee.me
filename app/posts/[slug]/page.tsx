@@ -3,6 +3,7 @@ import markdownToHtml from "@/lib/markdownToHtml";
 
 import css from "./page.module.css";
 import "./prism-theme.css";
+import "./remark.css";
 
 export async function generateStaticParams() {
     const posts = getAllPosts(["slug"]);
@@ -25,11 +26,13 @@ export default async function Post({
     const content = await markdownToHtml(post.content || "");
 
     return (
-        <main>
-            <article>
-                <h1 className={css.title}>{post.title}</h1>
-                <div dangerouslySetInnerHTML={{ __html: content }} />
-            </article>
-        </main>
+        <div className={css.container}>
+            <main>
+                <article>
+                    <h1 className={css.title}>{post.title}</h1>
+                    <div dangerouslySetInnerHTML={{ __html: content }} />
+                </article>
+            </main>
+        </div>
     );
 }
