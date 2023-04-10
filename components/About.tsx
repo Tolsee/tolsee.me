@@ -11,7 +11,7 @@ export default function About() {
             </div>
             <div className="x">
                 <h2 className={styles.sectionHeadText}>
-                    Hey, I'm <span className={styles.name}>Tulsi Sapkota.</span>
+                    Hey, I&apos;m <span className={styles.name}>Tulsi Sapkota.</span>
                 </h2>
 
                 <p className={styles.aboutText}>
