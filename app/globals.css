@@ -4,12 +4,16 @@
   }
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
 /*
  * Copypasta from overreacted.io
  * */
-body {
-}
-
 body {
   --bg: #ffffff;
   --bg-secondary: rgb(249, 250, 251);
@@ -22,6 +26,7 @@ body {
   --inlineCode-text: #1a1a1a;
   --form-shadow: 0 2px 15px 0 rgba(210, 214, 220, 0.5);
   --pink: rgb(255, 167, 196);
+  --green: rgb(0,175,154);
   --color-muted: rgba(175, 184, 193, 0.2);
   background-color: var(--bg);
   font-family: Roboto, Noto Sans, sans-serif;
