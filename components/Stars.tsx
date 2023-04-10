@@ -3,24 +3,27 @@
 import { useState, useRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Preload } from "@react-three/drei";
-import * as random from "maath/random/dist/maath-random.esm";
+import * as three from "three";
+import { random } from "maath";
 
 import styles from "./Stars.module.css";
 
-const StarsObjects = (props) => {
-    const ref = useRef();
+const StarsObjects = () => {
+    const ref = useRef<three.Points>(null);
     const [sphere] = useState(() =>
-        random.inSphere(new Float32Array(3000), { radius: 5 })
+        random.inSphere(new Float32Array(3000), { radius: 5 }) as Float32Array
     );
 
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
+        if (!ref.current) return;
+
         ref.current.rotation.x -= delta / 20;
         ref.current.rotation.y -= delta / 25;
     });
 
     return (
         <group rotation={[0, 0, Math.PI / 8]}>
-            <Points ref={ref} positions={sphere} stride={3} frustumCulled {...props}>
+            <Points ref={ref} positions={sphere} stride={3} frustumCulled>
                 <PointMaterial
                     transparent
                     color="#f272c8"
