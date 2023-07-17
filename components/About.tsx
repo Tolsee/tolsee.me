@@ -15,7 +15,7 @@ export default function About() {
                 </h2>
 
                 <p className={styles.aboutText}>
-                    I enjoy tralating ideas into programs.
+                    I enjoy translating ideas into programs.
                 </p>
             </div>
             <Stars />
