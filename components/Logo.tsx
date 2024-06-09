@@ -19,11 +19,11 @@ const icon = {
 };
 
 const Logo = () => (
-  <div className={styles.container}>
+  <div className="h-[50px] w-[50px] flex place-content-center rounded-lg bg-[--green]">
     <motion.svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 100 100"
-      className={styles.item}
+      className="stroke-white stroke-2 w-1/2 [stroke-linejoin:round] [stroke-linecap:round]"
     >
       <motion.path
         d="M 0 20 V 0 L 100 0 v 20 L 60 20 L 60 100 L 40 100 L 40 100 L 40 20 L 0 20"

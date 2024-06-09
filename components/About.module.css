@@ -1,14 +1,5 @@
-.container {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 100vh;
-  z-index: 0;
-}
-
 .logoContainer {
-    margin-right: 2rem;
+  margin-right: 2rem;
 }
 
 .sectionHeadText {
@@ -20,14 +11,4 @@
   margin-top: 0.5rem;
   font-weight: 900;
   font-size: 2.5rem;
-}
-
-.name {
-  color: var(--green);
-}
-
-.aboutText {
-    color: var(--textNormal);
-    margin-top: 1rem;
-    font-size: 1.5rem;
 }
