@@ -3,8 +3,6 @@
 import * as React from "react";
 import { motion } from "framer-motion";
 
-import styles from './Logo.module.css';
-
 const icon = {
   hidden: {
     opacity: 0,

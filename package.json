@@ -1,14 +1,12 @@
 {
   "name": "tolsee.me",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "next lint --fix",
-    "vercel-build": "yum install gcc-c++ cairo-devel pango-devel libjpeg-turbo-devel giflib-devel"
+    "lint:fix": "next lint --fix"
   },
   "dependencies": {
     "@react-three/drei": "^9.57.3",
