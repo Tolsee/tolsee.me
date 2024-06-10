@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const posts = await getAllPosts(['title', 'content', 'date', 'slug']);
+  const posts = await getAllPosts(['title', 'content', 'publishedAt', 'slug']);
 
   return (
     <div>

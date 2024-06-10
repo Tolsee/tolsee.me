@@ -1,52 +1,68 @@
-import "server-only";
+import 'server-only';
 
-import { readdir, readFile } from "fs/promises";
-import { join } from "path";
-import matter from "gray-matter";
+import { readdir, readFile } from 'fs/promises';
+import { join } from 'path';
+import matter from 'gray-matter';
 
-const postsDirectory = join(process.cwd(), "_posts");
+const postsDirectory = join(process.cwd(), '_posts');
+
+interface Metadata {
+  title: string;
+  author: string;
+  publishedAt: string;
+  tags: string;
+}
+
+export interface Item extends Metadata {
+  slug: string;
+  content: string;
+}
 
 export async function getPostSlugs() {
-    const entries = await readdir(postsDirectory, { withFileTypes: true });
-    const files = entries.filter((entry) => entry.isFile()).map((entry) => entry.name);
+  const entries = await readdir(postsDirectory, { withFileTypes: true });
+  const files = entries
+    .filter((entry) => entry.isFile())
+    .map((entry) => entry.name);
 
-    return files;
+  return files;
 }
 
-export async function getPostBySlug(slug: string, fields: string[] = []) {
-    const realSlug = slug.replace(/\.md$/, "");
-    const fullPath = join(postsDirectory, slug);
-    const fileContents = await readFile(fullPath, "utf8");
-    const { data, content } = matter(fileContents);
-    console.log('DATA', data, content);
+export async function getPostBySlug<T extends Partial<keyof Item>>(
+  slug: string,
+  fields: T[],
+) {
+  const realSlug = slug.replace(/\.md$/, '');
+  const fullPath = join(postsDirectory, `${realSlug}.md`);
+  const fileContents = await readFile(fullPath, 'utf8');
+  const { data, content } = matter(fileContents);
 
-    type Items = {
-        [key: string]: string;
-    };
+  return (fields || []).reduce<Pick<Item, T>>(
+    (acc, field) => {
+      if (field === 'slug') {
+        acc[field] = realSlug;
+      }
 
-    const items: Items = {};
+      if (field === 'content') {
+        acc[field] = content;
+      }
 
-    // Ensure only the minimal needed data is exposed
-    fields.forEach((field) => {
-        if (field === "slug") {
-            items[field] = realSlug;
-        }
-        if (field === "content") {
-            items[field] = content;
-        }
+      if (['title', 'publishedAt', 'tags'].includes(field)) {
+        acc[field] = data[field];
+      }
 
-        if (typeof data[field] !== "undefined") {
-            items[field] = data[field];
-        }
-    });
-
-    return items;
+      return acc;
+    },
+    {} as Pick<Item, T>,
+  );
 }
 
-export async function getAllPosts(fields: string[] = []) {
-    const slugs = await getPostSlugs();
-    const posts = await Promise.all(slugs.map((slug) => getPostBySlug(slug, fields)));
+export async function getAllPosts(fields: Array<keyof Item> = []) {
+  const slugs = await getPostSlugs();
+  const posts = await Promise.all(
+    slugs.map((slug) => getPostBySlug(slug, [...fields, 'publishedAt'])),
+  );
 
-    console.log('POSTS', posts);
-    return posts.sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
+  return posts.sort((post1, post2) =>
+    post1.publishedAt > post2.publishedAt ? -1 : 1,
+  );
 }

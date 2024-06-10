@@ -1,6 +1,6 @@
 ---
 title: "Prevent accidental project deletion in GCP with liens"
-date: "2023-02-06"
+publishedAt: "2023-02-06"
 author: "Tulsi Sapkota"
 tags:
   - GCP

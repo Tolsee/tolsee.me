@@ -8,13 +8,9 @@ import './remark.css';
 export async function generateStaticParams() {
   const posts = await getAllPosts(['slug']);
 
-  return await Promise.all(
-    posts.map(async (post) => {
-      return {
-        slug: post.slug,
-      };
-    }),
-  );
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
 }
 
 export default async function Post({
