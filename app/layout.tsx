@@ -1,5 +1,8 @@
 import Header from '@/components/Header';
 import { Metadata } from 'next';
+import LinkedInIcon from '@/src/assets/icons/linkedin.svg';
+import TwitterIcon from '@/src/assets/icons/twitter.svg';
+import GithubIcon from '@/src/assets/icons/github.svg';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -49,6 +52,34 @@ export default function RootLayout({
         <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
           <Header />
           {children}
+          <footer className="mt-8 flex flex-row justify-between">
+            <p>
+              <>© {new Date().getFullYear()} Tulsi Sapkota</>
+            </p>
+            <div className="flex flex-row space-x-2">
+              <a
+                href="https://twitter.com/tolsee"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <TwitterIcon />
+              </a>
+              <a
+                href="https://github.com/tolsee"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <GithubIcon />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/tolsee"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkedInIcon />
+              </a>
+            </div>
+          </footer>
         </main>
       </body>
     </html>

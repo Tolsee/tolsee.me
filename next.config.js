@@ -13,16 +13,24 @@ if (
 }
 
 const nextConfig = {
-    experimental: {
-        serverComponentsExternalPackages: [
-            "canvas",
-            "prism",
-            "gray-matter",
-            "remark",
-            "remark-html",
-            "remark-prism",
-        ],
-    },
+  experimental: {
+    serverComponentsExternalPackages: [
+      'canvas',
+      'prism',
+      'gray-matter',
+      'remark',
+      'remark-html',
+      'remark-prism',
+    ],
+  },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack']
+    });
+
+    return config;
+  },
 };
 
 module.exports = nextConfig;
