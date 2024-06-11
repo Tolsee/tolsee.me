@@ -5,14 +5,14 @@ export default function About() {
 
   return (
     <div className="relative">
-      <div className="mx-auto max-w-4xl pb-8">
-        <div className="mt-10">
-          <div className="flex flex-row items-center">
+      <div className="mx-auto max-w-4xl pb-16">
+        <div className="mt-5 md:mt-10">
+          <div className="flex flex-col md:flex-row md:items-center mb-8">
             <img
               src="https://github.com/tolsee.png"
               className="rounded-full w-48 h-48"
             />
-            <div className="pl-5">
+            <div className="md:pl-5">
               <h2 className="p-0 m-0 mt-2 text-2xl font-black">
                 Hey 👋, I&apos;m{' '}
                 <span className="text-[--green]">Tulsi Sapkota.</span>
