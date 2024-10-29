@@ -33,7 +33,7 @@ export function FeaturedProject() {
       <h2 className="text-2xl font-semibold">Featured Projects</h2>
       <div className="grid gap-6 md:grid-cols-2">
         {FEATURED_PROJECTS.map((featuredProject) => (
-          <Card className="flex flex-col">
+          <Card  key={featuredProject.title} className="flex flex-col">
             <CardHeader>
               <CardTitle>{featuredProject.title}</CardTitle>
               <CardDescription>{featuredProject.description}</CardDescription>
@@ -42,7 +42,9 @@ export function FeaturedProject() {
               <p className="mb-4">{featuredProject.longDescription}</p>
               <div className="flex flex-wrap gap-2 mb-4">
                 {featuredProject.technologies.map((technology) => (
-                  <Badge variant="outline">{technology}</Badge>
+                  <Badge key={technology} variant="outline">
+                    {technology}
+                  </Badge>
                 ))}
               </div>
               <div className="flex space-x-2 mt-auto">
@@ -53,7 +55,12 @@ export function FeaturedProject() {
                   </Link>
                 </Button>
                 {featuredProject.externalLinks?.map((externalLink) => (
-                  <Button variant="outline" size="sm" asChild>
+                  <Button
+                    key={externalLink.link}
+                    variant="outline"
+                    size="sm"
+                    asChild
+                  >
                     <Link href={externalLink.link}>
                       <ExternalLink className="mr-2 h-4 w-4" />
                       {externalLink.title}
