@@ -1,8 +1,6 @@
 import Header from '@/components/Header';
 import { Metadata } from 'next';
-import LinkedInIcon from '@/src/assets/icons/linkedin.svg';
-import TwitterIcon from '@/src/assets/icons/twitter.svg';
-import GithubIcon from '@/src/assets/icons/github.svg';
+import { LinkedInIcon, TwitterIcon, GithubIcon } from '@/src/assets/icons';
 import './globals.css';
 
 export const metadata: Metadata = {
