@@ -12,7 +12,7 @@ export default async function BlogPage() {
   return (
     <section>
       <h1 className="font-medium text-2xl mb-8 tracking-tighter">
-        read my blog
+        Read my blog
       </h1>
       {posts
         .sort((a, b) => {
