@@ -1,8 +1,8 @@
 import Header from '@/components/Header';
 import { Metadata, Viewport } from 'next';
-import { LinkedInIcon, TwitterIcon, GithubIcon } from '@/src/assets/icons';
 import { ThemeProvider } from '@/src/providers';
 import './globals.css';
+import { Footer } from '@/src/components/Footer';
 
 export const viewport: Viewport = {
   themeColor: [
@@ -54,45 +54,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head />
-      <body className="antialiased max-w-2xl mb-40 flex flex-col md:flex-row mx-4 mt-8 lg:mx-auto">
+      <body>
         <ThemeProvider
           enableSystem
           disableTransitionOnChange
           attribute="class"
           defaultTheme="system"
         >
-          <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
-            <Header />
+          <Header />
+          <main className="max-w-4xl mx-auto px-4 py-8 space-y-16">
             {children}
-            <footer className="mt-8 flex flex-row justify-between">
-              <p>
-                <>© {new Date().getFullYear()} Tulsi Sapkota</>
-              </p>
-              <div className="flex flex-row space-x-2">
-                <a
-                  href="https://twitter.com/tolsee"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <TwitterIcon />
-                </a>
-                <a
-                  href="https://github.com/tolsee"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <GithubIcon />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/tolsee"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <LinkedInIcon />
-                </a>
-              </div>
-            </footer>
           </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

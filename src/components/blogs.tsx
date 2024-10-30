@@ -11,7 +11,7 @@ import { Item } from '@/lib/api';
 
 export function Blogs({ posts }: { posts: Item[] }) {
   return (
-    <section className="space-y-4">
+    <section className="space-y-6">
       <h2 className="text-2xl font-semibold">Recent Blog Posts</h2>
       <div className="grid gap-4 md:grid-cols-2">
         {posts

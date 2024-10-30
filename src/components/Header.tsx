@@ -1,5 +1,6 @@
 import Logo from './Logo';
 import Link from 'next/link';
+import { ThemeToggle } from './ThemeToggle';
 
 const navItems = {
   '/posts': {
@@ -9,8 +10,8 @@ const navItems = {
 
 export default function Header() {
   return (
-    <aside className="mb-8 md:mb-16 tracking-tight">
-      <div className="lg:sticky lg:top-20">
+    <header className="flex justify-between items-center p-4 mb-8 md:mb-16 tracking-tight max-w-6xl mx-auto border-b border-border">
+      <div className="lg:sticky lg:top-20 w-full">
         <nav
           className="flex flex-row justify-between items-center relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative"
           id="nav"
@@ -47,9 +48,10 @@ export default function Header() {
                 </Link>
               );
             })}
+            <ThemeToggle />
           </div>
         </nav>
       </div>
-    </aside>
+    </header>
   );
 }

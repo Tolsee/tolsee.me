@@ -7,10 +7,10 @@ export default async function Home() {
   const posts = await getAllPosts(['title', 'content', 'publishedAt', 'slug']);
 
   return (
-    <div>
+    <>
       <About />
       <FeaturedProject />
       <Blogs posts={posts} />
-    </div>
+    </>
   );
 }
