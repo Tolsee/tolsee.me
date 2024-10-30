@@ -1,4 +1,4 @@
-import { Link } from 'lucide-react';
+import Link from 'next/link';
 import { Button } from './ui/button';
 import {
   Card,
@@ -47,7 +47,7 @@ function BlogCard({ post }: { post: Item }) {
         <p className="line-clamp-3 text-muted-foreground">
           {post.content.split(' ').slice(0, 50).join(' ')}...
         </p>
-        <Button variant="link" size="sm" asChild>
+        <Button variant="link" className="mt-2 p-0">
           <Link href={`/posts/${post.slug}`}>Read More</Link>
         </Button>
       </CardContent>
