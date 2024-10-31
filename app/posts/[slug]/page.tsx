@@ -1,9 +1,10 @@
 import { getAllPosts, getPostBySlug } from '@/lib/api';
 import markdownToHtml from '@/lib/markdownToHtml';
 
-import css from './page.module.css';
+import markdownStyles from './markdown-styles.module.css';
 import './prism-theme.css';
 import './remark.css';
+import { PostTitle } from '@/src/components/post/post-title';
 
 export async function generateStaticParams() {
   const posts = await getAllPosts(['slug']);
@@ -22,11 +23,14 @@ export default async function Post({
   const content = await markdownToHtml(post.content || '');
 
   return (
-    <div className={css.container}>
+    <div className="mx-auto">
       <main>
         <article>
-          <h1 className={css.title}>{post.title}</h1>
-          <div dangerouslySetInnerHTML={{ __html: content }} />
+          <PostTitle>{post.title}</PostTitle>
+          <div
+            dangerouslySetInnerHTML={{ __html: content }}
+            className={markdownStyles['markdown']}
+          />
         </article>
       </main>
     </div>

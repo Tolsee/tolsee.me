@@ -1,5 +1,5 @@
 ---
-title: 'Day 1: Getting Started with Zig - A Systems Programming Language'
+title: 'Day 1: Getting Started with Zig'
 publishedAt: '2024-10-31'
 author: 'Learning Engineer'
 tags:
