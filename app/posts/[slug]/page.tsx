@@ -1,10 +1,14 @@
 import { getAllPosts, getPostBySlug } from '@/lib/api';
 import markdownToHtml from '@/lib/markdownToHtml';
+import { PostTitle } from '@/src/components/post/post-title';
 
 import markdownStyles from './markdown-styles.module.css';
 import './prism-theme.css';
 import './remark.css';
-import { PostTitle } from '@/src/components/post/post-title';
+import 'remark-github-blockquote-alert/alert.css'
+
+// TODO: Change later
+// import './remark-alert.css';
 
 export async function generateStaticParams() {
   const posts = await getAllPosts(['slug']);

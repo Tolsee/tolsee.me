@@ -1,0 +1,62 @@
+@tailwind components {
+  .markdown-alert {
+    @apply border-l-4 border-gray-200 dark:border-gray-700 text-inherit mb-4 py-2 px-4;
+  }
+
+  .markdown-alert > :last-child {
+    @apply mb-0;
+  }
+
+  .markdown-alert .markdown-alert-title {
+    @apply flex items-center text-sm font-medium leading-none;
+  }
+
+  .markdown-alert .markdown-alert-title svg.octicon {
+    @apply mr-2 fill-current;
+  }
+
+  /* Note - Blue */
+  .markdown-alert.markdown-alert-note {
+    @apply border-l-blue-600 dark:border-l-blue-500;
+  }
+
+  .markdown-alert.markdown-alert-note .markdown-alert-title {
+    @apply text-blue-600 dark:text-blue-400;
+  }
+
+  /* Tip - Green */
+  .markdown-alert.markdown-alert-tip {
+    @apply border-l-green-600 dark:border-l-green-500;
+  }
+
+  .markdown-alert.markdown-alert-tip .markdown-alert-title {
+    @apply text-green-600 dark:text-green-400;
+  }
+
+  /* Important - Purple */
+  .markdown-alert.markdown-alert-important {
+    @apply border-l-purple-600 dark:border-l-purple-500;
+  }
+
+  .markdown-alert.markdown-alert-important .markdown-alert-title {
+    @apply text-purple-600 dark:text-purple-400;
+  }
+
+  /* Warning - Yellow/Amber */
+  .markdown-alert.markdown-alert-warning {
+    @apply border-l-amber-600 dark:border-l-amber-500;
+  }
+
+  .markdown-alert.markdown-alert-warning .markdown-alert-title {
+    @apply text-amber-600 dark:text-amber-400;
+  }
+
+  /* Caution - Red */
+  .markdown-alert.markdown-alert-caution {
+    @apply border-l-red-600 dark:border-l-red-500;
+  }
+
+  .markdown-alert.markdown-alert-caution .markdown-alert-title {
+    @apply text-red-600 dark:text-red-400;
+  }
+}
