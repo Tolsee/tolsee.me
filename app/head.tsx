@@ -6,5 +6,5 @@ export default function Head() {
       <meta name="description" content="Personal website of Tulsi Sapkota" />
       <link rel="icon" href="/favicon.ico" />
     </>
-  )
+  );
 }

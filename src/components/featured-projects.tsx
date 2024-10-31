@@ -33,7 +33,10 @@ export function FeaturedProject() {
       <h2 className="text-2xl font-semibold">Featured Projects</h2>
       <div className="grid gap-6 md:grid-cols-2">
         {FEATURED_PROJECTS.map((featuredProject) => (
-          <Card key={featuredProject.title} className="flex flex-col border-border bg-card text-card-foreground">
+          <Card
+            key={featuredProject.title}
+            className="flex flex-col border-border bg-card text-card-foreground"
+          >
             <CardHeader>
               <CardTitle>{featuredProject.title}</CardTitle>
               <CardDescription>{featuredProject.description}</CardDescription>
