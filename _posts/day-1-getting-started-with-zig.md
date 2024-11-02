@@ -1,7 +1,7 @@
 ---
 title: 'Day 1: Getting Started with Zig'
 publishedAt: '2024-10-31'
-author: 'Learning Engineer'
+author: 'Tulsi Sapkota'
 tags:
   - Zig
   - Systems Programming
