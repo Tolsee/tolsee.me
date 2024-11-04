@@ -10,6 +10,7 @@ interface Metadata {
   title: string;
   author: string;
   publishedAt: string;
+  updatedAt: string;
   tags: string;
 }
 

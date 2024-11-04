@@ -21,7 +21,7 @@ export default async function sitemap() {
     '!app/posts/[slug]/*.{js,jsx,ts,tsx}',
   ]);
 
-  const posts = await getAllPosts(['title', 'content', 'publishedAt', 'slug']);
+  const posts = await getAllPosts(['title', 'content', 'publishedAt', 'updatedAt', 'slug']);
 
   const routes = pages.map((page) => ({
     url: `${WEBSITE_URL}${addPage(page)}`,
@@ -30,7 +30,7 @@ export default async function sitemap() {
 
   const postRoutes = posts.map((post) => ({
     url: `${WEBSITE_URL}/posts/${post.slug}`,
-    lastModified: new Date(post.publishedAt).toISOString(),
+    lastModified: new Date(post.updatedAt).toISOString(),
     changeFrequency: 'weekly',
   }));
 
