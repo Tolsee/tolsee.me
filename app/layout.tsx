@@ -1,8 +1,12 @@
 import Header from '@/components/Header';
 import { Metadata, Viewport } from 'next';
 import { ThemeProvider } from '@/src/providers';
-import './globals.css';
 import { Footer } from '@/src/components/Footer';
+import { GoogleAnalytics } from '@next/third-parties/google'
+
+import './globals.css';
+
+const GA_ID = 'G-X8TMR4HTB3';
 
 export const viewport: Viewport = {
   themeColor: [
@@ -68,6 +72,7 @@ export default function RootLayout({
           <Footer />
         </ThemeProvider>
       </body>
+      <GoogleAnalytics gaId={GA_ID} />
     </html>
   );
 }
