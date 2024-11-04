@@ -47,7 +47,7 @@ export async function getPostBySlug<T extends Partial<keyof Item>>(
         acc[field] = content;
       }
 
-      if (['title', 'publishedAt', 'tags'].includes(field)) {
+      if (['title', 'publishedAt', 'updatedAt', 'tags'].includes(field)) {
         acc[field] = data[field];
       }
 
@@ -63,7 +63,5 @@ export async function getAllPosts(fields: Array<keyof Item> = []) {
     slugs.map((slug) => getPostBySlug(slug, [...fields, 'publishedAt'])),
   );
 
-  return posts.sort((post1, post2) =>
-    post1.publishedAt > post2.publishedAt ? -1 : 1,
-  );
+  return posts;
 }
