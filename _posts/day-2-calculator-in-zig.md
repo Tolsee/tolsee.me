@@ -2,7 +2,7 @@
 title: 'Day 2: Calculator in Zig'
 publishedAt: '2024-11-02'
 updatedAt: '2024-11-04'
-author: 'Learning Engineer'
+author: 'Tulsi Sapkota'
 tags:
   - Zig
   - Systems Programming

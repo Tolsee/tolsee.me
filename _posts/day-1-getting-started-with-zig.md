@@ -1,6 +1,7 @@
 ---
 title: 'Day 1: Getting Started with Zig'
 publishedAt: '2024-10-31'
+updatedAt: '2024-11-04'
 author: 'Tulsi Sapkota'
 tags:
   - Zig
@@ -8,9 +9,11 @@ tags:
   - Learning Journey
 ---
 
-Today marks my first day exploring Zig, a modern systems programming language that
-promises memory safety without a garbage collector, and maintains direct control over
-the hardware. Let's dive into what I've learned so far.
+Today marks my first day exploring Zig, a modern systems programming language.
+
+I like to learn languages by doing to get a better sense of how things work.
+Along the way, we will also dive into the fundamentals of Zig and explore its features.
+So, we will start by building a simple "Hello, World!" program in Zig.
 
 ### Installation
 
