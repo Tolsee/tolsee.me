@@ -13,7 +13,7 @@ As this is our second day with Zig, we will learn how to read user input and per
 We will also learn about how basic assignments and control flow works in Zig.
 
 > [!TIP]
-> If you haven't installed Zig yet, please refer to [Day 1: Getting Started with Zig](day-1-getting-started-with-zig.md) for installation instructions.
+> If you haven't installed Zig yet, please refer to [Day 1: Getting Started with Zig](/posts/day-1-getting-started-with-zig) for installation instructions.
 > Also, create a new Zig project `calculator` using `zig init` command.
 
 Before we start, lets learn about how to get user input in Zig.
@@ -79,4 +79,3 @@ pub fn main() !void {
     std.debug.print("Result: {d}\n", .{result});
 }
 ```
-
