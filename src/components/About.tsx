@@ -1,3 +1,5 @@
+import { MapPin } from 'lucide-react';
+
 const DATE_STARTED = new Date('2016-01-01');
 
 export default function About() {
@@ -13,19 +15,26 @@ export default function About() {
               className="rounded-full w-48 h-48"
             />
             <div className="md:pl-5">
-              <h2 className="p-0 m-0 mt-2 text-2xl font-black">
+              <h1 className="text-3xl md:text-4xl font-bold mb-4">
                 Hey 👋, I&apos;m{' '}
                 <span className="text-[--green]">Tulsi Sapkota.</span>
-              </h2>
-              <p className="text-[--textNormal] mt-1 text-2xl">
-                🧑‍💻 Software Engineer and Creator
+              </h1>
+              <p className="text-muted-foreground mb-2 text-xl">
+                🧑‍💻 Software Engineer
               </p>
+              <div className="flex items-center text-muted-foreground">
+                <MapPin className="w-4 h-4 mr-2" />
+                <p className="text-muted-foreground">Melbourne, Australia</p>
+              </div>
             </div>
           </div>
-          <p className="text-[--textNormal] mt-1 text-2xl mt-5">
-            I am a self-taught software engineer. I have been building software
-            solutions for over {experience} years. I love traslating ideas to
-            code.
+          <p className="text-[--textNormal] text-lg mt-5">
+            As a passionate, self-taught software engineer with over{' '}
+            {experience} years of experience, I specialize in crafting
+            innovative software solutions. My expertise lies in transforming
+            complex ideas into elegant, efficient code. I thrive on the
+            challenges of software development and am constantly exploring new
+            technologies to enhance my craft.
           </p>
         </div>
       </div>
