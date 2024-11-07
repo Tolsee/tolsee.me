@@ -1,6 +1,19 @@
 import { MapPin } from 'lucide-react';
+import { Badge } from './ui/badge';
 
 const DATE_STARTED = new Date('2016-01-01');
+const TECH_STACKS = [
+  'JavaScript',
+  'TypeScript',
+  'Ruby',
+  'Zig 🚧',
+  'Elixir 🤷',
+  'React.js',
+  'Node.js',
+  'Ruby on Rails',
+  'PostgreSQL',
+  'AWS',
+];
 
 export default function About() {
   const experience = new Date().getFullYear() - DATE_STARTED.getFullYear();
@@ -22,9 +35,16 @@ export default function About() {
               <p className="text-muted-foreground mb-2 text-xl">
                 🧑‍💻 Software Engineer
               </p>
-              <div className="flex items-center text-muted-foreground">
+              <div className="flex items-center text-muted-foreground mb-2">
                 <MapPin className="w-4 h-4 mr-2" />
                 <p className="text-muted-foreground">Melbourne, Australia</p>
+              </div>
+              <div>
+                {TECH_STACKS.map((tech) => (
+                  <Badge key={tech} className="mt-1 mr-1">
+                    {tech}
+                  </Badge>
+                ))}
               </div>
             </div>
           </div>

@@ -1,19 +1,11 @@
-import Link from 'next/link';
-import { Button } from './ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from './ui/card';
 import { Item } from '@/lib/api';
+import { BlogCard } from './blog-card';
 
 export function Blogs({ posts }: { posts: Item[] }) {
   return (
     <section className="space-y-6">
       <h2 className="text-2xl font-semibold">Recent Blog Posts</h2>
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2">
         {posts
           .sort((a, b) => {
             if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
@@ -26,31 +18,5 @@ export function Blogs({ posts }: { posts: Item[] }) {
           ))}
       </div>
     </section>
-  );
-}
-
-function BlogCard({ post }: { post: Item }) {
-  return (
-    <Card className="border-border bg-card text-card-foreground">
-      <CardHeader>
-        <CardTitle>{post.title}</CardTitle>
-        <CardDescription className="text-muted-foreground">
-          Published on{' '}
-          {new Date(post.publishedAt).toLocaleDateString('en', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-          })}
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p className="line-clamp-3 text-muted-foreground">
-          {post.content.split(' ').slice(0, 50).join(' ')}...
-        </p>
-        <Button variant="link" className="mt-2 p-0">
-          <Link href={`/posts/${post.slug}`}>Read More</Link>
-        </Button>
-      </CardContent>
-    </Card>
   );
 }

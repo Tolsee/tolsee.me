@@ -35,7 +35,7 @@ export function FeaturedProject() {
         {FEATURED_PROJECTS.map((featuredProject) => (
           <Card
             key={featuredProject.title}
-            className="flex flex-col border-border bg-card text-card-foreground"
+            className="flex flex-col border-border bg-card text-card-foreground hover:shadow-xl"
           >
             <CardHeader>
               <CardTitle>{featuredProject.title}</CardTitle>
