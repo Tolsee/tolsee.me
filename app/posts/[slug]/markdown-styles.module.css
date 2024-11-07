@@ -16,3 +16,7 @@
 .markdown h3 {
   @apply text-2xl mt-8 mb-4 leading-snug;
 }
+
+.markdown blockquote {
+  @apply p-4 my-4 border-s-4 bg-muted;
+}
