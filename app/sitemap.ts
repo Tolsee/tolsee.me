@@ -1,7 +1,7 @@
 import { getAllPosts } from '@/lib/api';
 import { globby } from 'globby';
 
-const WEBSITE_URL = 'https://www.tolsee.me';
+const WEBSITE_URL = 'https://tolsee.me';
 
 function addPage(page: string) {
   const path = page

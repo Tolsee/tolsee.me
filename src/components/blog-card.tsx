@@ -7,13 +7,13 @@ import {
   CardHeader,
   CardTitle,
 } from './ui/card';
-import { motion } from 'framer-motion';
 import { Item } from '@/lib/api';
+import { AnimatingCard } from './animating-card';
 
 export function BlogCard({ post }: { post: Item }) {
   return (
     <Link href={`/posts/${post.slug}`}>
-      <motion.div whileHover={{ scale: 1.01 }}>
+      <AnimatingCard>
         <Card className="border-border bg-card text-card-foreground hover:shadow-xl">
           <CardHeader>
             <CardTitle>{post.title}</CardTitle>
@@ -32,7 +32,7 @@ export function BlogCard({ post }: { post: Item }) {
             </p>
           </CardContent>
         </Card>
-      </motion.div>
+      </AnimatingCard>
     </Link>
   );
 }
