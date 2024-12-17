@@ -19,6 +19,7 @@ export default async function sitemap() {
     '!app/{sitemap,layout,head}.{js,jsx,ts,tsx}',
     '!app/api',
     '!app/posts/[slug]/*.{js,jsx,ts,tsx}',
+    '!app/**/not-found.{js,jsx,ts,tsx}',
   ]);
 
   const posts = await getAllPosts(['title', 'publishedAt', 'updatedAt', 'slug']);
