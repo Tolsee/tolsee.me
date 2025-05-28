@@ -1,8 +1,10 @@
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 import Header from '@/components/Header';
 import { Metadata, Viewport } from 'next';
 import { ThemeProvider } from '@/src/providers';
 import { Footer } from '@/src/components/Footer';
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 import './globals.css';
 
@@ -50,29 +52,33 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
-      <head />
-      <body>
-        <ThemeProvider
-          enableSystem
-          disableTransitionOnChange
-          attribute="class"
-          defaultTheme="system"
-        >
-          <Header />
-          <main className="max-w-4xl mx-auto px-4 py-8 space-y-16">
-            {children}
-          </main>
-          <Footer />
-        </ThemeProvider>
-      </body>
-      <GoogleAnalytics gaId={GA_ID} />
-    </html>
+    <NextIntlClientProvider messages={messages}>
+      <html lang="en">
+        <head />
+        <body>
+          <ThemeProvider
+            enableSystem
+            disableTransitionOnChange
+            attribute="class"
+            defaultTheme="system"
+          >
+            <Header />
+            <main className="max-w-4xl mx-auto px-4 py-8 space-y-16">
+              {children}
+            </main>
+            <Footer />
+          </ThemeProvider>
+        </body>
+        <GoogleAnalytics gaId={GA_ID} />
+      </html>
+    </NextIntlClientProvider>
   );
 }

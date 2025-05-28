@@ -1,3 +1,4 @@
+import createNextIntlPlugin from 'next-intl/plugin';
 /** @type {import('next').NextConfig} */
 
 // For building on vercel: https://github.com/Automattic/node-canvas/issues/1779
@@ -33,4 +34,5 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+const withNextIntl = createNextIntlPlugin();
+module.exports = withNextIntl(nextConfig);

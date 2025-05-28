@@ -21,7 +21,7 @@ To get started with Zig, we need to install Zig on our system. I am using [zvm](
 to manage Zig versions. You can install `zvm` using the following command:
 
 > [!TIP]
-> If you are not running Linux, BSD, MacOS or *nix, please refer to `zvm` installation guide.
+> If you are not running Linux, BSD, MacOS or \*nix, please refer to `zvm` installation guide.
 
 ```bash
 curl https://raw.githubusercontent.com/tristanisham/zvm/master/install.sh | bash
@@ -32,6 +32,7 @@ curl https://raw.githubusercontent.com/tristanisham/zvm/master/install.sh | bash
 Let's start with the classic "Hello, World!" program in Zig:
 
 Create a folder for our project "hello-zig":
+
 ```bash
 mkdir hello-zig
 cd hello-zig
@@ -54,6 +55,7 @@ Your project structure should look like this:
 ```
 
 Now, let's update `main.zig` with the following code:
+
 ```zig
 const std = @import("std");
 

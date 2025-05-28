@@ -22,7 +22,12 @@ export default async function sitemap() {
     '!app/**/not-found.{js,jsx,ts,tsx}',
   ]);
 
-  const posts = await getAllPosts(['title', 'publishedAt', 'updatedAt', 'slug']);
+  const posts = await getAllPosts([
+    'title',
+    'publishedAt',
+    'updatedAt',
+    'slug',
+  ]);
 
   const routes = pages.map((page) => ({
     url: `${WEBSITE_URL}${addPage(page)}`,
