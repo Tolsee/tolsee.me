@@ -1,4 +1,5 @@
-'use client';
+import { useTranslations } from 'next-intl';
+('use client');
 import Link from 'next/link';
 import {
   Card,
@@ -11,6 +12,8 @@ import { Item } from '@/lib/api';
 import { AnimatingCard } from './animating-card';
 
 export function BlogCard({ post }: { post: Item }) {
+  const t = useTranslations('../src/components');
+
   return (
     <Link href={`/posts/${post.slug}`}>
       <AnimatingCard>
@@ -18,7 +21,7 @@ export function BlogCard({ post }: { post: Item }) {
           <CardHeader>
             <CardTitle>{post.title}</CardTitle>
             <CardDescription className="text-muted-foreground">
-              Published on{' '}
+              {t('published-on')}
               {new Date(post.publishedAt).toLocaleDateString('en', {
                 day: 'numeric',
                 month: 'long',

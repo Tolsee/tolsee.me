@@ -1,4 +1,5 @@
-'use client';
+import { useTranslations } from 'next-intl';
+('use client');
 
 import { Button } from '@/components/ui/button';
 import {
@@ -31,9 +32,11 @@ const FEATURED_PROJECTS = [
 ];
 
 export function FeaturedProject() {
+  const t = useTranslations('../src/components');
+
   return (
     <section className="space-y-6">
-      <h2 className="text-2xl font-semibold">Featured Projects</h2>
+      <h2 className="text-2xl font-semibold">{t('featured-projects')}</h2>
       <div className="grid gap-6 md:grid-cols-2">
         {FEATURED_PROJECTS.map((featuredProject) => (
           <AnimatingCard key={featuredProject.title}>
@@ -55,7 +58,7 @@ export function FeaturedProject() {
                   <Button variant="outline" size="sm" asChild>
                     <Link href={featuredProject.githubLink}>
                       <Github className="mr-2 h-4 w-4" />
-                      View Code
+                      {t('view-code')}
                     </Link>
                   </Button>
                   {featuredProject.externalLinks?.map((externalLink) => (

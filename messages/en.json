@@ -1,0 +1,17 @@
+{
+  "posts": {
+    "read-my-blog": "Read my blog"
+  },
+  "../src/components": {
+    "published-on": "Published on",
+    "featured-projects": "Featured Projects",
+    "view-code": " View Code",
+    "recent-blog-posts": "Recent Blog Posts"
+  },
+  "": {
+    "not-found-message": "Not found",
+    "page-does-not-exist": "This page doesn'''t exist (yet?)",
+    "link-back-to-homepage_component0": "homepage",
+    "link-back-to-homepage": " Link back to the {component0}"
+  }
+}
