@@ -12,7 +12,7 @@ tags:
 
 I have been learning Zig for past few days and I am really enjoying it.
 Going through [zig reddit](https://www.reddit.com/r/Zig/),
-I found what looks to be a good way to learn Zig: [Ziglings](https://codeberg.org/ziglings/exercises). 
+I found what looks to be a good way to learn Zig: [Ziglings](https://codeberg.org/ziglings/exercises).
 Today, I will go through the Ziglings exercises and share my experience.
 
 ### Intended Audience
@@ -29,4 +29,3 @@ So, this is a good way to learn Zig from scratch if you have some programming ex
 
 There are 109 exercises starting from basic "Hello World!" to `comptime` features.
 Each exercise has a explaination of what needs to be done for the exercise, and test case to verify the solution.
-
