@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { getAllPosts, Item } from '@/lib/api';
 
@@ -7,12 +8,14 @@ export const metadata = {
 };
 
 export default async function BlogPage() {
+  const t = await getTranslations('posts');
+
   const posts = await getAllPosts(['title', 'content', 'publishedAt', 'slug']);
 
   return (
     <section>
       <h1 className="font-medium text-2xl mb-8 tracking-tighter">
-        Read my blog
+        {t('read-my-blog')}
       </h1>
       {posts
         .sort((a, b) => {
