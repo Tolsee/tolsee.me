@@ -9,7 +9,6 @@ import {
   Heart,
 } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 const DATE_STARTED = new Date('2016-01-01');
 const BIRTH_DATE = new Date('1994-05-16');
@@ -35,7 +34,7 @@ export default function About() {
         <div className="mt-5 md:mt-10">
           {/* Hero Section */}
           <div className="flex flex-col md:flex-row md:items-center mb-12">
-            <Image
+            <img
               src="https://github.com/tolsee.png"
               className="rounded-full w-48 h-48 mb-6 md:mb-0 shadow-lg border-4 border-[--green] hover:scale-105 transition-transform duration-300"
               alt="Tulsi Sapkota"
