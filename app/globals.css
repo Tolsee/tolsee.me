@@ -15,6 +15,71 @@
   scroll-behavior: smooth;
 }
 
+/* Simple Text Selection */
+::selection {
+  background-color: var(--green);
+  color: white;
+}
+
+::-moz-selection {
+  background-color: var(--green);
+  color: white;
+}
+
+/* Dark mode selection */
+.dark ::selection {
+  background-color: var(--pink);
+  color: white;
+}
+
+.dark ::-moz-selection {
+  background-color: var(--pink);
+  color: white;
+}
+
+/* Animated cursor effect on hover - gives illusion of animated selection */
+@keyframes cursorPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Add pulsing effect to text that can be selected */
+p:hover, h1:hover, h2:hover, h3:hover {
+  cursor: text;
+  position: relative;
+}
+
+p:hover::after, h1:hover::after, h2:hover::after, h3:hover::after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--green);
+  animation: cursorPulse 1s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.dark p:hover::after, 
+.dark h1:hover::after, 
+.dark h2:hover::after, 
+.dark h3:hover::after {
+  background: var(--pink);
+}
+
+/* Exclude pills and buttons from indicator effect */
+.glass-pill:hover::after,
+.glass-button:hover::after,
+span.glass-pill:hover::after,
+span.glass-button:hover::after {
+  display: none;
+}
+
 /*
  * Copypasta from overreacted.io
  * */
@@ -31,6 +96,7 @@ body {
   --form-shadow: 0 2px 15px 0 rgba(210, 214, 220, 0.5);
   --pink: rgb(255, 167, 196);
   --green: rgb(0, 175, 154);
+  --green-rgb: 0, 175, 154;
   --color-muted: rgba(175, 184, 193, 0.2);
   background-color: var(--bg);
   font-family:
@@ -53,6 +119,7 @@ body {
   --inlineCode-text: #e6e6e6;
   --form-shadow: 0 2px 15px 0 rgba(26, 26, 27, 0.637);
   --muted: rgba(110, 118, 129, 0.4);
+  --green-rgb: 0, 175, 154;
 }
 
 @layer base {

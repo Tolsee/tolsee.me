@@ -10,39 +10,26 @@ const navItems = {
 
 export default function Header() {
   return (
-    <header className="flex justify-between items-center p-4 mb-8 md:mb-16 tracking-tight max-w-6xl mx-auto border-b border-border">
-      <div className="lg:sticky lg:top-20 w-full">
-        <nav
-          className="flex flex-row justify-between items-center relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative"
-          id="nav"
-        >
+    <header className="w-full py-8">
+      <div className="max-w-4xl mx-auto px-4">
+        <nav className="flex justify-between items-center">
+          {/* Logo */}
           <Link
             href="/"
-            className="flex flex-row justify-start items-center text-2xl"
+            className="flex items-center gap-2 text-xl font-semibold hover:opacity-80 transition-opacity"
           >
             <Logo />
-            <span
-              style={{
-                backgroundImage:
-                  'linear-gradient(90deg, rgba(0,175,154,1) 0%, rgba(0,212,255,1) 100%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                color: 'transparent',
-                transition:
-                  'rgba(0,175,154,1) 0.2s ease-out, rgba(0,212,255,1) 0.2s ease-in-out',
-              }}
-              className="font-bold ml-1"
-            >
-              tolsee.me
-            </span>
+            <span className="text-foreground">tolsee</span>
           </Link>
-          <div className="flex flex-row space-x-2">
+          
+          {/* Minimal navigation */}
+          <div className="flex items-center gap-8">
             {Object.entries(navItems).map(([path, { name }]) => {
               return (
                 <Link
                   key={path}
                   href={path}
-                  className="transition-all text-muted-foreground hover:text-foreground flex align-middle relative py-1 px-2"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {name}
                 </Link>

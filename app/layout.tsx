@@ -3,6 +3,7 @@ import { Metadata, Viewport } from 'next';
 import { ThemeProvider } from '@/src/providers';
 import { Footer } from '@/src/components/Footer';
 import { GoogleAnalytics } from '@next/third-parties/google'
+import GameEffect from '@/src/components/MoireWaveEffect';
 
 import './globals.css';
 
@@ -65,6 +66,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="system"
         >
+          <GameEffect />
           <Header />
           <main className="max-w-4xl mx-auto px-4 py-8 space-y-16">
             {children}
