@@ -13,13 +13,13 @@ const SOCIAL_LINKS = [
     name: 'GitHub',
     href: 'https://github.com/tolsee',
     icon: GithubIcon,
-    description: '69 repos, 270+ contributions'
+    description: '@tolsee'
   },
   {
     name: 'Twitter/X',
     href: 'https://twitter.com/tolsee',
     icon: TwitterIcon,
-    description: '1.2K+ posts, @tolsee'
+    description: '@tolsee'
   },
   {
     name: 'LinkedIn',
@@ -94,9 +94,11 @@ export function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors group"
+                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors group"
                   >
-                    <IconComponent className="w-5 h-5" />
+                    <div className="w-6 h-6 flex-shrink-0 flex items-center justify-center">
+                      <IconComponent className="w-6 h-6" />
+                    </div>
                     <div className="flex-1">
                       <div className="font-medium text-foreground group-hover:text-[--green] transition-colors">
                         {social.name}
