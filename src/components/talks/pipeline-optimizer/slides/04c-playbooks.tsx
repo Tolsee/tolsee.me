@@ -212,7 +212,7 @@ function PlaybooksSlide() {
         animate={{ opacity: showDefinition ? 1 : 0, y: showDefinition ? 0 : 10 }}
         transition={{ duration: 0.35, ease: 'easeOut' }}
       >
-        <SectionLabel visible={showDefinition}>What's a playbook?</SectionLabel>
+        <SectionLabel visible={showDefinition}>What&apos;s a playbook?</SectionLabel>
         <div
           style={{
             fontSize: 19,

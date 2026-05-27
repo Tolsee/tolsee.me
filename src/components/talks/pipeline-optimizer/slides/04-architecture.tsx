@@ -460,4 +460,5 @@ export const funnel: SlideData[] = [
   },
 ];
 
-export default [...archMap, ...funnel];
+const slides = [...archMap, ...funnel];
+export default slides;

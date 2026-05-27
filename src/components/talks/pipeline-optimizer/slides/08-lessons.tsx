@@ -125,7 +125,7 @@ function AutoresearchSlide() {
               className="font-mono text-[11px] mb-1 px-2 py-1 rounded inline-block"
               style={{ background: 'rgba(0,175,154,0.12)', color: 'rgba(255,255,255,0.75)' }}
             >
-              "do not spawn sub-agents"
+              &quot;do not spawn sub-agents&quot;
             </div>
             <div className={`${sans.className} text-xs text-white/55 mt-1`}>
               turn variance collapsed
@@ -137,7 +137,7 @@ function AutoresearchSlide() {
         <div
           className={`${sans.className} text-xs text-white/40 mt-4 pt-3 border-t border-white/10 italic`}
         >
-          What's obvious to humans isn't obvious to agents. Spell it out.
+          What&apos;s obvious to humans isn&apos;t obvious to agents. Spell it out.
         </div>
       </motion.div>
 
