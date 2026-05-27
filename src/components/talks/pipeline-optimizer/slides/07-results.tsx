@@ -88,7 +88,7 @@ function KindTag({ kind, visible }: { kind: PlaybookKind; visible: boolean }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: visible ? 1 : 0 }}
       transition={{ duration: 0.22, ease: 'easeOut' }}
-      className="font-mono text-[9.5px] uppercase tracking-[0.18em] px-4 pt-2.5 pb-0.5"
+      className="font-mono text-[11px] uppercase tracking-[0.18em] px-4 pt-3 pb-0.5"
       style={{ color: color.replace('rgb', 'rgba').replace(')', ', 0.6)').replace('rgba(rgba', 'rgba') }}
     >
       {kindLabel(kind)}
@@ -112,30 +112,30 @@ function PlaybookRow({
       initial={{ opacity: 0, x: -8 }}
       animate={{ opacity: visible ? 1 : 0, x: visible ? 0 : -8 }}
       transition={{ duration: 0.30, delay, ease: 'easeOut' }}
-      className="grid items-center gap-x-4 py-1 px-4"
+      className="grid items-center gap-x-4 py-1.5 px-4"
       style={{ gridTemplateColumns: '1fr auto auto auto' }}
     >
       {/* slug */}
       <span
-        className="font-mono text-[12.5px] truncate"
-        style={{ color: isReliability ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.80)' }}
+        className="font-mono text-[14px] truncate"
+        style={{ color: isReliability ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.85)' }}
       >
         {row.slug}
       </span>
 
       {/* before */}
-      <span className="font-mono text-[12px] text-white/25 text-right tabular-nums">
+      <span className="font-mono text-[13.5px] text-white/40 text-right tabular-nums">
         {row.before}
       </span>
 
       {/* after */}
-      <span className="font-mono text-[12px] text-white/50 text-right tabular-nums">
+      <span className="font-mono text-[13.5px] text-white/60 text-right tabular-nums">
         {isReliability ? '' : `→ ${row.after}`}
       </span>
 
       {/* pct / outcome */}
       <span
-        className="font-mono text-[12.5px] font-bold text-right tabular-nums"
+        className="font-mono text-[14px] font-bold text-right tabular-nums"
         style={{
           color: isReliability ? PINK_DIM : TEAL,
           minWidth: '4.5rem',
@@ -180,12 +180,12 @@ function ResultsReceipt() {
 
   return (
     <div
-      className={`${sans.className} flex flex-col h-full w-full justify-center max-w-2xl mx-auto`}
+      className={`${sans.className} flex flex-col h-full w-full justify-center max-w-3xl mx-auto`}
     >
       {/* ── Receipt header ─────────────────────────────────────────────────── */}
       <motion.div
         {...fadeIn(1)}
-        className="font-mono text-[9.5px] uppercase tracking-[0.22em] text-white/22 px-4 mb-3 flex justify-between"
+        className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/40 px-4 mb-3 flex justify-between"
       >
         <span>autonomous agent · first month · best case per playbook</span>
         <span>before → after</span>
@@ -221,10 +221,10 @@ function ResultsReceipt() {
           className="border-t border-white/12 mt-1 px-4 py-2.5 flex justify-between items-baseline"
           style={{ background: 'rgba(0,175,154,0.05)' }}
         >
-          <span className="font-mono text-[10.5px] text-white/38">
+          <span className="font-mono text-[12px] text-white/60">
             80+ PRs merged &nbsp;·&nbsp; 20+ repos &nbsp;·&nbsp; 12 playbooks &nbsp;·&nbsp; Buildkite-verified
           </span>
-          <span className="font-mono text-[10.5px]" style={{ color: 'rgba(0,175,154,0.58)' }}>
+          <span className="font-mono text-[12px]" style={{ color: 'rgba(0,175,154,0.75)' }}>
             ~6 showed ∅ improvement
           </span>
         </motion.div>
@@ -235,7 +235,7 @@ function ResultsReceipt() {
         initial={{ opacity: 0, y: 5 }}
         animate={{ opacity: act >= 4 ? 1 : 0, y: act >= 4 ? 0 : 5 }}
         transition={{ duration: 0.4, delay: 0.12, ease: 'easeOut' }}
-        className="text-sm text-white/38 italic text-center mt-4"
+        className="text-sm text-white/65 italic text-center mt-4"
       >
         The system reports its non-wins. Every PR ships verification hints — pass or fail.
       </motion.div>
