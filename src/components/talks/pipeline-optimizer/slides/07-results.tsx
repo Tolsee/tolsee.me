@@ -70,13 +70,14 @@ const GROUPS: PlaybookGroup[] = [
 function kindColor(kind: PlaybookKind): string {
   if (kind === 'parallelization') return TEAL;
   if (kind === 'reliability')     return PINK;
-  return 'rgba(255,255,255,0.45)';
+  // NOTE: must be rgb(...), not rgba(...) — KindTag's color transform breaks on rgba inputs
+  return 'rgb(255,255,255)';
 }
 
 function kindLabel(kind: PlaybookKind): string {
   if (kind === 'parallelization') return 'parallelization';
   if (kind === 'reliability')     return 'reliability';
-  return 'standard';
+  return 'caching';
 }
 
 // ── Sub-components ────────────────────────────────────────────────────────────
