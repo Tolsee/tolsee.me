@@ -39,12 +39,8 @@ const FEATURED_PROJECTS = [
     githubLink: 'https://github.com/Tolsee/tolsee.me',
     liveLink: 'https://tolsee.me',
     status: 'Active',
-    externalLinks: [
-      {
-        title: 'Live Site',
-        link: 'https://tolsee.me',
-      },
-    ],
+    // No "Live Site" link — visitors viewing this card are already on it.
+    externalLinks: [],
   },
   {
     title: 'Developer Dotfiles',
