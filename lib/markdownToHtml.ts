@@ -50,9 +50,11 @@ function normalizeCodeFences() {
       if (isPrismSupported(resolved)) {
         node.lang = resolved;
       } else {
+        // Mirror remark-prism's wrapper so the fenced block keeps the same
+        // dark background + styling (prism-theme.css targets .remark-highlight).
         const cls = `language-${node.lang || 'none'}`;
         node.type = 'html';
-        node.value = `<pre class="${cls}"><code class="${cls}">${escapeHtml(node.value || '')}</code></pre>`;
+        node.value = `<div class="remark-highlight"><pre class="${cls}"><code class="${cls}">${escapeHtml(node.value || '')}</code></pre></div>`;
         delete node.lang;
         delete node.meta;
       }
