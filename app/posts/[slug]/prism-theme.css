@@ -35,6 +35,13 @@ pre[class*='language-'] {
 pre[class*='language-'] {
   overflow: auto;
   padding: 1.3125rem;
+  /* Dark background lives directly on <pre> (not only on the .remark-highlight
+     wrapper). The wrapper isn't always emitted — self-escaped fences and any
+     grammar Prism can't load server-side fall through to a bare <pre>, and the
+     white code text was rendering invisibly on the white page. Same navy as
+     .remark-highlight so it's identical when the wrapper is present. */
+  background: #011627;
+  border-radius: 10px;
 }
 
 pre[class*='language-']::-moz-selection {
