@@ -10,7 +10,7 @@ const navItems = {
 
 export default function Header() {
   return (
-    <header className="w-full py-8">
+    <header className="site-header w-full py-8">
       <div className="max-w-4xl mx-auto px-4">
         <nav className="flex justify-between items-center">
           {/* Logo */}

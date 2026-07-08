@@ -96,8 +96,12 @@ export default function GameEffect({ className = '' }: GameEffectProps) {
           opacity: 0.4;
         }
         
-        /* Glass morphism card effects */
-        .card, [class*="card"], article, .project-card, .blog-card {
+        /* Glass morphism card effects.
+           NB: bare \`article\` is intentionally NOT matched. The blog post is
+           wrapped in <article>, and this rule would turn the whole post into a
+           lifting, pink-glowing hover card (border-radius + blur + hover
+           transform/glow). Article is plain content — style real cards by class. */
+        .card, [class*="card"], .project-card, .blog-card {
           transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
           border: 1px solid rgba(255, 255, 255, 0.1);
           background: rgba(var(--card), 0.8);
@@ -110,7 +114,6 @@ export default function GameEffect({ className = '' }: GameEffectProps) {
         
         .dark .card, 
         .dark [class*="card"], 
-        .dark article, 
         .dark .project-card, 
         .dark .blog-card {
           background: rgba(var(--card), 0.6);
@@ -119,7 +122,6 @@ export default function GameEffect({ className = '' }: GameEffectProps) {
         
         .card::before, 
         [class*="card"]::before, 
-        article::before, 
         .project-card::before, 
         .blog-card::before {
           content: '';
@@ -138,7 +140,6 @@ export default function GameEffect({ className = '' }: GameEffectProps) {
         
         .card:hover::before,
         [class*="card"]:hover::before,
-        article:hover::before,
         .project-card:hover::before,
         .blog-card:hover::before {
           opacity: 1;
@@ -146,7 +147,6 @@ export default function GameEffect({ className = '' }: GameEffectProps) {
         
         .card:hover,
         [class*="card"]:hover,
-        article:hover,
         .project-card:hover,
         .blog-card:hover {
           transform: translateY(-4px) scale(1.02);
@@ -159,7 +159,6 @@ export default function GameEffect({ className = '' }: GameEffectProps) {
         
         .dark .card:hover,
         .dark [class*="card"]:hover,
-        .dark article:hover,
         .dark .project-card:hover,
         .dark .blog-card:hover {
           box-shadow: 
@@ -236,16 +235,18 @@ export default function GameEffect({ className = '' }: GameEffectProps) {
           @apply glass-button;
         }
         
-        /* Glass morphism header */
-        header {
+        /* Glass morphism header — scoped to the site nav (.site-header) only.
+           Bare \`header\` also matched the blog listing/post <header> wrappers,
+           dressing them as stray pink-bordered, shadowed glass panels. */
+        .site-header {
           backdrop-filter: blur(25px) saturate(180%);
           -webkit-backdrop-filter: blur(25px) saturate(180%);
           background: rgba(var(--background), 0.85);
           border: 1px solid rgba(255, 167, 196, 0.1);
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
-        
-        .dark header {
+
+        .dark .site-header {
           background: rgba(var(--background), 0.7);
           border: 1px solid rgba(255, 255, 255, 0.05);
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -319,7 +320,7 @@ export default function GameEffect({ className = '' }: GameEffectProps) {
             animation: none;
           }
           
-          .card:hover, [class*="card"]:hover, article:hover {
+          .card:hover, [class*="card"]:hover {
             transform: translateY(-2px) scale(1.01);
           }
         }
