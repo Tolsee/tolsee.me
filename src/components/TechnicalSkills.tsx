@@ -109,7 +109,7 @@ export function TechnicalSkills() {
       </div>
 
       {/* Skills Display */}
-      <div className="backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-2xl p-6">
+      <div className="glass-card rounded-2xl p-6">
         <div className="flex items-center gap-3 mb-6">
           {(() => {
             const category = SKILL_CATEGORIES[activeCategory];
@@ -129,7 +129,7 @@ export function TechnicalSkills() {
           {SKILL_CATEGORIES[activeCategory].skills.map((skill, index) => (
             <div
               key={skill.name}
-              className="group p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+              className="group p-4 rounded-xl glass-tile transition-all duration-300"
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -173,22 +173,22 @@ export function TechnicalSkills() {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="text-center p-4 rounded-xl backdrop-blur-sm bg-white/5 border border-white/10">
+        <div className="text-center p-4 rounded-xl glass-tile">
           <Star className="w-6 h-6 text-[--green] mx-auto mb-2" />
           <div className="text-2xl font-bold text-[--green]">25+</div>
           <div className="text-sm text-muted-foreground">Technologies</div>
         </div>
-        <div className="text-center p-4 rounded-xl backdrop-blur-sm bg-white/5 border border-white/10">
+        <div className="text-center p-4 rounded-xl glass-tile">
           <Layers className="w-6 h-6 text-[--green] mx-auto mb-2" />
           <div className="text-2xl font-bold text-[--green]">Full Stack</div>
           <div className="text-sm text-muted-foreground">Development</div>
         </div>
-        <div className="text-center p-4 rounded-xl backdrop-blur-sm bg-white/5 border border-white/10">
+        <div className="text-center p-4 rounded-xl glass-tile">
           <Terminal className="w-6 h-6 text-[--green] mx-auto mb-2" />
           <div className="text-2xl font-bold text-[--green]">10+</div>
           <div className="text-sm text-muted-foreground">Years Experience</div>
         </div>
-        <div className="text-center p-4 rounded-xl backdrop-blur-sm bg-white/5 border border-white/10">
+        <div className="text-center p-4 rounded-xl glass-tile">
           <ChevronRight className="w-6 h-6 text-[--green] mx-auto mb-2" />
           <div className="text-2xl font-bold text-[--green]">Always</div>
           <div className="text-sm text-muted-foreground">Learning</div>

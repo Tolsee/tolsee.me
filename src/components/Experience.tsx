@@ -180,7 +180,7 @@ export function Experience() {
               </div>
 
               {/* Content Card */}
-              <div className="flex-1 backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
+              <div className="flex-1 glass-card rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                   <div className="space-y-2">
                     <h3 className="text-xl font-bold text-foreground">

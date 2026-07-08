@@ -81,7 +81,7 @@ export function Insights() {
           return (
             <div 
               key={index} 
-              className="backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-2xl p-6 hover:shadow-xl transition-all duration-300"
+              className="glass-card rounded-2xl p-6 hover:shadow-xl transition-all duration-300"
             >
               <div className="flex items-start gap-4 mb-4">
                 <div className={`p-3 rounded-lg ${insight.bgColor} flex-shrink-0`}>
@@ -131,7 +131,7 @@ export function Insights() {
           {PROFESSIONAL_VALUES.map((value, index) => (
             <div 
               key={index}
-              className="p-4 rounded-xl backdrop-blur-sm bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+              className="p-4 rounded-xl glass-tile transition-colors"
             >
               <h4 className="font-semibold text-[--green] mb-2">{value.title}</h4>
               <p className="text-sm text-muted-foreground leading-relaxed">

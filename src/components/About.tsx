@@ -157,7 +157,7 @@ export default function About() {
             </div>
 
             {/* Tech Philosophy - Glass Effect */}
-            <div className="rounded-2xl p-6 backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20 shadow-xl">
+            <div className="rounded-2xl p-6 glass-card shadow-xl">
               <h3 className="text-xl font-semibold mb-4">My Tech Philosophy</h3>
               <div className="space-y-3 text-muted-foreground">
                 <p>

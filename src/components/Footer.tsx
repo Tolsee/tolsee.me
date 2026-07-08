@@ -38,7 +38,7 @@ const QUICK_LINKS = [
 
 export function Footer() {
   return (
-    <footer className="mt-24 pt-16 pb-8 backdrop-blur-lg bg-gradient-to-br from-white/5 to-white/2 border-t border-white/10">
+    <footer className="mt-24 pt-16 pb-8 border-t border-border">
       <div className="max-w-6xl mx-auto px-4">
         {/* Main Footer Content */}
         <div className="grid md:grid-cols-3 gap-8 mb-8">
@@ -94,7 +94,7 @@ export function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors group"
+                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors group"
                   >
                     <div className="w-6 h-6 flex-shrink-0 flex items-center justify-center">
                       <IconComponent className="w-6 h-6" />
@@ -116,7 +116,7 @@ export function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-white/10 pt-6">
+        <div className="border-t border-border pt-6">
           
           {/* Bottom Footer */}
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
@@ -135,7 +135,7 @@ export function Footer() {
         </div>
 
         {/* Fun Stats Bar */}
-        <div className="mt-6 pt-4 border-t border-white/5">
+        <div className="mt-6 pt-4 border-t border-border">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
               <div className="text-lg font-bold text-[--green]">10+</div>

@@ -96,6 +96,46 @@ a h3:hover::after {
   display: none;
 }
 
+/* Theme-aware frosted card. The old inline `border-white/20 + white
+   gradient` only read as glass on a dark backdrop; on the light page it
+   washed out to a faint stray border. These tune each theme:
+   light = subtle frosted white with a soft border, dark = translucent
+   light frost. */
+.glass-card {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .glass-card {
+  border-color: rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.glass-tile {
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  background-color: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.glass-tile:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.dark .glass-tile {
+  border-color: rgba(255, 255, 255, 0.08);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.dark .glass-tile:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
 /*
  * Copypasta from overreacted.io
  * */

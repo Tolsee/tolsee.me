@@ -35,7 +35,7 @@ export function Certifications() {
         {CERTIFICATIONS.map((cert, index) => (
           <div
             key={index}
-            className="group relative backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
+            className="group relative glass-card rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
           >
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">
