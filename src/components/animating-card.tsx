@@ -54,24 +54,34 @@ export function AnimatingCard({ children }: Props) {
     }, 100);
   };
 
+  // Pointer handlers live on a STATIC wrapper, not the tilted element.
+  // Tilting the card itself moved its hit-area at the edges, so the pointer
+  // flickered in/out and the tilt juddered. The wrapper never transforms, so
+  // mouseleave only fires when you actually leave the card — no jitter.
   return (
-    <motion.div
+    <div
       onMouseMove={animate}
       onMouseLeave={stopAnimating}
-      animate={{
-        rotateY: rotations.x,
-        rotateX: rotations.y,
-        transformPerspective: Math.max(100, rotations.z * 100),
-      }}
       style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        transformStyle: 'preserve-3d',
-        transformOrigin: 'center',
       }}
     >
-      {children}
-    </motion.div>
+      <motion.div
+        animate={{
+          rotateY: rotations.x,
+          rotateX: rotations.y,
+          transformPerspective: Math.max(100, rotations.z * 100),
+        }}
+        style={{
+          width: '100%',
+          transformStyle: 'preserve-3d',
+          transformOrigin: 'center',
+        }}
+      >
+        {children}
+      </motion.div>
+    </div>
   );
 }

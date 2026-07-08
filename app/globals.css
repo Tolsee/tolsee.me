@@ -80,6 +80,22 @@ span.glass-button:hover::after {
   display: none;
 }
 
+/* Text inside a link is clickable, not selectable — keep the pointer cursor
+   and drop the caret/selection bar so post rows don't feel like plain text. */
+a p:hover,
+a h1:hover,
+a h2:hover,
+a h3:hover {
+  cursor: pointer;
+}
+
+a p:hover::after,
+a h1:hover::after,
+a h2:hover::after,
+a h3:hover::after {
+  display: none;
+}
+
 /*
  * Copypasta from overreacted.io
  * */
