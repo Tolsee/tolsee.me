@@ -179,7 +179,7 @@ function RepositorySlide() {
           {[
             ['Discoverability', 'An agent must encounter the route to the right knowledge.'],
             ['Scoped guidance', 'Rules live close to the code they govern.'],
-            ['Executable truth', 'Document the real validation path—not an imagined command.'],
+            ['Real verification', 'Tell the agent exactly how to prove the change worked.'],
           ].map(([heading, detail]) => (
             <div key={heading} className="flex gap-4 border-l-2 pl-5" style={{ borderColor: TEAL }}>
               <div><p className="text-xl font-bold text-white">{heading}</p><p className="mt-1 text-base text-white/55">{detail}</p></div>
