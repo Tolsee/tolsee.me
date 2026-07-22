@@ -1,16 +1,18 @@
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { Check, ChevronRight, CircleDot, Code2, Database, FileText, Gauge, GitPullRequest, GraduationCap, Play, ShieldCheck, Wrench } from 'lucide-react';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { sans } from '@/lib/fonts';
 import type { TalkSlide } from './deck';
+import { useTalkActs } from './slide-acts-context';
 
 const TEAL = '#00af9a';
 const PURPLE = '#a78bfa';
 const PINK = '#ffa7c4';
 const AMBER = '#fbbf24';
 
-function Surface({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return <div className={`rounded-2xl border border-white/10 bg-white/[0.035] ${className}`}>{children}</div>;
+function Surface({ children, className = '', style }: { children: ReactNode; className?: string; style?: CSSProperties }) {
+  return <div className={`rounded-2xl border border-white/10 bg-white/[0.035] ${className}`} style={style}>{children}</div>;
 }
 
 function SlideShell({ eyebrow, title, children }: { eyebrow?: string; title?: string; children: ReactNode }) {
@@ -29,6 +31,22 @@ function Pill({ children, color = 'rgba(255,255,255,0.55)' }: { children: ReactN
 
 function Arrow() {
   return <ChevronRight className="h-6 w-6 shrink-0 text-white/30" />;
+}
+
+function Reveal({ at, children, className = '', style }: { at: number; children: ReactNode; className?: string; style?: CSSProperties }) {
+  const { act } = useTalkActs();
+  const visible = act >= at;
+  return (
+    <motion.div
+      className={className}
+      style={style}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 10 }}
+      transition={{ duration: 0.28, ease: 'easeOut' }}
+    >
+      {children}
+    </motion.div>
+  );
 }
 
 function TitleSlide() {
@@ -81,11 +99,13 @@ function ProgressionSlide() {
       <div className="flex h-full items-end gap-2 md:gap-4">
         {stages.map(([number, name, detail], index) => (
           <div key={number} className="flex flex-1 flex-col justify-end" style={{ height: `${48 + index * 12}%` }}>
-            <div className="rounded-t-xl border border-white/10 border-b-0 bg-white/[0.04] p-4 md:p-6" style={{ boxShadow: index === 1 ? `inset 0 3px 0 ${TEAL}` : undefined }}>
-              <p className="font-mono text-xs text-white/35">{number}</p>
-              <p className="mt-3 text-lg font-bold text-white md:text-2xl">{name}</p>
-              <p className="mt-2 hidden text-sm leading-snug text-white/55 md:block">{detail}</p>
-            </div>
+            <Reveal at={index} className="h-full">
+              <div className="h-full rounded-t-xl border border-white/10 border-b-0 bg-white/[0.04] p-4 md:p-6" style={{ boxShadow: index === 1 ? `inset 0 3px 0 ${TEAL}` : undefined }}>
+                <p className="font-mono text-xs text-white/35">{number}</p>
+                <p className="mt-3 text-lg font-bold text-white md:text-2xl">{name}</p>
+                <p className="mt-2 hidden text-sm leading-snug text-white/55 md:block">{detail}</p>
+              </div>
+            </Reveal>
           </div>
         ))}
       </div>
@@ -96,31 +116,34 @@ function ProgressionSlide() {
 
 function ContextSlide() {
   const layers = [
-    { icon: FileText, title: 'Repository guidance', detail: 'Where to start. Which rules apply here.', color: '#e5e7eb' },
-    { icon: GraduationCap, title: 'Knowledge', detail: 'Conventions, constraints, and prior learnings.', color: PURPLE },
-    { icon: Wrench, title: 'Tools', detail: 'Logs, metrics, build and deploy state.', color: TEAL },
-    { icon: Code2, title: 'Targeted code', detail: 'Only the implementation surface the task needs.', color: '#cbd5e1' },
+    { number: '01', title: 'Tools', detail: 'CI/CD · logs · metrics', color: TEAL },
+    { number: '02', title: 'Knowledge', detail: 'repository guidance · platform constraints · prior learnings', color: PURPLE },
+    { number: '03', title: 'Codebase', detail: 'the smallest relevant code and validation surface', color: '#e5e7eb' },
   ];
   return (
-    <SlideShell eyebrow="The foundation" title="Progressive context: the smallest useful layer, at the moment it is needed.">
-      <div className="grid h-full grid-cols-[1fr_1.15fr] gap-8 lg:gap-14">
-        <div className="flex flex-col justify-center">
-          <p className="mb-5 font-mono text-sm uppercase tracking-widest text-white/40">Start with the task</p>
-          <Surface className="border-white/20 bg-white/[0.07] p-6 md:p-8">
-            <p className="font-mono text-sm" style={{ color: TEAL }}>definition of done</p>
-            <p className="mt-3 text-2xl font-bold leading-tight text-white md:text-4xl">Make one bounded change and prove it is safe.</p>
+    <SlideShell eyebrow="The foundation" title="Context is a layered search—not a giant prompt.">
+      <div className="mx-auto flex h-full max-w-4xl flex-col items-center justify-center">
+        <Reveal at={0} className="w-full max-w-2xl">
+          <Surface className="border-white/20 bg-white/[0.07] px-7 py-5 text-center md:px-10 md:py-6">
+            <p className="font-mono text-xs uppercase tracking-[0.2em]" style={{ color: TEAL }}>Start with the task</p>
+            <p className="mt-3 text-2xl font-bold text-white md:text-3xl">What are we trying to change—and how will we know it worked?</p>
           </Surface>
-          <p className="mt-6 max-w-md text-lg leading-relaxed text-white/55">Do not preload the whole company, every document, and every production tool. Route the work through the context it actually needs.</p>
-        </div>
-        <div className="grid grid-cols-2 gap-4 self-center">
-          {layers.map(({ icon: Icon, title, detail, color }) => (
-            <Surface key={title} className="p-5 md:p-6">
-              <Icon className="h-6 w-6" style={{ color }} />
-              <p className="mt-6 text-lg font-bold text-white md:text-2xl">{title}</p>
-              <p className="mt-2 text-sm leading-relaxed text-white/55 md:text-base">{detail}</p>
-            </Surface>
+        </Reveal>
+        <div className="my-2 h-6 border-l border-dashed border-white/25" />
+        <div className="w-full space-y-3">
+          {layers.map(({ number, title, detail, color }, index) => (
+            <Reveal key={title} at={index + 1}>
+              <Surface className="grid grid-cols-[auto_1fr] items-center gap-5 px-6 py-4 md:px-8 md:py-5" style={{ borderLeftColor: color, borderLeftWidth: 4 }}>
+                <span className="font-mono text-sm" style={{ color }}>{number}</span>
+                <div className="flex items-baseline justify-between gap-6">
+                  <p className="text-xl font-bold text-white md:text-2xl">{title}</p>
+                  <p className="text-right font-mono text-xs leading-relaxed text-white/50 md:text-sm">{detail}</p>
+                </div>
+              </Surface>
+            </Reveal>
           ))}
         </div>
+        <p className="mt-5 font-mono text-xs text-white/40">Expand only as the task requires—then change and verify.</p>
       </div>
     </SlideShell>
   );
@@ -156,51 +179,61 @@ function RepositorySlide() {
 }
 
 function KnowledgeSlide() {
-  const layers = [
-    ['Repository', 'Conventions, local gotchas, and architecture decisions.', '#d8b4fe'],
-    ['Platform', 'Constraints and policies code search cannot reliably reveal.', '#a78bfa'],
-    ['Organisational learning', 'Curated lessons from past engineering work.', '#7c3aed'],
-  ];
   return (
-    <SlideShell eyebrow="Context layer 02" title="Knowledge is more than code search.">
-      <div className="grid h-full grid-cols-[1.1fr_.9fr] gap-10">
-        <div className="flex flex-col justify-center gap-3">
-          {layers.map(([title, detail, color], index) => (
-            <div key={title} className="rounded-xl border border-white/10 p-5 md:p-6" style={{ marginLeft: `${index * 5}%`, background: `${color}0d`, borderLeftColor: color, borderLeftWidth: 3 }}>
-              <p className="text-xl font-bold text-white md:text-2xl">{title}</p>
-              <p className="mt-1 text-sm text-white/60 md:text-base">{detail}</p>
-            </div>
-          ))}
+    <SlideShell eyebrow="Context layer 02" title="Knowledge should compound, not accumulate.">
+      <div className="grid h-full grid-cols-[.8fr_auto_1.2fr_auto_.85fr] items-center gap-3 md:gap-5">
+        <Reveal at={0}>
+          <Surface className="p-5 md:p-6">
+            <p className="font-mono text-xs uppercase tracking-widest text-white/40">Engineering work</p>
+            <p className="mt-4 text-xl font-bold text-white md:text-2xl">Debugging<br />Decisions<br />Gotchas</p>
+          </Surface>
+        </Reveal>
+        <Reveal at={1}><Arrow /></Reveal>
+        <Reveal at={1} className="h-full">
+          <Surface className="flex h-full flex-col justify-center p-5 md:p-6">
+            <p className="font-mono text-xs uppercase tracking-widest" style={{ color: PURPLE }}>Extract</p>
+            <p className="mt-4 text-xl font-bold text-white md:text-2xl">Turn work into reusable guidance.</p>
+          </Surface>
+        </Reveal>
+        <Reveal at={2}><Arrow /></Reveal>
+        <div className="space-y-3">
+          <Reveal at={2}>
+            <Surface className="border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-5">
+              <p className="font-mono text-xs uppercase tracking-widest" style={{ color: PURPLE }}>In the repository</p>
+              <p className="mt-3 text-lg font-bold text-white">Local rules and architecture context</p>
+            </Surface>
+          </Reveal>
+          <Reveal at={3}>
+            <Surface className="border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-5">
+              <p className="font-mono text-xs uppercase tracking-widest" style={{ color: TEAL }}>Across the organisation</p>
+              <p className="mt-3 text-lg font-bold text-white">Platform constraints and reusable learnings</p>
+            </Surface>
+          </Reveal>
+          <Reveal at={4}>
+            <p className="pt-2 text-sm leading-relaxed text-white/55">The next relevant engineer or agent retrieves the layer it needs—without rediscovering the same thing.</p>
+          </Reveal>
         </div>
-        <Surface className="flex flex-col justify-center p-6 md:p-8">
-          <p className="font-mono text-xs uppercase tracking-widest" style={{ color: PURPLE }}>A system we built</p>
-          <p className="mt-4 text-2xl font-bold text-white md:text-3xl">Work should make the next session less blind.</p>
-          <div className="mt-8 flex items-center gap-2 font-mono text-xs text-white/65 md:text-sm">
-            <span>capture</span><Arrow /><span>curate</span><Arrow /><span>retrieve</span>
-          </div>
-          <p className="mt-7 text-sm leading-relaxed text-white/55">Capture is not truth. Curation, deduplication, freshness, and retrieval are part of the product.</p>
-        </Surface>
       </div>
     </SlideShell>
   );
 }
 
 function ToolsSlide() {
-  const raw = ['Build API', 'Log stream', 'Metric dashboard', 'Deploy status'];
+  const raw = ['CI/CD', 'Logs', 'Metrics'];
   return (
-    <SlideShell eyebrow="Context layer 03" title="Code tells you what was written. Tools tell you what is true now.">
+    <SlideShell eyebrow="Context layer 03" title="Code tells you how the system is written. Tools tell you what it is doing now.">
       <div className="grid h-full grid-cols-[1fr_auto_1fr] items-center gap-5 md:gap-10">
-        <Surface className="p-5 md:p-8">
-          <p className="font-mono text-xs uppercase tracking-widest text-white/40">Raw systems</p>
+        <Reveal at={0}><Surface className="p-5 md:p-8">
+          <p className="font-mono text-xs uppercase tracking-widest text-white/40">Live evidence</p>
           <div className="mt-6 flex flex-wrap gap-2">{raw.map((item) => <Pill key={item}>{item}</Pill>)}</div>
           <p className="mt-7 text-lg text-white/55">Correct data, but fragmented and shaped for humans or generic APIs.</p>
-        </Surface>
-        <div className="flex flex-col items-center gap-2"><Arrow /><p className="font-mono text-[10px] uppercase tracking-wider text-white/35">shape it</p></div>
-        <Surface className="border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-5 md:p-8">
+        </Surface></Reveal>
+        <Reveal at={1}><div className="flex flex-col items-center gap-2"><Arrow /><p className="font-mono text-[10px] uppercase tracking-wider text-white/35">shape it</p></div></Reveal>
+        <Reveal at={2}><Surface className="border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-5 md:p-8">
           <p className="font-mono text-xs uppercase tracking-widest" style={{ color: TEAL }}>Task-shaped capability</p>
           <p className="mt-5 text-2xl font-bold text-white md:text-3xl">“Give me the evidence needed to decide this task.”</p>
           <p className="mt-7 text-lg text-white/60">One focused answer. Fewer round trips. Fewer irrelevant decisions.</p>
-        </Surface>
+        </Surface></Reveal>
       </div>
     </SlideShell>
   );
@@ -210,14 +243,14 @@ function ToolSurfaceSlide() {
   return (
     <SlideShell eyebrow="Tool design" title="A tool surface is a job description.">
       <div className="grid h-full grid-cols-2 gap-6 md:gap-10">
-        <Surface className="border-white/10 p-6 md:p-8">
+        <Reveal at={0}><Surface className="h-full border-white/10 p-6 md:p-8">
           <p className="font-mono text-xs uppercase tracking-widest text-white/35">Generic surface</p>
           <p className="mt-5 text-2xl font-bold text-white">The agent must assemble the answer.</p>
           <div className="mt-8 space-y-3 font-mono text-sm text-white/45">
             {['list projects', 'list builds', 'get build', 'get job', 'read logs'].map((step) => <p key={step}>○ {step}</p>)}
           </div>
-        </Surface>
-        <Surface className="border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-6 md:p-8">
+        </Surface></Reveal>
+        <Reveal at={1}><Surface className="h-full border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-6 md:p-8">
           <p className="font-mono text-xs uppercase tracking-widest" style={{ color: TEAL }}>Purpose-shaped surface</p>
           <p className="mt-5 text-2xl font-bold text-white">The tool returns the decision-ready context.</p>
           <div className="mt-8 rounded-xl border border-[#00af9a]/30 bg-black/20 p-5 font-mono text-sm text-white/75">
@@ -226,7 +259,7 @@ function ToolSurfaceSlide() {
             <p className="text-white/50">→ relevant log lines</p>
             <p className="text-white/50">→ applicable rule</p>
           </div>
-        </Surface>
+        </Surface></Reveal>
       </div>
     </SlideShell>
   );
@@ -242,9 +275,9 @@ function SkillsSlide() {
     <SlideShell eyebrow="The bridge" title="Skills turn good individual practice into reusable capability.">
       <div className="flex h-full items-center">
         <div className="grid w-full grid-cols-3 gap-5">
-          {cards.map(([title, detail, Icon]) => {
+          {cards.map(([title, detail, Icon], index) => {
             const CardIcon = Icon as typeof Play;
-            return <Surface key={title as string} className="p-5 md:p-8"><CardIcon className="h-7 w-7" style={{ color: TEAL }} /><p className="mt-7 text-2xl font-bold text-white">{title as string}</p><p className="mt-3 text-base leading-relaxed text-white/55">{detail as string}</p></Surface>;
+            return <Reveal key={title as string} at={index}><Surface className="h-full p-5 md:p-8"><CardIcon className="h-7 w-7" style={{ color: TEAL }} /><p className="mt-7 text-2xl font-bold text-white">{title as string}</p><p className="mt-3 text-base leading-relaxed text-white/55">{detail as string}</p></Surface></Reveal>;
           })}
         </div>
       </div>
@@ -258,15 +291,15 @@ function BoundedAgentSlide() {
     <SlideShell eyebrow="The next step" title="A bounded agent owns one role—not an entire engineering organisation.">
       <div className="flex h-full flex-col justify-center">
         <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-3 md:gap-5">
-          <Surface className="p-5"><GitPullRequest className="h-6 w-6" style={{ color: PINK }} /><p className="mt-4 font-bold text-white">Current PR</p><p className="mt-1 text-sm text-white/50">The changed surface</p></Surface>
-          <Arrow />
-          <Surface className="border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-5"><FileText className="h-6 w-6" style={{ color: PURPLE }} /><p className="mt-4 font-bold text-white">Test context</p><p className="mt-1 text-sm text-white/50">Repo-provided flows and rules</p></Surface>
-          <Arrow />
-          <Surface className="border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-5"><Check className="h-6 w-6" style={{ color: TEAL }} /><p className="mt-4 font-bold text-white">Testing agent</p><p className="mt-1 text-sm text-white/50">Targeted plan and evidence</p></Surface>
+          <Reveal at={0}><Surface className="p-5"><GitPullRequest className="h-6 w-6" style={{ color: PINK }} /><p className="mt-4 font-bold text-white">Current PR</p><p className="mt-1 text-sm text-white/50">The changed surface</p></Surface></Reveal>
+          <Reveal at={1}><Arrow /></Reveal>
+          <Reveal at={1}><Surface className="border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-5"><FileText className="h-6 w-6" style={{ color: PURPLE }} /><p className="mt-4 font-bold text-white">Test context</p><p className="mt-1 text-sm text-white/50">Repo-provided flows and rules</p></Surface></Reveal>
+          <Reveal at={2}><Arrow /></Reveal>
+          <Reveal at={2}><Surface className="border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-5"><Check className="h-6 w-6" style={{ color: TEAL }} /><p className="mt-4 font-bold text-white">Testing agent</p><p className="mt-1 text-sm text-white/50">Targeted plan and evidence</p></Surface></Reveal>
         </div>
-        <div className="mx-auto mt-7 flex items-center gap-3 rounded-full border border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] px-5 py-3 font-mono text-sm text-[#ffa7c4]">
+        <Reveal at={3} className="mx-auto mt-7"><div className="flex items-center gap-3 rounded-full border border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] px-5 py-3 font-mono text-sm text-[#ffa7c4]">
           <CircleDot className="h-4 w-4" /> uncertain judgement → human handoff
-        </div>
+        </div></Reveal>
       </div>
     </SlideShell>
   );
@@ -355,14 +388,14 @@ function CloseSlide() {
 export const slides: TalkSlide[] = [
   { id: 'title', content: <TitleSlide />, notes: 'This is a talk about the engineering work behind useful agents. Not a tool roundup, and not a claim that every team should automate everything.' },
   { id: 'start', content: <StartingSlide />, notes: 'A model can reason over the code you show it. It cannot automatically know what changed in production, which local convention is important, or whether its change had the desired effect.' },
-  { id: 'progression', content: <ProgressionSlide />, notes: 'The key is progression. Start with personal leverage, then make the environment reliable enough for a narrow role, then automate only the workflow that has earned it.' },
-  { id: 'context', content: <ContextSlide />, notes: 'Context is not one giant prompt. It is a routing system: task first, then the smallest useful repository guidance, knowledge, tools, and code.' },
+  { id: 'progression', acts: 5, content: <ProgressionSlide />, notes: 'The key is progression. Start with personal leverage, then make the environment reliable enough for a narrow role, then automate only the workflow that has earned it.' },
+  { id: 'context', acts: 4, content: <ContextSlide />, notes: 'Context is a layered search: start with the task, then reach for live tools, knowledge, and the smallest relevant code surface only as the task requires.' },
   { id: 'repo', content: <RepositorySlide />, notes: 'The exact file names are less important than the behaviour: an agent finds an entry point, reaches local rules only when it enters that system, and can run the true validation command.' },
-  { id: 'knowledge', content: <KnowledgeSlide />, notes: 'Code search cannot tell an agent every platform constraint or prior gotcha. A useful knowledge system makes learnings discoverable while preserving a quality bar.' },
-  { id: 'tools', content: <ToolsSlide />, notes: 'Live tools turn stale code context into a view of the current system. The goal is a decision-ready response rather than broad access to every dashboard and API.' },
-  { id: 'tool-surface', content: <ToolSurfaceSlide />, notes: 'A generic tool surface pushes orchestration decisions into the model. A purpose-shaped capability removes those choices and narrows the blast radius.' },
-  { id: 'skills', content: <SkillsSlide />, notes: 'Skills are an important middle stage: a person still chooses to run them, but the procedure, verification, and pause points are repeatable.' },
-  { id: 'agent', content: <BoundedAgentSlide />, notes: 'A bounded agent should own one role with defined inputs and outputs. This makes the job easier to inspect, test, and hand back to a human when judgment is needed.' },
+  { id: 'knowledge', acts: 5, content: <KnowledgeSlide />, notes: 'Knowledge can be published beside the code when it is repository-specific, or into a shared system when it is useful across the organisation. Both make the next relevant task less blind.' },
+  { id: 'tools', acts: 3, content: <ToolsSlide />, notes: 'Live tools turn stale code context into a view of the current system. CI/CD, logs, and metrics are the core sources. The goal is a decision-ready response rather than broad access to every dashboard and API.' },
+  { id: 'tool-surface', acts: 2, content: <ToolSurfaceSlide />, notes: 'A generic tool surface pushes orchestration decisions into the model. A purpose-shaped capability removes those choices and narrows the blast radius.' },
+  { id: 'skills', acts: 3, content: <SkillsSlide />, notes: 'Skills are an important middle stage: a person still chooses to run them, but the procedure, verification, and pause points are repeatable.' },
+  { id: 'agent', acts: 4, content: <BoundedAgentSlide />, notes: 'A bounded agent should own one role with defined inputs and outputs. This makes the job easier to inspect, test, and hand back to a human when judgment is needed.' },
   { id: 'automation', content: <AutomationSlide />, notes: 'The model is only one component of automation. A trustworthy loop needs a trigger, scoped context, a budget, external verification, and escalation.' },
   { id: 'learnings', content: <LearningsSlide />, notes: 'These principles come from building different layers: skills, knowledge systems, task-shaped tools, testing agents, and autonomous workflows.' },
   { id: 'first-step', content: <FirstStepSlide />, notes: 'Pick a task you already understand. Make its context and verification explicit. Run it as a skill until you understand the failure modes. Then consider automation.' },

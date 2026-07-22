@@ -3,11 +3,13 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { sans } from '@/lib/fonts';
+import { TalkActsContext } from './slide-acts-context';
 
 export interface TalkSlide {
   id: string;
   content: ReactNode;
   notes?: string;
+  acts?: number;
 }
 
 function clamp(value: number, max: number) {
@@ -21,12 +23,16 @@ function slideFromHash() {
 
 export function TalkDeck({ slides }: { slides: TalkSlide[] }) {
   const [current, setCurrent] = useState(0);
+  const [currentAct, setCurrentAct] = useState(0);
   const [showHint, setShowHint] = useState(true);
   const [showNotes, setShowNotes] = useState(false);
   const currentRef = useRef(0);
+  const currentActRef = useRef(0);
+  const pendingActRef = useRef<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
   const active = slides[current];
+  const totalActs = active.acts ?? 1;
 
   useEffect(() => {
     const fromHash = slideFromHash();
@@ -35,10 +41,20 @@ export function TalkDeck({ slides }: { slides: TalkSlide[] }) {
 
   useEffect(() => {
     currentRef.current = current;
+    if (pendingActRef.current !== null) {
+      setCurrentAct(pendingActRef.current);
+      pendingActRef.current = null;
+    } else {
+      setCurrentAct(0);
+    }
     const url = new URL(window.location.href);
     url.hash = String(current + 1);
     window.history.replaceState(null, '', url.toString());
   }, [current]);
+
+  useEffect(() => {
+    currentActRef.current = currentAct;
+  }, [currentAct]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -63,17 +79,32 @@ export function TalkDeck({ slides }: { slides: TalkSlide[] }) {
         case 'ArrowDown':
         case ' ':
           event.preventDefault();
-          setCurrent((index) => clamp(index + 1, slides.length));
+          if (currentActRef.current < (slides[currentRef.current]?.acts ?? 1) - 1) {
+            setCurrentAct((act) => act + 1);
+          } else {
+            setCurrent((index) => clamp(index + 1, slides.length));
+          }
           break;
         case 'ArrowLeft':
         case 'ArrowUp':
           event.preventDefault();
-          setCurrent((index) => clamp(index - 1, slides.length));
+          if (currentActRef.current > 0) {
+            setCurrentAct((act) => act - 1);
+          } else {
+            const previous = clamp(currentRef.current - 1, slides.length);
+            if (previous !== currentRef.current) {
+              pendingActRef.current = (slides[previous]?.acts ?? 1) - 1;
+              setCurrent(previous);
+            }
+          }
           break;
         case 'Escape':
           event.preventDefault();
           if (showNotes) setShowNotes(false);
-          else setCurrent(0);
+          else {
+            setCurrent(0);
+            setCurrentAct(0);
+          }
           break;
         case 'n':
         case 'N':
@@ -108,13 +139,16 @@ export function TalkDeck({ slides }: { slides: TalkSlide[] }) {
               exit={{ opacity: 0, y: reducedMotion ? 0 : -10 }}
               transition={{ duration: reducedMotion ? 0.1 : 0.28, ease: 'easeOut' }}
             >
-              {active.content}
+              <TalkActsContext.Provider value={{ act: currentAct, totalActs }}>
+                {active.content}
+              </TalkActsContext.Provider>
             </motion.div>
           </AnimatePresence>
 
           <div className="pointer-events-none absolute bottom-3 right-4 z-20 font-mono text-xs text-white/35 md:text-sm">
             {current + 1} / {slides.length}
             {active.notes && <span className="ml-2 opacity-60">· n ·</span>}
+            {totalActs > 1 && <span className="ml-2 opacity-60">· {currentAct + 1}/{totalActs}</span>}
           </div>
           <div className={`pointer-events-none absolute bottom-4 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] text-white/30 transition-opacity duration-700 md:text-xs ${showHint ? 'opacity-100' : 'opacity-0'}`}>
             ← → navigate&nbsp;&nbsp;·&nbsp;&nbsp;N notes&nbsp;&nbsp;·&nbsp;&nbsp;F fullscreen

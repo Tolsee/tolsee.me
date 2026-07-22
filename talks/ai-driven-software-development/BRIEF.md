@@ -53,10 +53,9 @@ An agent should not receive the whole company, whole repository, and every produ
 
 ```text
 Task and definition of done
-  ├─ Repository guidance: where to start and which local rules apply
-  ├─ Knowledge: repo conventions → platform constraints → curated prior learnings
-  ├─ Tools: live logs, metrics, build/deploy status, targeted actions
-  └─ Code: the smallest relevant implementation and validation surface
+  ├─ Tools: live CI/CD, logs, and metrics
+  ├─ Knowledge: repository guidance plus organisation-wide platform constraints and reusable learnings
+  └─ Codebase: the smallest relevant implementation and validation surface
 ```
 
 The exact directory names do not matter. The invariants do:
@@ -64,7 +63,7 @@ The exact directory names do not matter. The invariants do:
 - a discoverable entry point (`AGENTS.md`, `CLAUDE.md`, or equivalent);
 - local guidance close to the subsystem it governs;
 - durable human-and-agent documentation;
-- freshness and executable verification where possible;
+- clear routing: repository-specific guidance belongs beside the code; cross-repository learning belongs in shared organisational knowledge;
 - purpose-shaped tools that return decision-ready evidence;
 - explicit safety boundaries around write access and verification.
 
@@ -75,7 +74,7 @@ Examples appear where they demonstrate a concept; they are not collected into a 
 | Concept | External-safe Linktree example |
 |---|---|
 | Repository context | Root and subsystem-level agent guidance that routes work to the right architecture knowledge and commands. |
-| Knowledge layers | A session-learning knowledge system: capture useful engineering lessons, curate/deduplicate them, then make them searchable in later sessions. |
+| Knowledge layers | Engineering work is turned into reusable guidance: repository-specific context lives beside the code, while cross-repository constraints and learnings are published to a shared knowledge system. |
 | Tools | Purpose-built CLI/MCP capabilities that gather decision-ready logs, metrics, build status, and other live evidence. |
 | Skills | Human-triggered, reusable procedures such as reviewing a PR through CI and review completion, or producing a release update from verified inputs. |
 | Bounded agents | An autonomous PR-testing agent that combines repository-provided test context with the current PR and an ephemeral environment. |
