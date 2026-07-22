@@ -167,7 +167,10 @@ function RepositorySlide() {
           <div className="font-mono text-sm leading-9 text-white/70 md:text-lg">
             <p><span style={{ color: TEAL }}>├─</span> AGENTS.md <span className="text-white/35">← entry point</span></p>
             <p><span style={{ color: TEAL }}>├─</span> docs/ <span className="text-white/35">← durable architecture knowledge</span></p>
-            <p><span style={{ color: TEAL }}>├─</span> .agents/ <span className="text-white/35">← workflows and tool configuration</span></p>
+            <p><span style={{ color: TEAL }}>├─</span> .agents/</p>
+            <p className="pl-6"><span style={{ color: TEAL }}>├─</span> skills/ <span className="text-white/35">← repeatable workflows and verification</span></p>
+            <p className="pl-6"><span style={{ color: TEAL }}>├─</span> agents/ <span className="text-white/35">← role instructions and boundaries</span></p>
+            <p className="pl-6"><span style={{ color: TEAL }}>└─</span> tools/ <span className="text-white/35">← live-system integration setup</span></p>
             <p><span style={{ color: TEAL }}>└─</span> subsystem/</p>
             <p className="pl-6"><span style={{ color: TEAL }}>└─</span> AGENTS.md <span className="text-white/35">← local constraints</span></p>
           </div>
