@@ -48,36 +48,20 @@ function FlowArrow({ branch = false }: { branch?: boolean }) {
       viewBox={branch ? '0 0 130 260' : '0 0 72 40'}
       fill="none"
     >
-      <motion.path
+      <path
         d={path}
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: 1, opacity: 0.65 }}
-        transition={{ duration: 0.55, ease: 'easeOut' }}
         stroke={PURPLE}
         strokeWidth="1.5"
+        opacity="0.65"
       />
-      {!branch && (
-        <motion.path
-          d={path}
-          animate={{ strokeDashoffset: [0, -52] }}
-          transition={{ duration: 2.8, ease: 'linear', repeat: Infinity }}
-          stroke={PURPLE}
-          strokeWidth="2.5"
-          strokeDasharray="1 13"
-          strokeLinecap="round"
-          opacity="0.55"
-        />
-      )}
       {branch && <circle cx="46" cy="130" r="3" fill={PURPLE} opacity="0.8" />}
       {arrowheads.map((arrowhead) => (
-        <motion.path
+        <path
           key={arrowhead}
           d={arrowhead}
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 0.65 }}
-          transition={{ duration: 0.2, delay: 0.45, ease: 'easeOut' }}
           stroke={PURPLE}
           strokeWidth="1.5"
+          opacity="0.65"
         />
       ))}
     </svg>
