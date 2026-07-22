@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, ChevronRight, CircleDot, Code2, Database, FileText, Gauge, GitPullRequest, GraduationCap, Play, ShieldCheck, Wrench } from 'lucide-react';
+import { Check, ChevronRight, CircleDot, Code2, Database, FileText, Gauge, GitPullRequest, GraduationCap, Play, ShieldCheck, Wrench } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 import { sans } from '@/lib/fonts';
 import type { TalkSlide } from './deck';
@@ -31,6 +31,54 @@ function Pill({ children, color = 'rgba(255,255,255,0.55)' }: { children: ReactN
 
 function Arrow() {
   return <ChevronRight className="h-6 w-6 shrink-0 text-white/30" />;
+}
+
+function FlowArrow({ branch = false }: { branch?: boolean }) {
+  const path = branch
+    ? 'M 4 130 H 46 M 46 130 L 126 65 M 46 130 L 126 195'
+    : 'M 4 20 H 68';
+  const arrowheads = branch
+    ? ['M 116 57 L 126 65 L 116 73', 'M 116 187 L 126 195 L 116 203']
+    : ['M 58 12 L 68 20 L 58 28'];
+
+  return (
+    <svg
+      aria-hidden
+      className={branch ? 'h-56 w-24 shrink-0 overflow-visible' : 'h-10 w-16 shrink-0 overflow-visible'}
+      viewBox={branch ? '0 0 130 260' : '0 0 72 40'}
+      fill="none"
+    >
+      <motion.path
+        d={path}
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: 1, opacity: 0.65 }}
+        transition={{ duration: 0.55, ease: 'easeOut' }}
+        stroke={PURPLE}
+        strokeWidth="1.5"
+      />
+      <motion.path
+        d={path}
+        animate={{ strokeDashoffset: [0, -52] }}
+        transition={{ duration: 2.8, ease: 'linear', repeat: Infinity }}
+        stroke={PURPLE}
+        strokeWidth="2.5"
+        strokeDasharray="1 13"
+        strokeLinecap="round"
+        opacity="0.55"
+      />
+      {arrowheads.map((arrowhead) => (
+        <motion.path
+          key={arrowhead}
+          d={arrowhead}
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 0.65 }}
+          transition={{ duration: 0.2, delay: 0.45, ease: 'easeOut' }}
+          stroke={PURPLE}
+          strokeWidth="1.5"
+        />
+      ))}
+    </svg>
+  );
 }
 
 function Reveal({ at, children, className = '', style }: { at: number; children: ReactNode; className?: string; style?: CSSProperties }) {
@@ -194,21 +242,22 @@ function RepositorySlide() {
 function KnowledgeSlide() {
   return (
     <SlideShell eyebrow="Linktree example · context layer 02" title="Knowledge should compound, not accumulate.">
-      <div className="grid h-full grid-cols-[.8fr_auto_1.2fr_auto_.85fr] items-center gap-3 md:gap-5">
+      <div className="grid h-full grid-cols-[minmax(0,.8fr)_auto_minmax(0,1.15fr)_auto_minmax(0,.95fr)] items-center gap-3 md:gap-5">
         <Reveal at={0}>
           <Surface className="p-5 md:p-6">
             <p className="font-mono text-xs uppercase tracking-widest text-white/40">Engineering work</p>
             <p className="mt-4 text-xl font-bold text-white md:text-2xl">Debugging<br />Decisions<br />Gotchas</p>
           </Surface>
         </Reveal>
-        <Reveal at={1}><ArrowRight className="h-9 w-9 text-[#a78bfa]" strokeWidth={1.5} /></Reveal>
+        <Reveal at={1}><FlowArrow /></Reveal>
         <Reveal at={1} className="h-full">
           <Surface className="flex h-full flex-col justify-center p-5 md:p-6">
             <p className="font-mono text-xs uppercase tracking-widest" style={{ color: PURPLE }}>A Linktree knowledge system</p>
-            <p className="mt-4 text-xl font-bold text-white md:text-2xl">Turn work into reusable guidance.</p>
+            <p className="mt-4 text-xl font-bold text-white md:text-2xl">Via a Claude plugin.</p>
+            <p className="mt-3 text-sm leading-relaxed text-white/55">Captures session learnings, then curates them for retrieval.</p>
           </Surface>
         </Reveal>
-        <Reveal at={2}><ArrowRight className="h-9 w-9 text-[#a78bfa]" strokeWidth={1.5} /></Reveal>
+        <Reveal at={2}><FlowArrow branch /></Reveal>
         <div className="space-y-3">
           <Reveal at={2}>
             <Surface className="border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-5">
