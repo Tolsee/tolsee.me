@@ -35,7 +35,7 @@ function Arrow() {
 
 function FlowArrow({ branch = false }: { branch?: boolean }) {
   const path = branch
-    ? 'M 4 130 H 46 M 46 130 L 126 65 M 46 130 L 126 195'
+    ? 'M 4 130 H 46 M 46 130 V 65 H 126 M 46 130 V 195 H 126'
     : 'M 4 20 H 68';
   const arrowheads = branch
     ? ['M 116 57 L 126 65 L 116 73', 'M 116 187 L 126 195 L 116 203']
@@ -56,16 +56,19 @@ function FlowArrow({ branch = false }: { branch?: boolean }) {
         stroke={PURPLE}
         strokeWidth="1.5"
       />
-      <motion.path
-        d={path}
-        animate={{ strokeDashoffset: [0, -52] }}
-        transition={{ duration: 2.8, ease: 'linear', repeat: Infinity }}
-        stroke={PURPLE}
-        strokeWidth="2.5"
-        strokeDasharray="1 13"
-        strokeLinecap="round"
-        opacity="0.55"
-      />
+      {!branch && (
+        <motion.path
+          d={path}
+          animate={{ strokeDashoffset: [0, -52] }}
+          transition={{ duration: 2.8, ease: 'linear', repeat: Infinity }}
+          stroke={PURPLE}
+          strokeWidth="2.5"
+          strokeDasharray="1 13"
+          strokeLinecap="round"
+          opacity="0.55"
+        />
+      )}
+      {branch && <circle cx="46" cy="130" r="3" fill={PURPLE} opacity="0.8" />}
       {arrowheads.map((arrowhead) => (
         <motion.path
           key={arrowhead}
