@@ -14,6 +14,8 @@ Alternatives to test later:
 
 Most engineers begin with an AI coding assistant and a repository. That is useful, but it is not enough for dependable agent work. The engineering environment must supply the right context at the right time, prove whether work succeeded, and preserve what it learned for the next run.
 
+**Talk promise:** What you need to build before agents can do useful work.
+
 The talk presents this as a progression, not a leap to autonomy:
 
 ```text

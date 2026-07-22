@@ -56,7 +56,7 @@ function TitleSlide() {
       <div className="relative max-w-5xl">
         <p className="mb-7 font-mono text-sm uppercase tracking-[0.28em]" style={{ color: TEAL }}>Tulsi Sapkota · Linktree</p>
         <h1 className="text-6xl font-black leading-[0.98] text-white md:text-8xl">AI-Driven<br />Software Development</h1>
-        <p className="mt-8 max-w-3xl text-xl leading-relaxed text-white/60 md:text-3xl">How better context becomes skills, agents, and eventually trusted automation.</p>
+        <p className="mt-8 max-w-3xl text-xl leading-relaxed text-white/60 md:text-3xl">What you need to build before agents can do useful work.</p>
       </div>
       <div className="absolute bottom-12 right-16 hidden gap-3 font-mono text-xs text-white/35 md:flex">
         <span>context</span><span>→</span><span>capability</span><span>→</span><span>confidence</span>
@@ -78,8 +78,18 @@ function StartingSlide() {
           <p className="font-mono text-xs uppercase tracking-widest text-white/40">Model + repository</p>
           <p className="mt-5 text-2xl font-bold text-white md:text-4xl">Can write code.<br />Often cannot know enough.</p>
         </Surface>
-        <div className="col-span-3 mt-2 grid grid-cols-4 gap-3 text-center font-mono text-[10px] uppercase tracking-wider text-white/35 md:gap-5 md:text-xs">
-          {['live state', 'local rules', 'platform constraints', 'proof it worked'].map((item) => <div key={item} className="rounded-lg border border-dashed border-white/15 py-3">missing: {item}</div>)}
+        <div className="col-span-3 mt-2 grid grid-cols-4 gap-3 md:gap-5">
+          {[
+            ['Live state', 'CI/CD · logs · metrics'],
+            ['Local rules', 'repo and subsystem guidance'],
+            ['Platform constraints', 'knowledge outside code search'],
+            ['Proof it worked', 'tests, reviews, and runtime evidence'],
+          ].map(([title, detail]) => (
+            <div key={title} className="rounded-xl border border-dashed border-white/15 bg-white/[0.025] px-3 py-4 text-left">
+              <p className="font-mono text-xs font-bold uppercase tracking-wide text-white/70 md:text-sm">{title}</p>
+              <p className="mt-2 text-xs leading-snug text-white/40 md:text-sm">{detail}</p>
+            </div>
+          ))}
         </div>
       </div>
     </SlideShell>
