@@ -6,6 +6,9 @@ const navItems = {
   '/posts': {
     name: 'Blog',
   },
+  '/talks': {
+    name: 'Talks',
+  },
 };
 
 export default function Header() {
