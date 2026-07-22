@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Check, ChevronRight, CircleDot, Code2, Database, FileText, Gauge, GitPullRequest, GraduationCap, Play, ShieldCheck, Wrench } from 'lucide-react';
+import { ArrowRight, Check, ChevronRight, CircleDot, Code2, Database, FileText, Gauge, GitPullRequest, GraduationCap, Play, ShieldCheck, Wrench } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 import { sans } from '@/lib/fonts';
 import type { TalkSlide } from './deck';
@@ -193,7 +193,7 @@ function RepositorySlide() {
 
 function KnowledgeSlide() {
   return (
-    <SlideShell eyebrow="Context layer 02" title="Knowledge should compound, not accumulate.">
+    <SlideShell eyebrow="Linktree example · context layer 02" title="Knowledge should compound, not accumulate.">
       <div className="grid h-full grid-cols-[.8fr_auto_1.2fr_auto_.85fr] items-center gap-3 md:gap-5">
         <Reveal at={0}>
           <Surface className="p-5 md:p-6">
@@ -201,14 +201,14 @@ function KnowledgeSlide() {
             <p className="mt-4 text-xl font-bold text-white md:text-2xl">Debugging<br />Decisions<br />Gotchas</p>
           </Surface>
         </Reveal>
-        <Reveal at={1}><Arrow /></Reveal>
+        <Reveal at={1}><ArrowRight className="h-9 w-9 text-[#a78bfa]" strokeWidth={1.5} /></Reveal>
         <Reveal at={1} className="h-full">
           <Surface className="flex h-full flex-col justify-center p-5 md:p-6">
-            <p className="font-mono text-xs uppercase tracking-widest" style={{ color: PURPLE }}>Extract</p>
+            <p className="font-mono text-xs uppercase tracking-widest" style={{ color: PURPLE }}>A Linktree knowledge system</p>
             <p className="mt-4 text-xl font-bold text-white md:text-2xl">Turn work into reusable guidance.</p>
           </Surface>
         </Reveal>
-        <Reveal at={2}><Arrow /></Reveal>
+        <Reveal at={2}><ArrowRight className="h-9 w-9 text-[#a78bfa]" strokeWidth={1.5} /></Reveal>
         <div className="space-y-3">
           <Reveal at={2}>
             <Surface className="border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-5">
@@ -223,7 +223,7 @@ function KnowledgeSlide() {
             </Surface>
           </Reveal>
           <Reveal at={4}>
-            <p className="pt-2 text-sm leading-relaxed text-white/55">The next relevant engineer or agent retrieves the layer it needs—without rediscovering the same thing.</p>
+            <p className="pt-2 text-sm leading-relaxed text-white/55">Future Linktree engineers and agents retrieve the relevant layer—without rediscovering the same thing.</p>
           </Reveal>
         </div>
       </div>
