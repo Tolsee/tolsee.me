@@ -170,7 +170,7 @@ function ContextSlide() {
     { number: '03', title: 'Codebase', detail: 'the smallest relevant code and validation surface', color: '#e5e7eb' },
   ];
   return (
-    <SlideShell eyebrow="The foundation" title="Context is a layered search—not a giant prompt.">
+    <SlideShell eyebrow="The foundation" title="Context for agents">
       <div className="mx-auto flex h-full max-w-4xl flex-col items-center justify-center">
         <Reveal at={0} className="w-full max-w-2xl">
           <Surface className="border-white/20 bg-white/[0.07] px-7 py-5 text-center md:px-10 md:py-6">
