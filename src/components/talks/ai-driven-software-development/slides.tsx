@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Check, ChevronRight, CircleDot, Code2, Database, FileText, Gauge, GitPullRequest, GraduationCap, Play, ShieldCheck, Wrench } from 'lucide-react';
+import { ArrowDown, ArrowRight, Check, ChevronRight, CircleDot, Code2, Database, FileText, Gauge, GitPullRequest, GraduationCap, Play, ShieldCheck, Wrench } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 import { sans } from '@/lib/fonts';
 import type { TalkSlide } from './deck';
@@ -30,7 +30,7 @@ function Pill({ children, color = 'rgba(255,255,255,0.55)' }: { children: ReactN
 }
 
 function Arrow() {
-  return <ChevronRight className="h-6 w-6 shrink-0 text-white/30" />;
+  return <ArrowRight className="h-6 w-6 shrink-0 text-white/30" />;
 }
 
 function FlowArrow({ branch = false }: { branch?: boolean }) {
@@ -436,7 +436,7 @@ function AutomationSlide() {
 
 function DevinLoopSlide() {
   return (
-    <SlideShell eyebrow="Devin automation" title="One request, two paths.">
+    <SlideShell eyebrow="Devin automation" title="Automation helping us">
       <div className="flex h-full flex-col justify-center">
         <div className="grid grid-cols-[1fr_auto_.75fr_auto_1fr_auto_.55fr] items-center gap-2 md:gap-4">
           <Reveal at={0}><Surface className="min-h-32 border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] p-5"><CircleDot className="h-6 w-6" style={{ color: PINK }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Developer request</p><p className="mt-3 text-lg font-bold text-white">A question needs help.</p></Surface></Reveal>
@@ -447,7 +447,7 @@ function DevinLoopSlide() {
           <Reveal at={1}><div className="flex flex-col items-center gap-1"><Arrow /><p className="font-mono text-[10px] text-white/40">yes</p></div></Reveal>
           <Reveal at={1}><Surface className="min-h-32 border-white/15 p-5"><Check className="h-6 w-6" style={{ color: AMBER }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Answer</p><p className="mt-3 text-lg font-bold text-white">Known answer, then exit.</p></Surface></Reveal>
         </div>
-        <Reveal at={2} className="ml-[48%] mt-4 flex items-center gap-2"><p className="font-mono text-[10px] text-white/40">needs a PR</p><span className="text-xl text-[#a78bfa]">↓</span></Reveal>
+        <Reveal at={2} className="ml-[48%] mt-4 flex items-center gap-2"><p className="font-mono text-[10px] text-white/40">needs a PR</p><ArrowDown className="h-5 w-5 text-[#a78bfa]" /></Reveal>
         <Reveal at={2} className="ml-[28%] mt-2">
           <div className="grid max-w-xl grid-cols-[1fr_auto_1fr] items-center gap-2 md:gap-4">
             <Surface className="min-h-32 border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-5"><FileText className="h-6 w-6" style={{ color: PURPLE }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Playbook</p><p className="mt-3 text-lg font-bold text-white">Guidance and constraints.</p></Surface>
@@ -455,7 +455,7 @@ function DevinLoopSlide() {
             <Surface className="min-h-32 p-5"><GitPullRequest className="h-6 w-6" style={{ color: PINK }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Devin</p><p className="mt-3 text-lg font-bold text-white">Creates a PR.</p></Surface>
           </div>
         </Reveal>
-        <Reveal at={3} className="mx-auto mt-8"><div className="flex items-center gap-3 rounded-full border border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] px-5 py-3 font-mono text-sm text-[#ffa7c4]"><CircleDot className="h-4 w-4" /> needs a decision → asks in Slack → human responds → Devin continues</div></Reveal>
+        <Reveal at={3} className="mx-auto mt-8"><div className="flex items-center gap-3 rounded-full border border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] px-5 py-3 font-mono text-sm text-[#ffa7c4]"><CircleDot className="h-4 w-4" /><span>needs a decision</span><ArrowRight className="h-4 w-4" /><span>asks in Slack</span><ArrowRight className="h-4 w-4" /><span>human responds</span><ArrowRight className="h-4 w-4" /><span>Devin continues</span></div></Reveal>
       </div>
     </SlideShell>
   );
