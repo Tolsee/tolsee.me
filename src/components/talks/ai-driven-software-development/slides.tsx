@@ -140,7 +140,7 @@ function ProgressionSlide() {
     ['01', 'Personal use', 'Ask AI to help with a task.'],
     ['02', 'Prepared environment', 'Make your codebase agent-friendly.'],
     ['03', 'Bounded role', 'Give an agent one job.'],
-    ['04', 'Automation', 'Trigger and verify repeatable work.'],
+    ['04', 'Loops', 'Automate repeatable work with feedback and verification.'],
     ['05', 'Trusted autonomy', 'Raise scope only with evidence.'],
   ];
   return (
