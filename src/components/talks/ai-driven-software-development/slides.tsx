@@ -30,7 +30,7 @@ function Pill({ children, color = 'rgba(255,255,255,0.55)' }: { children: ReactN
 }
 
 function Arrow() {
-  return <ArrowRight className="h-6 w-6 shrink-0 text-white/30" />;
+  return <ArrowRight className="h-6 w-6 shrink-0 self-center text-white/30" />;
 }
 
 function FlowArrow({ branch = false, direction = 'right', compact = false }: { branch?: boolean; direction?: 'right' | 'left' | 'down'; compact?: boolean }) {
