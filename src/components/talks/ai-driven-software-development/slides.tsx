@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, ChevronRight, CircleDot, Code2, Database, FileText, Gauge, GitPullRequest, GraduationCap, Play, ShieldCheck, Wrench } from 'lucide-react';
+import { ArrowRight, Check, ChevronRight, CircleDot, Database, FileText, GitPullRequest, Play, ShieldCheck } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 import { sans } from '@/lib/fonts';
 import type { TalkSlide } from './deck';
@@ -468,36 +468,67 @@ function AutomationSlide() {
   );
 }
 
-function DevinLoopSlide() {
+function NodeCard({ eyebrow, title, detail, accent }: { eyebrow: string; title: string; detail?: string; accent: string }) {
+  return (
+    <Surface className="h-full p-4 md:p-5" style={{ borderTopColor: accent, borderTopWidth: 3 }}>
+      <p className="font-mono text-[10px] uppercase tracking-widest md:text-xs" style={{ color: accent }}>{eyebrow}</p>
+      <p className="mt-3 text-base font-bold leading-snug text-white md:text-xl">{title}</p>
+      {detail && <p className="mt-2 text-xs leading-snug text-white/50 md:text-sm">{detail}</p>}
+    </Surface>
+  );
+}
+
+function DecisionDiamond({ accent, children, small = false }: { accent: string; children: ReactNode; small?: boolean }) {
+  return (
+    <div className={`flex ${small ? 'h-24 w-24' : 'h-28 w-28'} rotate-45 items-center justify-center rounded-xl border`} style={{ borderColor: `${accent}66`, background: `${accent}14` }}>
+      <p className="-rotate-45 text-center font-mono text-xs font-bold leading-tight text-white md:text-sm">{children}</p>
+    </div>
+  );
+}
+
+function DevinLoopSlideV2() {
+  const { act } = useTalkActs();
   return (
     <SlideShell eyebrow="Devin automation" title="Automation helping us">
       <div className="flex h-full flex-col justify-center">
-        <div className="relative mx-auto h-[31rem] w-full max-w-6xl">
+        <div className="relative mx-auto h-full max-h-[34rem] w-full max-w-6xl">
           <svg aria-hidden className="absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 1000 560" fill="none" preserveAspectRatio="none">
-            <WorkflowConnector path="M 190 125 H 250" arrowhead="M 240 117 L 250 125 L 240 133" />
-            <WorkflowConnector path="M 430 125 H 475" arrowhead="M 465 117 L 475 125 L 465 133" delay={0.1} />
-            <WorkflowConnector path="M 595 125 H 700" arrowhead="M 690 117 L 700 125 L 690 133" delay={0.2} />
-            <WorkflowConnector path="M 535 185 V 240 H 335 V 275" arrowhead="M 327 265 L 335 275 L 343 265" delay={0.3} />
-            <WorkflowConnector path="M 420 335 H 480" arrowhead="M 470 327 L 480 335 L 470 343" delay={0.4} />
-            <WorkflowConnector path="M 660 335 H 700" arrowhead="M 690 327 L 700 335 L 690 343" delay={0.5} />
-            <WorkflowConnector path="M 800 335 H 845" arrowhead="M 835 327 L 845 335 L 835 343" delay={0.6} />
-            <WorkflowConnector path="M 750 385 V 445 H 570 V 395" arrowhead="M 562 405 L 570 395 L 578 405" delay={0.7} />
+            {act >= 0 && <WorkflowConnector key="c0" path="M 200 125 H 240" arrowhead="M 232 117 L 240 125 L 232 133" />}
+            {act >= 1 && <WorkflowConnector key="c1" path="M 437 125 H 472" arrowhead="M 464 117 L 472 125 L 464 133" />}
+            {act >= 2 && <WorkflowConnector key="c2" path="M 595 125 H 693" arrowhead="M 685 117 L 693 125 L 685 133" />}
+            {act >= 3 && <WorkflowConnector key="c3" path="M 535 185 V 240 H 570 V 272" arrowhead="M 562 262 L 570 272 L 578 262" />}
+            {act >= 4 && <WorkflowConnector key="c4" path="M 667 335 H 700" arrowhead="M 692 327 L 700 335 L 692 343" />}
+            {act >= 4 && <WorkflowConnector key="c5" path="M 800 335 H 838" arrowhead="M 830 327 L 838 335 L 830 343" />}
+            {act >= 5 && <WorkflowConnector key="c6" path="M 748 400 V 460 H 570 V 418" arrowhead="M 562 428 L 570 418 L 578 428" />}
           </svg>
 
-          <div className="absolute left-[3.5%] top-[11%] w-[15.5%]"><Surface className="min-h-32 border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] p-4"><CircleDot className="h-5 w-5" style={{ color: PINK }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Developer request</p><p className="mt-2 text-base font-bold leading-snug text-white">A question needs help.</p></Surface></div>
-          <div className="absolute left-[25%] top-[11%] w-[18%]"><Surface className="min-h-32 border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-4"><Wrench className="h-5 w-5" style={{ color: TEAL }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Devin</p><p className="mt-2 text-base font-bold leading-snug text-white">Understands the request.</p></Surface></div>
-          <div className="absolute left-[47.5%] top-[15%]"><div className="flex h-28 w-28 rotate-45 items-center justify-center rounded-xl border border-[#a78bfa]/40 bg-[#a78bfa]/[0.08]"><p className="-rotate-45 text-center font-mono text-sm font-bold text-white">Known<br />answer?</p></div></div>
-          <div className="absolute left-[70%] top-[11%] w-[20%]"><Surface className="min-h-32 border-white/15 p-4"><Check className="h-5 w-5" style={{ color: AMBER }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Yes</p><p className="mt-2 text-base font-bold leading-snug text-white">Answer, then exit.</p></Surface></div>
-          <div className="absolute left-[25%] top-[49%] w-[17%]"><Surface className="min-h-30 border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-4"><FileText className="h-5 w-5" style={{ color: PURPLE }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Playbook</p><p className="mt-2 text-base font-bold leading-snug text-white">Guidance and constraints.</p></Surface></div>
-          <div className="absolute left-[48%] top-[49%] w-[18%]"><Surface className="min-h-30 border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-4"><Wrench className="h-5 w-5" style={{ color: TEAL }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Devin</p><p className="mt-2 text-base font-bold leading-snug text-white">Works on the request.</p></Surface></div>
-          <div className="absolute left-[70%] top-[52%]"><div className="flex h-24 w-24 rotate-45 items-center justify-center rounded-xl border border-[#ffa7c4]/40 bg-[#ffa7c4]/[0.08]"><p className="-rotate-45 text-center font-mono text-xs font-bold text-white">Needs a<br />decision?</p></div></div>
-          <div className="absolute left-[84.5%] top-[49%] w-[15%]"><Surface className="min-h-30 border-white/15 p-4"><GitPullRequest className="h-5 w-5" style={{ color: PINK }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">No</p><p className="mt-2 text-base font-bold leading-snug text-white">Creates a PR.</p></Surface></div>
+          <Reveal at={0} className="absolute" style={{ left: '3.5%', top: '11%', width: '16%' }}>
+            <NodeCard eyebrow="Developer request" title="A question needs help." accent={PINK} />
+          </Reveal>
+          <Reveal at={0} className="absolute" style={{ left: '24.5%', top: '11%', width: '18.5%' }}>
+            <NodeCard eyebrow="Devin" title="Understands the request." detail="Playbook guidance and constraints." accent={TEAL} />
+          </Reveal>
+          <Reveal at={1} className="absolute" style={{ left: '47.5%', top: '13.5%' }}>
+            <DecisionDiamond accent={PURPLE}>Known<br />answer?</DecisionDiamond>
+          </Reveal>
+          <Reveal at={2} className="absolute" style={{ left: '70%', top: '11%', width: '20%' }}>
+            <NodeCard eyebrow="Yes" title="Answer, then exit." accent={AMBER} />
+          </Reveal>
+          <Reveal at={3} className="absolute" style={{ left: '48%', top: '49%', width: '18%' }}>
+            <NodeCard eyebrow="Devin" title="Prepares the change." accent={TEAL} />
+          </Reveal>
+          <Reveal at={4} className="absolute" style={{ left: '70.5%', top: '52%' }}>
+            <DecisionDiamond accent={PINK} small>Needs a<br />decision?</DecisionDiamond>
+          </Reveal>
+          <Reveal at={4} className="absolute" style={{ left: '84.5%', top: '49%', width: '15%' }}>
+            <NodeCard eyebrow="Outcome" title="Creates a PR." accent={PINK} />
+          </Reveal>
 
-          <p className="absolute left-[63%] top-[21%] font-mono text-[10px] text-white/40">yes</p>
-          <p className="absolute left-[47%] top-[40%] font-mono text-[10px] text-white/40">needs a PR</p>
-          <p className="absolute left-[81%] top-[55%] font-mono text-[10px] text-white/40">no</p>
-          <p className="absolute left-[75%] top-[76%] font-mono text-[10px] text-[#ffa7c4]">asks in Slack</p>
-          <p className="absolute left-[58%] top-[82%] font-mono text-[10px] text-[#ffa7c4]">human responds</p>
+          <Reveal at={2} className="absolute font-mono text-[10px] text-white/40" style={{ left: '63%', top: '21%' }}>yes</Reveal>
+          <Reveal at={3} className="absolute font-mono text-[10px] text-white/40" style={{ left: '46%', top: '40%' }}>no · needs a PR</Reveal>
+          <Reveal at={4} className="absolute font-mono text-[10px] text-white/40" style={{ left: '81%', top: '55%' }}>no</Reveal>
+          <Reveal at={5} className="absolute font-mono text-[10px]" style={{ left: '76%', top: '70.5%', color: PINK }}>yes · asks in Slack</Reveal>
+          <Reveal at={5} className="absolute font-mono text-[10px]" style={{ left: '57%', top: '86%', color: PINK }}>human responds</Reveal>
         </div>
       </div>
     </SlideShell>
@@ -570,7 +601,7 @@ export const slides: TalkSlide[] = [
   { id: 'agent', acts: 4, content: <FocusedAgentSlide />, notes: 'A focused agent has clear input, one narrow job, and a specific output. This makes it easier to inspect, test, and hand back to a human when judgement is needed.' },
   { id: 'migration-reviewer', acts: 5, content: <MigrationReviewerSlide />, notes: 'This is a concrete focused-agent example. The migration reviewer does not try to review everything in the PR: a migration change triggers it, it receives migration-specific context, evaluates production safety, and returns a risk level with inline feedback.' },
   { id: 'automation', content: <AutomationSlide />, notes: 'The model is only one component of automation. A trustworthy loop needs a trigger, scoped context, a budget, external verification, and escalation.' },
-  { id: 'devin-loop', content: <DevinLoopSlide />, notes: 'Every developer request reaches Devin first. If it has a known answer, Devin answers and exits. If it needs a PR, a playbook supplies guidance and constraints and Devin creates the change. Whenever judgement is needed, Devin asks in Slack; the human response lets the task continue.' },
+  { id: 'devin-loop', acts: 6, content: <DevinLoopSlideV2 />, notes: 'Every developer request reaches Devin first. It uses playbook guidance and constraints to understand the request. If it has a known answer, Devin answers and exits. If it needs a PR, Devin prepares the change. Whenever judgement is needed, Devin asks in Slack; the human response returns the task to Devin.' },
   { id: 'learnings', content: <LearningsSlide />, notes: 'These principles come from building different layers: skills, knowledge systems, task-shaped tools, testing agents, and autonomous workflows.' },
   { id: 'first-step', content: <FirstStepSlide />, notes: 'Pick a task you already understand. Make its context and verification explicit. Run it as a skill until you understand the failure modes. Then consider automation.' },
   { id: 'close', content: <CloseSlide />, notes: 'The deeper Pipeline Optimizer presentation is linked here. This talk is the preparation layer: the work that lets a more autonomous system be trusted later.' },
