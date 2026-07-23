@@ -208,7 +208,7 @@ function ContextSlide() {
 
 function RepositorySlide() {
   return (
-    <SlideShell eyebrow="Context layer 01" title="Make the repository navigable before asking an agent to change it.">
+    <SlideShell eyebrow="Context layer 01" title="Make the repository navigable by agents.">
       <div className="grid h-full grid-cols-[1.05fr_.95fr] gap-10">
         <Surface className="flex flex-col justify-center p-6 md:p-9">
           <div className="font-mono text-sm leading-9 text-white/70 md:text-lg">
