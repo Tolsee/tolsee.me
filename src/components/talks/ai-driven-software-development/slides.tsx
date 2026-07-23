@@ -273,46 +273,37 @@ function KnowledgeSlide() {
 
 function ToolsSlide() {
   const raw = ['CI/CD', 'Logs', 'Metrics'];
+  const genericCalls = ['list_builds', 'get_build', 'get_job', 'read_logs', 'get_metrics'];
+  const costs = ['5 tool calls', 'repeated IDs and lookups', 'more tokens and branches'];
   return (
-    <SlideShell eyebrow="Context layer 03" title="Code tells you how the system is written. Tools tell you what it is doing now.">
-      <div className="grid h-full grid-cols-[1fr_auto_1fr] items-center gap-5 md:gap-10">
-        <Reveal at={0}><Surface className="p-5 md:p-8">
-          <p className="font-mono text-xs uppercase tracking-widest text-white/40">Live evidence</p>
-          <div className="mt-6 flex flex-wrap gap-2">{raw.map((item) => <Pill key={item}>{item}</Pill>)}</div>
-          <p className="mt-7 text-lg text-white/55">Correct data, but fragmented and shaped for humans or generic APIs.</p>
-        </Surface></Reveal>
-        <Reveal at={1}><div className="flex flex-col items-center gap-2"><Arrow /><p className="font-mono text-[10px] uppercase tracking-wider text-white/35">shape it</p></div></Reveal>
-        <Reveal at={2}><Surface className="border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-5 md:p-8">
-          <p className="font-mono text-xs uppercase tracking-widest" style={{ color: TEAL }}>Task-shaped capability</p>
-          <p className="mt-5 text-2xl font-bold text-white md:text-3xl">“Give me the evidence needed to decide this task.”</p>
-          <p className="mt-7 text-lg text-white/60">One focused answer. Fewer round trips. Fewer irrelevant decisions.</p>
-        </Surface></Reveal>
-      </div>
-    </SlideShell>
-  );
-}
-
-function ToolSurfaceSlide() {
-  return (
-    <SlideShell eyebrow="Tool design" title="A tool surface is a job description.">
-      <div className="grid h-full grid-cols-2 gap-6 md:gap-10">
-        <Reveal at={0}><Surface className="h-full border-white/10 p-6 md:p-8">
-          <p className="font-mono text-xs uppercase tracking-widest text-white/35">Generic surface</p>
-          <p className="mt-5 text-2xl font-bold text-white">The agent must assemble the answer.</p>
-          <div className="mt-8 space-y-3 font-mono text-sm text-white/45">
-            {['list projects', 'list builds', 'get build', 'get job', 'read logs'].map((step) => <p key={step}>○ {step}</p>)}
+    <SlideShell eyebrow="Live tools" title="Build tools around the job.">
+      <div className="flex h-full flex-col">
+        <Reveal at={0} className="mx-auto max-w-3xl">
+          <p className="text-center text-xl font-bold text-white md:text-2xl">“Why did this deployment fail?”</p>
+          <p className="mt-2 text-center text-sm text-white/50">CI/CD, logs, and metrics provide the live evidence. The tool design decides how much work the agent must do to use it.</p>
+        </Reveal>
+        <div className="mt-7 grid min-h-0 flex-1 grid-cols-2 gap-6 md:gap-10">
+          <Reveal at={0}><Surface className="h-full border-white/10 p-6 md:p-8">
+          <p className="font-mono text-xs uppercase tracking-widest text-white/35">Raw tool surface</p>
+          <p className="mt-5 text-2xl font-bold text-white">The agent has to assemble the answer.</p>
+          <div className="mt-5 flex flex-wrap gap-2">{raw.map((item) => <Pill key={item}>{item}</Pill>)}</div>
+          <div className="mt-6 space-y-2 font-mono text-sm text-white/45">
+            {genericCalls.map((step, index) => <p key={step}>0{index + 1} · {step}</p>)}
           </div>
+          <Reveal at={2} className="mt-7 flex flex-wrap gap-2">{costs.map((cost) => <Pill key={cost} color="#fda4af">{cost}</Pill>)}</Reveal>
         </Surface></Reveal>
-        <Reveal at={1}><Surface className="h-full border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-6 md:p-8">
-          <p className="font-mono text-xs uppercase tracking-widest" style={{ color: TEAL }}>Purpose-shaped surface</p>
-          <p className="mt-5 text-2xl font-bold text-white">The tool returns the decision-ready context.</p>
+          <Reveal at={1}><Surface className="h-full border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-6 md:p-8">
+          <p className="font-mono text-xs uppercase tracking-widest" style={{ color: TEAL }}>Task-shaped capability</p>
+          <p className="mt-5 text-2xl font-bold text-white">The tool returns decision-ready context.</p>
           <div className="mt-8 rounded-xl border border-[#00af9a]/30 bg-black/20 p-5 font-mono text-sm text-white/75">
             <p style={{ color: TEAL }}>get relevant failure context</p>
             <p className="mt-3 text-white/50">→ affected job</p>
             <p className="text-white/50">→ relevant log lines</p>
-            <p className="text-white/50">→ applicable rule</p>
+            <p className="text-white/50">→ metric change and applicable rule</p>
           </div>
+          <Reveal at={2} className="mt-7 flex flex-wrap gap-2"><Pill color="#4de5d1">1 tool call</Pill><Pill color="#4de5d1">one focused response</Pill></Reveal>
         </Surface></Reveal>
+        </div>
       </div>
     </SlideShell>
   );
@@ -445,8 +436,7 @@ export const slides: TalkSlide[] = [
   { id: 'context', acts: 4, content: <ContextSlide />, notes: 'Context is a layered search: start with the task, then reach for live tools, knowledge, and the smallest relevant code surface only as the task requires.' },
   { id: 'repo', content: <RepositorySlide />, notes: 'The exact file names are less important than the behaviour: an agent finds an entry point, reaches local rules only when it enters that system, and can run the true validation command.' },
   { id: 'knowledge', acts: 5, content: <KnowledgeSlide />, notes: 'Knowledge can be published beside the code when it is repository-specific, or into a shared system when it is useful across the organisation. Both make the next relevant task less blind.' },
-  { id: 'tools', acts: 3, content: <ToolsSlide />, notes: 'Live tools turn stale code context into a view of the current system. CI/CD, logs, and metrics are the core sources. The goal is a decision-ready response rather than broad access to every dashboard and API.' },
-  { id: 'tool-surface', acts: 2, content: <ToolSurfaceSlide />, notes: 'A generic tool surface pushes orchestration decisions into the model. A purpose-shaped capability removes those choices and narrows the blast radius.' },
+  { id: 'tools', acts: 3, content: <ToolsSlide />, notes: 'Use the BFF principle for agents: shape a capability around the job, not the upstream API. CI/CD, logs, and metrics are the live evidence, but a raw tool surface forces the agent to repeat lookups, receive excess context, spend more tokens, and make more routing decisions. A task-shaped tool does the orchestration internally and returns only the evidence it needs.' },
   { id: 'skills', acts: 3, content: <SkillsSlide />, notes: 'Skills are an important middle stage: a person still chooses to run them, but the procedure, verification, and pause points are repeatable.' },
   { id: 'agent', acts: 4, content: <BoundedAgentSlide />, notes: 'A bounded agent should own one role with defined inputs and outputs. This makes the job easier to inspect, test, and hand back to a human when judgment is needed.' },
   { id: 'automation', content: <AutomationSlide />, notes: 'The model is only one component of automation. A trustworthy loop needs a trigger, scoped context, a budget, external verification, and escalation.' },
