@@ -357,7 +357,7 @@ function MigrationReviewerSlide() {
     ['Output', 'Risk level and inline feedback', Check, AMBER],
   ];
   return (
-    <SlideShell eyebrow="Focused agent example" title="A migration changes. The reviewer knows exactly what to do.">
+    <SlideShell eyebrow="Migration reviewer workflow" title="A migration changes. The reviewer knows exactly what to do.">
       <div className="flex h-full flex-col justify-center">
         <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-2 md:gap-4">
           {stages.map(([label, detail, Icon, color], index) => {
