@@ -330,6 +330,30 @@ function SkillsSlide() {
   );
 }
 
+function CapabilityTransitionSlide() {
+  return (
+    <SlideShell eyebrow="The transition" title="The environment is ready. Now give it one job.">
+      <div className="grid h-full grid-cols-[1fr_auto_1fr] items-center gap-6 md:gap-10">
+        <Surface className="p-6 md:p-8">
+          <p className="font-mono text-xs uppercase tracking-widest text-white/40">Prepare the environment</p>
+          <div className="mt-7 flex flex-wrap gap-2">
+            {['Context', 'Knowledge', 'Tools', 'Skills'].map((item) => <Pill key={item}>{item}</Pill>)}
+          </div>
+          <p className="mt-7 text-xl leading-relaxed text-white/60">Make the right information and workflows available.</p>
+        </Surface>
+        <div className="flex flex-col items-center gap-3"><Arrow /><p className="font-mono text-[10px] uppercase tracking-wider text-white/35">put it to work</p></div>
+        <Surface className="border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-6 md:p-8">
+          <p className="font-mono text-xs uppercase tracking-widest" style={{ color: TEAL }}>Use the environment</p>
+          <div className="mt-7 flex flex-wrap gap-2">
+            {['Focused agents', 'Workflows', 'Loops'].map((item) => <Pill key={item} color="#4de5d1">{item}</Pill>)}
+          </div>
+          <p className="mt-7 text-xl leading-relaxed text-white/70">Start with one clear job, then earn the right to automate it.</p>
+        </Surface>
+      </div>
+    </SlideShell>
+  );
+}
+
 function FocusedAgentSlide() {
   return (
     <SlideShell eyebrow="Focused agent" title="Give an agent one clear job.">
@@ -498,6 +522,7 @@ export const slides: TalkSlide[] = [
   { id: 'knowledge', acts: 5, content: <KnowledgeSlide />, notes: 'Knowledge can be published beside the code when it is repository-specific, or into a shared system when it is useful across the organisation. Both make the next relevant task less blind.' },
   { id: 'tools', acts: 3, content: <ToolsSlide />, notes: 'Use the BFF principle for agents: shape a capability around the job, not the upstream API. CI/CD, logs, and metrics are the live evidence, but a raw tool surface forces the agent to repeat lookups, receive excess context, spend more tokens, and make more routing decisions. A task-shaped tool does the orchestration internally and returns only the evidence it needs.' },
   { id: 'skills', acts: 3, content: <SkillsSlide />, notes: 'Skills are an important middle stage: a person still chooses to run them, but the procedure, verification, and pause points are repeatable.' },
+  { id: 'transition', content: <CapabilityTransitionSlide />, notes: 'This is the transition in the talk. Everything so far prepared an environment: context, knowledge, tools, and skills. Now we move to the work that environment enables: focused agents, repeatable workflows, and eventually loops.' },
   { id: 'agent', acts: 4, content: <FocusedAgentSlide />, notes: 'A focused agent has clear input, one narrow job, and a specific output. This makes it easier to inspect, test, and hand back to a human when judgement is needed.' },
   { id: 'migration-reviewer', acts: 5, content: <MigrationReviewerSlide />, notes: 'This is a concrete focused-agent example. The migration reviewer does not try to review everything in the PR: a migration change triggers it, it receives migration-specific context, evaluates production safety, and returns a risk level with inline feedback.' },
   { id: 'automation', content: <AutomationSlide />, notes: 'The model is only one component of automation. A trustworthy loop needs a trigger, scoped context, a budget, external verification, and escalation.' },
