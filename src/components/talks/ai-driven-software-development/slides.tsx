@@ -276,7 +276,7 @@ function ToolsSlide() {
   const genericCalls = ['list_builds', 'get_build', 'get_job', 'read_logs', 'get_metrics'];
   const costs = ['5 tool calls', 'repeated IDs and lookups', 'more tokens and branches'];
   return (
-    <SlideShell eyebrow="Live tools" title="Build tools around the job.">
+    <SlideShell eyebrow="Live tools" title="Tool design">
       <div className="flex h-full flex-col">
         <Reveal at={0} className="mx-auto max-w-3xl">
           <p className="text-center text-xl font-bold text-white md:text-2xl">“Why did this deployment fail?”</p>
