@@ -232,7 +232,7 @@ function RepositorySlide() {
 
 function KnowledgeSlide() {
   return (
-    <SlideShell eyebrow="Linktree example · context layer 02" title="Knowledge should compound, not accumulate.">
+    <SlideShell eyebrow="Linktree example · context layer 02" title="Knowledge compounds with each session.">
       <div className="grid h-full grid-cols-[minmax(0,.8fr)_auto_minmax(0,1.15fr)_auto_minmax(0,.95fr)] items-center gap-3 md:gap-5">
         <Reveal at={0}>
           <Surface className="p-5 md:p-6">
