@@ -439,28 +439,30 @@ function MigrationReviewerSlide() {
 }
 
 function AutomationSlide() {
-  const gates = [
-    ['Trigger', 'A clear event or schedule'],
-    ['Context', 'Prepared, scoped inputs'],
-    ['Budget', 'Time, tokens, scope'],
-    ['Verify', 'Evidence outside the model'],
-    ['Escalate', 'A deliberate human stop'],
+  const layers = [
+    ['Trigger', 'Slack · GitHub · schedules', 'What starts the work.'],
+    ['Agent runtime', 'Devin Automation · Claude Agent SDK', 'Where the agent runs and takes action.'],
+    ['Evidence and feedback', 'CI/CD · logs · metrics · human review', 'What proves the outcome and guides the next step.'],
   ];
   return (
-    <SlideShell eyebrow="Automation" title="Automation earns its trust through gates.">
+    <SlideShell eyebrow="Automation" title="Design an automation">
       <div className="flex h-full flex-col justify-center">
-        <div className="grid grid-cols-5 gap-3 md:gap-5">
-          {gates.map(([title, detail], index) => (
-            <div key={title} className="relative">
-              <div className="rounded-xl border border-white/10 bg-white/[0.035] p-4 md:p-5" style={{ borderTopColor: index === 4 ? PINK : index === 3 ? AMBER : TEAL, borderTopWidth: 3 }}>
-                <p className="font-mono text-xs text-white/35">0{index + 1}</p>
-                <p className="mt-3 text-lg font-bold text-white">{title}</p>
-                <p className="mt-2 text-sm leading-snug text-white/50">{detail}</p>
-              </div>
+        <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-stretch gap-3 md:gap-5">
+          {layers.map(([title, examples, detail], index) => (
+            <div key={title} className="contents">
+              <Surface className="p-6 md:p-8" style={{ borderTopColor: index === 1 ? PURPLE : index === 2 ? PINK : TEAL, borderTopWidth: 3 }}>
+                <p className="font-mono text-xs uppercase tracking-widest" style={{ color: index === 1 ? PURPLE : index === 2 ? PINK : TEAL }}>{title}</p>
+                <p className="mt-5 text-2xl font-bold leading-snug text-white">{examples}</p>
+                <p className="mt-5 text-base leading-relaxed text-white/55">{detail}</p>
+              </Surface>
+              {index < layers.length - 1 && <Arrow />}
             </div>
           ))}
         </div>
-        <p className="mx-auto mt-9 max-w-3xl text-center text-lg leading-relaxed text-white/60">The confidence comes from the system around the model: live evidence, bounded authority, verification, and a visible path back to human judgement.</p>
+        <div className="mx-auto mt-9 max-w-4xl rounded-xl border border-[#00af9a]/25 bg-[#00af9a]/[0.05] px-6 py-4 text-center">
+          <p className="font-mono text-xs uppercase tracking-widest" style={{ color: TEAL }}>Combine the layers around one focused job</p>
+          <p className="mt-2 text-lg leading-relaxed text-white/70">The agent is one part of the automation—not the automation itself.</p>
+        </div>
       </div>
     </SlideShell>
   );
@@ -482,20 +484,20 @@ function DevinLoopSlide() {
             <WorkflowConnector path="M 750 385 V 445 H 570 V 395" arrowhead="M 562 405 L 570 395 L 578 405" delay={0.7} />
           </svg>
 
-          <Reveal at={0} className="absolute left-[3.5%] top-[11%] w-[15.5%]"><Surface className="min-h-32 border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] p-4"><CircleDot className="h-5 w-5" style={{ color: PINK }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Developer request</p><p className="mt-2 text-base font-bold leading-snug text-white">A question needs help.</p></Surface></Reveal>
-          <Reveal at={0} className="absolute left-[25%] top-[11%] w-[18%]"><Surface className="min-h-32 border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-4"><Wrench className="h-5 w-5" style={{ color: TEAL }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Devin</p><p className="mt-2 text-base font-bold leading-snug text-white">Understands the request.</p></Surface></Reveal>
-          <Reveal at={1} className="absolute left-[47.5%] top-[15%]"><div className="flex h-28 w-28 rotate-45 items-center justify-center rounded-xl border border-[#a78bfa]/40 bg-[#a78bfa]/[0.08]"><p className="-rotate-45 text-center font-mono text-sm font-bold text-white">Known<br />answer?</p></div></Reveal>
-          <Reveal at={1} className="absolute left-[70%] top-[11%] w-[20%]"><Surface className="min-h-32 border-white/15 p-4"><Check className="h-5 w-5" style={{ color: AMBER }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Yes</p><p className="mt-2 text-base font-bold leading-snug text-white">Answer, then exit.</p></Surface></Reveal>
-          <Reveal at={2} className="absolute left-[25%] top-[49%] w-[17%]"><Surface className="min-h-30 border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-4"><FileText className="h-5 w-5" style={{ color: PURPLE }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Playbook</p><p className="mt-2 text-base font-bold leading-snug text-white">Guidance and constraints.</p></Surface></Reveal>
-          <Reveal at={2} className="absolute left-[48%] top-[49%] w-[18%]"><Surface className="min-h-30 border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-4"><Wrench className="h-5 w-5" style={{ color: TEAL }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Devin</p><p className="mt-2 text-base font-bold leading-snug text-white">Works on the request.</p></Surface></Reveal>
-          <Reveal at={3} className="absolute left-[70%] top-[52%]"><div className="flex h-24 w-24 rotate-45 items-center justify-center rounded-xl border border-[#ffa7c4]/40 bg-[#ffa7c4]/[0.08]"><p className="-rotate-45 text-center font-mono text-xs font-bold text-white">Needs a<br />decision?</p></div></Reveal>
-          <Reveal at={3} className="absolute left-[84.5%] top-[49%] w-[15%]"><Surface className="min-h-30 border-white/15 p-4"><GitPullRequest className="h-5 w-5" style={{ color: PINK }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">No</p><p className="mt-2 text-base font-bold leading-snug text-white">Creates a PR.</p></Surface></Reveal>
+          <div className="absolute left-[3.5%] top-[11%] w-[15.5%]"><Surface className="min-h-32 border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] p-4"><CircleDot className="h-5 w-5" style={{ color: PINK }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Developer request</p><p className="mt-2 text-base font-bold leading-snug text-white">A question needs help.</p></Surface></div>
+          <div className="absolute left-[25%] top-[11%] w-[18%]"><Surface className="min-h-32 border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-4"><Wrench className="h-5 w-5" style={{ color: TEAL }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Devin</p><p className="mt-2 text-base font-bold leading-snug text-white">Understands the request.</p></Surface></div>
+          <div className="absolute left-[47.5%] top-[15%]"><div className="flex h-28 w-28 rotate-45 items-center justify-center rounded-xl border border-[#a78bfa]/40 bg-[#a78bfa]/[0.08]"><p className="-rotate-45 text-center font-mono text-sm font-bold text-white">Known<br />answer?</p></div></div>
+          <div className="absolute left-[70%] top-[11%] w-[20%]"><Surface className="min-h-32 border-white/15 p-4"><Check className="h-5 w-5" style={{ color: AMBER }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Yes</p><p className="mt-2 text-base font-bold leading-snug text-white">Answer, then exit.</p></Surface></div>
+          <div className="absolute left-[25%] top-[49%] w-[17%]"><Surface className="min-h-30 border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-4"><FileText className="h-5 w-5" style={{ color: PURPLE }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Playbook</p><p className="mt-2 text-base font-bold leading-snug text-white">Guidance and constraints.</p></Surface></div>
+          <div className="absolute left-[48%] top-[49%] w-[18%]"><Surface className="min-h-30 border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-4"><Wrench className="h-5 w-5" style={{ color: TEAL }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Devin</p><p className="mt-2 text-base font-bold leading-snug text-white">Works on the request.</p></Surface></div>
+          <div className="absolute left-[70%] top-[52%]"><div className="flex h-24 w-24 rotate-45 items-center justify-center rounded-xl border border-[#ffa7c4]/40 bg-[#ffa7c4]/[0.08]"><p className="-rotate-45 text-center font-mono text-xs font-bold text-white">Needs a<br />decision?</p></div></div>
+          <div className="absolute left-[84.5%] top-[49%] w-[15%]"><Surface className="min-h-30 border-white/15 p-4"><GitPullRequest className="h-5 w-5" style={{ color: PINK }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">No</p><p className="mt-2 text-base font-bold leading-snug text-white">Creates a PR.</p></Surface></div>
 
-          <Reveal at={1} className="absolute left-[63%] top-[21%]"><p className="font-mono text-[10px] text-white/40">yes</p></Reveal>
-          <Reveal at={2} className="absolute left-[47%] top-[40%]"><p className="font-mono text-[10px] text-white/40">needs a PR</p></Reveal>
-          <Reveal at={3} className="absolute left-[81%] top-[55%]"><p className="font-mono text-[10px] text-white/40">no</p></Reveal>
-          <Reveal at={3} className="absolute left-[75%] top-[76%]"><p className="font-mono text-[10px] text-[#ffa7c4]">asks in Slack</p></Reveal>
-          <Reveal at={3} className="absolute left-[58%] top-[82%]"><p className="font-mono text-[10px] text-[#ffa7c4]">human responds</p></Reveal>
+          <p className="absolute left-[63%] top-[21%] font-mono text-[10px] text-white/40">yes</p>
+          <p className="absolute left-[47%] top-[40%] font-mono text-[10px] text-white/40">needs a PR</p>
+          <p className="absolute left-[81%] top-[55%] font-mono text-[10px] text-white/40">no</p>
+          <p className="absolute left-[75%] top-[76%] font-mono text-[10px] text-[#ffa7c4]">asks in Slack</p>
+          <p className="absolute left-[58%] top-[82%] font-mono text-[10px] text-[#ffa7c4]">human responds</p>
         </div>
       </div>
     </SlideShell>
@@ -568,7 +570,7 @@ export const slides: TalkSlide[] = [
   { id: 'agent', acts: 4, content: <FocusedAgentSlide />, notes: 'A focused agent has clear input, one narrow job, and a specific output. This makes it easier to inspect, test, and hand back to a human when judgement is needed.' },
   { id: 'migration-reviewer', acts: 5, content: <MigrationReviewerSlide />, notes: 'This is a concrete focused-agent example. The migration reviewer does not try to review everything in the PR: a migration change triggers it, it receives migration-specific context, evaluates production safety, and returns a risk level with inline feedback.' },
   { id: 'automation', content: <AutomationSlide />, notes: 'The model is only one component of automation. A trustworthy loop needs a trigger, scoped context, a budget, external verification, and escalation.' },
-  { id: 'devin-loop', acts: 4, content: <DevinLoopSlide />, notes: 'Every developer request reaches Devin first. If it has a known answer, Devin answers and exits. If it needs a PR, a playbook supplies guidance and constraints and Devin creates the change. Whenever judgement is needed, Devin asks in Slack; the human response lets the task continue.' },
+  { id: 'devin-loop', content: <DevinLoopSlide />, notes: 'Every developer request reaches Devin first. If it has a known answer, Devin answers and exits. If it needs a PR, a playbook supplies guidance and constraints and Devin creates the change. Whenever judgement is needed, Devin asks in Slack; the human response lets the task continue.' },
   { id: 'learnings', content: <LearningsSlide />, notes: 'These principles come from building different layers: skills, knowledge systems, task-shaped tools, testing agents, and autonomous workflows.' },
   { id: 'first-step', content: <FirstStepSlide />, notes: 'Pick a task you already understand. Make its context and verification explicit. Run it as a skill until you understand the failure modes. Then consider automation.' },
   { id: 'close', content: <CloseSlide />, notes: 'The deeper Pipeline Optimizer presentation is linked here. This talk is the preparation layer: the work that lets a more autonomous system be trusted later.' },
