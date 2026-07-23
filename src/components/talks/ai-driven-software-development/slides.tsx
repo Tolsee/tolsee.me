@@ -175,7 +175,7 @@ function ContextSlide() {
         <Reveal at={0} className="w-full max-w-2xl">
           <Surface className="border-white/20 bg-white/[0.07] px-7 py-5 text-center md:px-10 md:py-6">
             <p className="font-mono text-xs uppercase tracking-[0.2em]" style={{ color: TEAL }}>Start with the task</p>
-            <p className="mt-3 text-2xl font-bold text-white md:text-3xl">What are we trying to change—and how will we know it worked?</p>
+            <p className="mt-3 text-2xl font-bold text-white md:text-3xl">Goal and verification</p>
           </Surface>
         </Reveal>
         <div className="my-2 h-6 border-l border-dashed border-white/25" />
