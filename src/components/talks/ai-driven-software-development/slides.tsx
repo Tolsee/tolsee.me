@@ -419,23 +419,19 @@ function DevinLoopSlide() {
           <Reveal at={0}><Arrow /></Reveal>
           <Reveal at={0}><Surface className="min-h-32 border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-5"><Wrench className="h-6 w-6" style={{ color: TEAL }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Devin automation</p><p className="mt-3 text-lg font-bold text-white">Understands the request.</p></Surface></Reveal>
           <Reveal at={1}><Arrow /></Reveal>
-          <Reveal at={1} className="flex justify-center"><div className="flex h-28 w-28 rotate-45 items-center justify-center rounded-xl border border-[#a78bfa]/40 bg-[#a78bfa]/[0.08]"><p className="-rotate-45 text-center font-mono text-sm font-bold text-white">Needs<br />a PR?</p></div></Reveal>
-          <Reveal at={1}><div className="flex flex-col items-center gap-1"><Arrow /><p className="font-mono text-[10px] text-white/40">no</p></div></Reveal>
+          <Reveal at={1} className="flex justify-center"><div className="flex h-28 w-28 rotate-45 items-center justify-center rounded-xl border border-[#a78bfa]/40 bg-[#a78bfa]/[0.08]"><p className="-rotate-45 text-center font-mono text-sm font-bold text-white">Known<br />answer?</p></div></Reveal>
+          <Reveal at={1}><div className="flex flex-col items-center gap-1"><Arrow /><p className="font-mono text-[10px] text-white/40">yes</p></div></Reveal>
           <Reveal at={1}><Surface className="min-h-32 border-white/15 p-5"><Check className="h-6 w-6" style={{ color: AMBER }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Answer</p><p className="mt-3 text-lg font-bold text-white">Known answer, then exit.</p></Surface></Reveal>
         </div>
-        <Reveal at={2} className="ml-[48%] mt-4 flex items-center gap-2"><p className="font-mono text-[10px] text-white/40">yes</p><span className="text-xl text-[#a78bfa]">↓</span></Reveal>
+        <Reveal at={2} className="ml-[48%] mt-4 flex items-center gap-2"><p className="font-mono text-[10px] text-white/40">needs a PR</p><span className="text-xl text-[#a78bfa]">↓</span></Reveal>
         <Reveal at={2} className="ml-[28%] mt-2">
-          <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_.55fr] items-center gap-2 md:gap-4">
+          <div className="grid max-w-xl grid-cols-[1fr_auto_1fr] items-center gap-2 md:gap-4">
             <Surface className="min-h-32 border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-5"><FileText className="h-6 w-6" style={{ color: PURPLE }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Playbook</p><p className="mt-3 text-lg font-bold text-white">Guidance and constraints.</p></Surface>
             <Arrow />
-            <Surface className="min-h-32 p-5"><GitPullRequest className="h-6 w-6" style={{ color: PINK }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">PR</p><p className="mt-3 text-lg font-bold text-white">Proposed change.</p></Surface>
-            <Arrow />
-            <Surface className="min-h-32 border-[#fbbf24]/30 bg-[#fbbf24]/[0.06] p-5"><Check className="h-6 w-6" style={{ color: AMBER }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Verify</p><p className="mt-3 text-lg font-bold text-white">CI and review evidence.</p></Surface>
-            <Arrow />
-            <Surface className="min-h-32 border-white/15 p-5"><Check className="h-6 w-6" style={{ color: AMBER }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Exit</p><p className="mt-3 text-lg font-bold text-white">Verified PR.</p></Surface>
+            <Surface className="min-h-32 p-5"><GitPullRequest className="h-6 w-6" style={{ color: PINK }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Devin</p><p className="mt-3 text-lg font-bold text-white">Creates a PR.</p></Surface>
           </div>
         </Reveal>
-        <Reveal at={3} className="mx-auto mt-8"><div className="flex items-center gap-3 rounded-full border border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] px-5 py-3 font-mono text-sm text-[#ffa7c4]"><CircleDot className="h-4 w-4" /> feedback or a decision → back to Devin</div></Reveal>
+        <Reveal at={3} className="mx-auto mt-8"><div className="flex items-center gap-3 rounded-full border border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] px-5 py-3 font-mono text-sm text-[#ffa7c4]"><CircleDot className="h-4 w-4" /> needs a decision → asks in Slack → human responds → Devin continues</div></Reveal>
       </div>
     </SlideShell>
   );
@@ -505,7 +501,7 @@ export const slides: TalkSlide[] = [
   { id: 'agent', acts: 4, content: <FocusedAgentSlide />, notes: 'A focused agent has clear input, one narrow job, and a specific output. This makes it easier to inspect, test, and hand back to a human when judgement is needed.' },
   { id: 'migration-reviewer', acts: 5, content: <MigrationReviewerSlide />, notes: 'This is a concrete focused-agent example. The migration reviewer does not try to review everything in the PR: a migration change triggers it, it receives migration-specific context, evaluates production safety, and returns a risk level with inline feedback.' },
   { id: 'automation', content: <AutomationSlide />, notes: 'The model is only one component of automation. A trustworthy loop needs a trigger, scoped context, a budget, external verification, and escalation.' },
-  { id: 'devin-loop', acts: 4, content: <DevinLoopSlide />, notes: 'Every developer request reaches Devin first. If it is a known question, Devin answers and exits. If the request needs a change, a playbook supplies guidance and constraints, Devin proposes a PR, and CI plus review provide verification. Feedback or a decision returns the work to Devin.' },
+  { id: 'devin-loop', acts: 4, content: <DevinLoopSlide />, notes: 'Every developer request reaches Devin first. If it has a known answer, Devin answers and exits. If it needs a PR, a playbook supplies guidance and constraints and Devin creates the change. Whenever judgement is needed, Devin asks in Slack; the human response lets the task continue.' },
   { id: 'learnings', content: <LearningsSlide />, notes: 'These principles come from building different layers: skills, knowledge systems, task-shaped tools, testing agents, and autonomous workflows.' },
   { id: 'first-step', content: <FirstStepSlide />, notes: 'Pick a task you already understand. Make its context and verification explicit. Run it as a skill until you understand the failure modes. Then consider automation.' },
   { id: 'close', content: <CloseSlide />, notes: 'The deeper Pipeline Optimizer presentation is linked here. This talk is the preparation layer: the work that lets a more autonomous system be trusted later.' },
