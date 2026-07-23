@@ -330,20 +330,53 @@ function SkillsSlide() {
   );
 }
 
-function BoundedAgentSlide() {
+function FocusedAgentSlide() {
   return (
-    <SlideShell eyebrow="The next step" title="A bounded agent owns one role—not an entire engineering organisation.">
+    <SlideShell eyebrow="Focused agent" title="Give an agent one clear job.">
       <div className="flex h-full flex-col justify-center">
         <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-3 md:gap-5">
-          <Reveal at={0}><Surface className="p-5"><GitPullRequest className="h-6 w-6" style={{ color: PINK }} /><p className="mt-4 font-bold text-white">Current PR</p><p className="mt-1 text-sm text-white/50">The changed surface</p></Surface></Reveal>
+          <Reveal at={0}><Surface className="p-5"><FileText className="h-6 w-6" style={{ color: PINK }} /><p className="mt-4 font-bold text-white">Clear input</p><p className="mt-1 text-sm text-white/50">The change and relevant context</p></Surface></Reveal>
           <Reveal at={1}><Arrow /></Reveal>
-          <Reveal at={1}><Surface className="border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-5"><FileText className="h-6 w-6" style={{ color: PURPLE }} /><p className="mt-4 font-bold text-white">Test context</p><p className="mt-1 text-sm text-white/50">Repo-provided flows and rules</p></Surface></Reveal>
+          <Reveal at={1}><Surface className="border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-5"><CircleDot className="h-6 w-6" style={{ color: PURPLE }} /><p className="mt-4 font-bold text-white">One job</p><p className="mt-1 text-sm text-white/50">A narrow, repeatable task</p></Surface></Reveal>
           <Reveal at={2}><Arrow /></Reveal>
-          <Reveal at={2}><Surface className="border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-5"><Check className="h-6 w-6" style={{ color: TEAL }} /><p className="mt-4 font-bold text-white">Testing agent</p><p className="mt-1 text-sm text-white/50">Targeted plan and evidence</p></Surface></Reveal>
+          <Reveal at={2}><Surface className="border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-5"><Check className="h-6 w-6" style={{ color: TEAL }} /><p className="mt-4 font-bold text-white">Clear output</p><p className="mt-1 text-sm text-white/50">Evidence and a recommendation</p></Surface></Reveal>
         </div>
         <Reveal at={3} className="mx-auto mt-7"><div className="flex items-center gap-3 rounded-full border border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] px-5 py-3 font-mono text-sm text-[#ffa7c4]">
           <CircleDot className="h-4 w-4" /> uncertain judgement → human handoff
         </div></Reveal>
+      </div>
+    </SlideShell>
+  );
+}
+
+function MigrationReviewerSlide() {
+  const stages = [
+    ['Trigger', 'A database migration changes', GitPullRequest, PINK],
+    ['Context', 'Migration SQL, database facts, and safety rules', FileText, PURPLE],
+    ['Focused job', 'Review for production safety', Database, TEAL],
+    ['Output', 'Risk level and inline feedback', Check, AMBER],
+  ];
+  return (
+    <SlideShell eyebrow="Focused agent example" title="A migration changes. The reviewer knows exactly what to do.">
+      <div className="flex h-full flex-col justify-center">
+        <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-2 md:gap-4">
+          {stages.map(([label, detail, Icon, color], index) => {
+            const StageIcon = Icon as typeof Check;
+            return (
+              <div key={label as string} className="contents">
+                <Reveal at={index}>
+                  <Surface className="min-h-40 p-4 md:p-5" style={{ borderTopColor: color as string, borderTopWidth: 3 }}>
+                    <StageIcon className="h-6 w-6" style={{ color: color as string }} />
+                    <p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">{label as string}</p>
+                    <p className="mt-3 text-lg font-bold leading-snug text-white">{detail as string}</p>
+                  </Surface>
+                </Reveal>
+                {index < stages.length - 1 && <Reveal at={index + 1}><Arrow /></Reveal>}
+              </div>
+            );
+          })}
+        </div>
+        <Reveal at={4} className="mx-auto mt-8"><p className="font-mono text-sm text-white/50">It does not review the whole PR. It reviews one risky change deeply.</p></Reveal>
       </div>
     </SlideShell>
   );
@@ -438,7 +471,8 @@ export const slides: TalkSlide[] = [
   { id: 'knowledge', acts: 5, content: <KnowledgeSlide />, notes: 'Knowledge can be published beside the code when it is repository-specific, or into a shared system when it is useful across the organisation. Both make the next relevant task less blind.' },
   { id: 'tools', acts: 3, content: <ToolsSlide />, notes: 'Use the BFF principle for agents: shape a capability around the job, not the upstream API. CI/CD, logs, and metrics are the live evidence, but a raw tool surface forces the agent to repeat lookups, receive excess context, spend more tokens, and make more routing decisions. A task-shaped tool does the orchestration internally and returns only the evidence it needs.' },
   { id: 'skills', acts: 3, content: <SkillsSlide />, notes: 'Skills are an important middle stage: a person still chooses to run them, but the procedure, verification, and pause points are repeatable.' },
-  { id: 'agent', acts: 4, content: <BoundedAgentSlide />, notes: 'A bounded agent should own one role with defined inputs and outputs. This makes the job easier to inspect, test, and hand back to a human when judgment is needed.' },
+  { id: 'agent', acts: 4, content: <FocusedAgentSlide />, notes: 'A focused agent has clear input, one narrow job, and a specific output. This makes it easier to inspect, test, and hand back to a human when judgement is needed.' },
+  { id: 'migration-reviewer', acts: 5, content: <MigrationReviewerSlide />, notes: 'This is a concrete focused-agent example. The migration reviewer does not try to review everything in the PR: a migration change triggers it, it receives migration-specific context, evaluates production safety, and returns a risk level with inline feedback.' },
   { id: 'automation', content: <AutomationSlide />, notes: 'The model is only one component of automation. A trustworthy loop needs a trigger, scoped context, a budget, external verification, and escalation.' },
   { id: 'learnings', content: <LearningsSlide />, notes: 'These principles come from building different layers: skills, knowledge systems, task-shaped tools, testing agents, and autonomous workflows.' },
   { id: 'first-step', content: <FirstStepSlide />, notes: 'Pick a task you already understand. Make its context and verification explicit. Run it as a skill until you understand the failure modes. Then consider automation.' },
