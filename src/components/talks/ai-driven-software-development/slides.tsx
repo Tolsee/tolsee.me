@@ -559,8 +559,8 @@ function CloseSlide() {
 export const slides: TalkSlide[] = [
   { id: 'title', content: <TitleSlide />, notes: 'This is a talk about the engineering work behind useful agents. Not a tool roundup, and not a claim that every team should automate everything.' },
   { id: 'progression', acts: 5, content: <ProgressionSlide />, notes: 'The key is progression. Start with personal leverage, then make the environment reliable enough for a narrow role, then automate only the workflow that has earned it.' },
-  { id: 'start', content: <StartingSlide />, notes: 'A model can reason over the code you show it. It cannot automatically know what changed in production, which local convention is important, or whether its change had the desired effect.' },
   { id: 'prepare-environment', content: <PrepareEnvironmentSlide />, notes: 'We are deliberately starting at Step 02. The next slides are the components of a prepared environment: context, repository guidance, knowledge, tools, and skills.' },
+  { id: 'start', content: <StartingSlide />, notes: 'A model can reason over the code you show it. It cannot automatically know what changed in production, which local convention is important, or whether its change had the desired effect.' },
   { id: 'context', acts: 4, content: <ContextSlide />, notes: 'Context is a layered search: start with the task, then reach for live tools, knowledge, and the smallest relevant code surface only as the task requires.' },
   { id: 'repo', content: <RepositorySlide />, notes: 'The exact file names are less important than the behaviour: an agent finds an entry point, reaches local rules only when it enters that system, and can run the true validation command.' },
   { id: 'knowledge', acts: 5, content: <KnowledgeSlide />, notes: 'Knowledge can be published beside the code when it is repository-specific, or into a shared system when it is useful across the organisation. Both make the next relevant task less blind.' },
