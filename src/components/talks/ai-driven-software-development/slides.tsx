@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Check, ChevronRight, CircleDot, Code2, Database, FileText, Gauge, GitPullRequest, GraduationCap, Play, ShieldCheck, Wrench } from 'lucide-react';
+import { ArrowRight, Check, ChevronRight, CircleDot, Database, FileText, GitPullRequest, Play, ShieldCheck } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 import { sans } from '@/lib/fonts';
 import type { TalkSlide } from './deck';
@@ -30,22 +30,30 @@ function Pill({ children, color = 'rgba(255,255,255,0.55)' }: { children: ReactN
 }
 
 function Arrow() {
-  return <ChevronRight className="h-6 w-6 shrink-0 text-white/30" />;
+  return <ArrowRight className="h-6 w-6 shrink-0 self-center text-white/30" />;
 }
 
-function FlowArrow({ branch = false }: { branch?: boolean }) {
+function FlowArrow({ branch = false, direction = 'right', compact = false }: { branch?: boolean; direction?: 'right' | 'left' | 'down'; compact?: boolean }) {
+  const down = direction === 'down';
+  const left = direction === 'left';
   const path = branch
     ? 'M 4 130 H 46 M 46 130 V 65 H 126 M 46 130 V 195 H 126'
-    : 'M 4 20 H 68';
+    : down ? 'M 20 4 V 68' : left ? 'M 68 20 H 4' : 'M 4 20 H 68';
   const arrowheads = branch
     ? ['M 116 57 L 126 65 L 116 73', 'M 116 187 L 126 195 L 116 203']
-    : ['M 58 12 L 68 20 L 58 28'];
+    : down ? ['M 12 58 L 20 68 L 28 58'] : left ? ['M 14 12 L 4 20 L 14 28'] : ['M 58 12 L 68 20 L 58 28'];
+  const className = branch
+    ? 'h-56 w-24 shrink-0 overflow-visible'
+    : down
+      ? compact ? 'h-9 w-8 shrink-0 overflow-visible' : 'h-16 w-10 shrink-0 overflow-visible'
+      : compact ? 'h-8 w-10 shrink-0 overflow-visible' : 'h-10 w-16 shrink-0 overflow-visible';
+  const viewBox = branch ? '0 0 130 260' : down ? '0 0 40 72' : '0 0 72 40';
 
   return (
     <svg
       aria-hidden
-      className={branch ? 'h-56 w-24 shrink-0 overflow-visible' : 'h-10 w-16 shrink-0 overflow-visible'}
-      viewBox={branch ? '0 0 130 260' : '0 0 72 40'}
+      className={className}
+      viewBox={viewBox}
       fill="none"
     >
       <motion.path
@@ -69,6 +77,15 @@ function FlowArrow({ branch = false }: { branch?: boolean }) {
         />
       ))}
     </svg>
+  );
+}
+
+function WorkflowConnector({ path, arrowhead, delay = 0 }: { path: string; arrowhead: string; delay?: number }) {
+  return (
+    <>
+      <motion.path d={path} initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 0.65 }} transition={{ duration: 0.55, delay, ease: 'easeOut' }} stroke={PURPLE} strokeWidth="1.5" />
+      <motion.path d={arrowhead} initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 0.65 }} transition={{ duration: 0.2, delay: delay + 0.45, ease: 'easeOut' }} stroke={PURPLE} strokeWidth="1.5" />
+    </>
   );
 }
 
@@ -135,12 +152,27 @@ function StartingSlide() {
   );
 }
 
+function PrepareEnvironmentSlide() {
+  return (
+    <SlideShell eyebrow="Step 02 · the starting point">
+      <div className="flex h-full flex-col items-center justify-center text-center">
+        <p className="font-mono text-sm uppercase tracking-[0.24em]" style={{ color: TEAL }}>Prepare the environment</p>
+        <h1 className="mt-6 max-w-4xl text-5xl font-black leading-tight text-white md:text-7xl">Make it possible for agents to do useful work.</h1>
+        <p className="mt-7 max-w-2xl text-xl leading-relaxed text-white/60">Give them the context, evidence, and repeatable workflows they need to act with confidence.</p>
+        <div className="mt-10 flex flex-wrap justify-center gap-3">
+          {['Context', 'Repository guidance', 'Knowledge', 'Tools', 'Skills'].map((item) => <Pill key={item} color="#4de5d1">{item}</Pill>)}
+        </div>
+      </div>
+    </SlideShell>
+  );
+}
+
 function ProgressionSlide() {
   const stages = [
     ['01', 'Personal use', 'Ask AI to help with a task.'],
-    ['02', 'Prepared environment', 'Make context discoverable.'],
-    ['03', 'Bounded role', 'Give an agent one job.'],
-    ['04', 'Automation', 'Trigger and verify repeatable work.'],
+    ['02', 'Prepare environment', 'Make your codebase agent-friendly.'],
+    ['03', 'Focused agent', 'Give it one clear job.'],
+    ['04', 'Loops', 'Automate repeatable work with feedback and verification.'],
     ['05', 'Trusted autonomy', 'Raise scope only with evidence.'],
   ];
   return (
@@ -170,12 +202,12 @@ function ContextSlide() {
     { number: '03', title: 'Codebase', detail: 'the smallest relevant code and validation surface', color: '#e5e7eb' },
   ];
   return (
-    <SlideShell eyebrow="The foundation" title="Context is a layered search—not a giant prompt.">
+    <SlideShell eyebrow="The foundation" title="Context for agents">
       <div className="mx-auto flex h-full max-w-4xl flex-col items-center justify-center">
         <Reveal at={0} className="w-full max-w-2xl">
           <Surface className="border-white/20 bg-white/[0.07] px-7 py-5 text-center md:px-10 md:py-6">
             <p className="font-mono text-xs uppercase tracking-[0.2em]" style={{ color: TEAL }}>Start with the task</p>
-            <p className="mt-3 text-2xl font-bold text-white md:text-3xl">What are we trying to change—and how will we know it worked?</p>
+            <p className="mt-3 text-2xl font-bold text-white md:text-3xl">Goal and verification</p>
           </Surface>
         </Reveal>
         <div className="my-2 h-6 border-l border-dashed border-white/25" />
@@ -200,7 +232,7 @@ function ContextSlide() {
 
 function RepositorySlide() {
   return (
-    <SlideShell eyebrow="Context layer 01" title="Make the repository navigable before asking an agent to change it.">
+    <SlideShell eyebrow="Context layer 01" title="Make the repository navigable by agents.">
       <div className="grid h-full grid-cols-[1.05fr_.95fr] gap-10">
         <Surface className="flex flex-col justify-center p-6 md:p-9">
           <div className="font-mono text-sm leading-9 text-white/70 md:text-lg">
@@ -232,7 +264,7 @@ function RepositorySlide() {
 
 function KnowledgeSlide() {
   return (
-    <SlideShell eyebrow="Linktree example · context layer 02" title="Knowledge should compound, not accumulate.">
+    <SlideShell eyebrow="Linktree example · context layer 02" title="Knowledge compounds with each session.">
       <div className="grid h-full grid-cols-[minmax(0,.8fr)_auto_minmax(0,1.15fr)_auto_minmax(0,.95fr)] items-center gap-3 md:gap-5">
         <Reveal at={0}>
           <Surface className="p-5 md:p-6">
@@ -273,46 +305,37 @@ function KnowledgeSlide() {
 
 function ToolsSlide() {
   const raw = ['CI/CD', 'Logs', 'Metrics'];
+  const genericCalls = ['list_builds', 'get_build', 'get_job', 'read_logs', 'get_metrics'];
+  const costs = ['5 tool calls', 'repeated IDs and lookups', 'more tokens and branches'];
   return (
-    <SlideShell eyebrow="Context layer 03" title="Code tells you how the system is written. Tools tell you what it is doing now.">
-      <div className="grid h-full grid-cols-[1fr_auto_1fr] items-center gap-5 md:gap-10">
-        <Reveal at={0}><Surface className="p-5 md:p-8">
-          <p className="font-mono text-xs uppercase tracking-widest text-white/40">Live evidence</p>
-          <div className="mt-6 flex flex-wrap gap-2">{raw.map((item) => <Pill key={item}>{item}</Pill>)}</div>
-          <p className="mt-7 text-lg text-white/55">Correct data, but fragmented and shaped for humans or generic APIs.</p>
-        </Surface></Reveal>
-        <Reveal at={1}><div className="flex flex-col items-center gap-2"><Arrow /><p className="font-mono text-[10px] uppercase tracking-wider text-white/35">shape it</p></div></Reveal>
-        <Reveal at={2}><Surface className="border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-5 md:p-8">
-          <p className="font-mono text-xs uppercase tracking-widest" style={{ color: TEAL }}>Task-shaped capability</p>
-          <p className="mt-5 text-2xl font-bold text-white md:text-3xl">“Give me the evidence needed to decide this task.”</p>
-          <p className="mt-7 text-lg text-white/60">One focused answer. Fewer round trips. Fewer irrelevant decisions.</p>
-        </Surface></Reveal>
-      </div>
-    </SlideShell>
-  );
-}
-
-function ToolSurfaceSlide() {
-  return (
-    <SlideShell eyebrow="Tool design" title="A tool surface is a job description.">
-      <div className="grid h-full grid-cols-2 gap-6 md:gap-10">
-        <Reveal at={0}><Surface className="h-full border-white/10 p-6 md:p-8">
-          <p className="font-mono text-xs uppercase tracking-widest text-white/35">Generic surface</p>
-          <p className="mt-5 text-2xl font-bold text-white">The agent must assemble the answer.</p>
-          <div className="mt-8 space-y-3 font-mono text-sm text-white/45">
-            {['list projects', 'list builds', 'get build', 'get job', 'read logs'].map((step) => <p key={step}>○ {step}</p>)}
+    <SlideShell eyebrow="Live tools" title="Tool design">
+      <div className="flex h-full flex-col">
+        <Reveal at={0} className="mx-auto max-w-3xl">
+          <p className="text-center text-xl font-bold text-white md:text-2xl">“Why did this deployment fail?”</p>
+          <p className="mt-2 text-center text-sm text-white/50">CI/CD, logs, and metrics provide the live evidence. The tool design decides how much work the agent must do to use it.</p>
+        </Reveal>
+        <div className="mt-7 grid min-h-0 flex-1 grid-cols-2 gap-6 md:gap-10">
+          <Reveal at={0}><Surface className="h-full border-white/10 p-6 md:p-8">
+          <p className="font-mono text-xs uppercase tracking-widest text-white/35">Raw tool surface</p>
+          <p className="mt-5 text-2xl font-bold text-white">The agent has to assemble the answer.</p>
+          <div className="mt-5 flex flex-wrap gap-2">{raw.map((item) => <Pill key={item}>{item}</Pill>)}</div>
+          <div className="mt-6 space-y-2 font-mono text-sm text-white/45">
+            {genericCalls.map((step, index) => <p key={step}>0{index + 1} · {step}</p>)}
           </div>
+          <Reveal at={2} className="mt-7 flex flex-wrap gap-2">{costs.map((cost) => <Pill key={cost} color="#fda4af">{cost}</Pill>)}</Reveal>
         </Surface></Reveal>
-        <Reveal at={1}><Surface className="h-full border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-6 md:p-8">
-          <p className="font-mono text-xs uppercase tracking-widest" style={{ color: TEAL }}>Purpose-shaped surface</p>
-          <p className="mt-5 text-2xl font-bold text-white">The tool returns the decision-ready context.</p>
+          <Reveal at={1}><Surface className="h-full border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-6 md:p-8">
+          <p className="font-mono text-xs uppercase tracking-widest" style={{ color: TEAL }}>Task-shaped capability</p>
+          <p className="mt-5 text-2xl font-bold text-white">The tool returns decision-ready context.</p>
           <div className="mt-8 rounded-xl border border-[#00af9a]/30 bg-black/20 p-5 font-mono text-sm text-white/75">
             <p style={{ color: TEAL }}>get relevant failure context</p>
             <p className="mt-3 text-white/50">→ affected job</p>
             <p className="text-white/50">→ relevant log lines</p>
-            <p className="text-white/50">→ applicable rule</p>
+            <p className="text-white/50">→ metric change and applicable rule</p>
           </div>
+          <Reveal at={2} className="mt-7 flex flex-wrap gap-2"><Pill color="#4de5d1">1 tool call</Pill><Pill color="#4de5d1">one focused response</Pill></Reveal>
         </Surface></Reveal>
+        </div>
       </div>
     </SlideShell>
   );
@@ -339,16 +362,40 @@ function SkillsSlide() {
   );
 }
 
-function BoundedAgentSlide() {
+function CapabilityTransitionSlide() {
   return (
-    <SlideShell eyebrow="The next step" title="A bounded agent owns one role—not an entire engineering organisation.">
+    <SlideShell eyebrow="The transition" title="The environment is ready. Now give it one job.">
+      <div className="grid h-full grid-cols-[1fr_auto_1fr] items-center gap-6 md:gap-10">
+        <Surface className="p-6 md:p-8">
+          <p className="font-mono text-xs uppercase tracking-widest text-white/40">Prepare the environment</p>
+          <div className="mt-7 flex flex-wrap gap-2">
+            {['Context', 'Knowledge', 'Tools', 'Skills'].map((item) => <Pill key={item}>{item}</Pill>)}
+          </div>
+          <p className="mt-7 text-xl leading-relaxed text-white/60">Make the right information and workflows available.</p>
+        </Surface>
+        <div className="flex flex-col items-center gap-3"><Arrow /><p className="font-mono text-[10px] uppercase tracking-wider text-white/35">put it to work</p></div>
+        <Surface className="border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-6 md:p-8">
+          <p className="font-mono text-xs uppercase tracking-widest" style={{ color: TEAL }}>Use the environment</p>
+          <div className="mt-7 flex flex-wrap gap-2">
+            {['Focused agents', 'Workflows', 'Loops'].map((item) => <Pill key={item} color="#4de5d1">{item}</Pill>)}
+          </div>
+          <p className="mt-7 text-xl leading-relaxed text-white/70">Start with one clear job, then earn the right to automate it.</p>
+        </Surface>
+      </div>
+    </SlideShell>
+  );
+}
+
+function FocusedAgentSlide() {
+  return (
+    <SlideShell eyebrow="Focused agent" title="Give an agent one clear job.">
       <div className="flex h-full flex-col justify-center">
         <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-3 md:gap-5">
-          <Reveal at={0}><Surface className="p-5"><GitPullRequest className="h-6 w-6" style={{ color: PINK }} /><p className="mt-4 font-bold text-white">Current PR</p><p className="mt-1 text-sm text-white/50">The changed surface</p></Surface></Reveal>
+          <Reveal at={0}><Surface className="p-5"><FileText className="h-6 w-6" style={{ color: PINK }} /><p className="mt-4 font-bold text-white">Clear input</p><p className="mt-1 text-sm text-white/50">The change and relevant context</p></Surface></Reveal>
           <Reveal at={1}><Arrow /></Reveal>
-          <Reveal at={1}><Surface className="border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-5"><FileText className="h-6 w-6" style={{ color: PURPLE }} /><p className="mt-4 font-bold text-white">Test context</p><p className="mt-1 text-sm text-white/50">Repo-provided flows and rules</p></Surface></Reveal>
+          <Reveal at={1}><Surface className="border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-5"><CircleDot className="h-6 w-6" style={{ color: PURPLE }} /><p className="mt-4 font-bold text-white">One job</p><p className="mt-1 text-sm text-white/50">A narrow, repeatable task</p></Surface></Reveal>
           <Reveal at={2}><Arrow /></Reveal>
-          <Reveal at={2}><Surface className="border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-5"><Check className="h-6 w-6" style={{ color: TEAL }} /><p className="mt-4 font-bold text-white">Testing agent</p><p className="mt-1 text-sm text-white/50">Targeted plan and evidence</p></Surface></Reveal>
+          <Reveal at={2}><Surface className="border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-5"><Check className="h-6 w-6" style={{ color: TEAL }} /><p className="mt-4 font-bold text-white">Clear output</p><p className="mt-1 text-sm text-white/50">Evidence and a recommendation</p></Surface></Reveal>
         </div>
         <Reveal at={3} className="mx-auto mt-7"><div className="flex items-center gap-3 rounded-full border border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] px-5 py-3 font-mono text-sm text-[#ffa7c4]">
           <CircleDot className="h-4 w-4" /> uncertain judgement → human handoff
@@ -358,29 +405,131 @@ function BoundedAgentSlide() {
   );
 }
 
-function AutomationSlide() {
-  const gates = [
-    ['Trigger', 'A clear event or schedule'],
-    ['Context', 'Prepared, scoped inputs'],
-    ['Budget', 'Time, tokens, scope'],
-    ['Verify', 'Evidence outside the model'],
-    ['Escalate', 'A deliberate human stop'],
+function MigrationReviewerSlide() {
+  const stages = [
+    ['Trigger', 'A database migration changes', GitPullRequest, PINK],
+    ['Context', 'Migration SQL, database facts, and safety rules', FileText, PURPLE],
+    ['Focused job', 'Review for production safety', Database, TEAL],
+    ['Output', 'Risk level and inline feedback', Check, AMBER],
   ];
   return (
-    <SlideShell eyebrow="Automation" title="Automation earns its trust through gates.">
+    <SlideShell eyebrow="Migration reviewer workflow" title="A migration changes. The reviewer knows exactly what to do.">
       <div className="flex h-full flex-col justify-center">
-        <div className="grid grid-cols-5 gap-3 md:gap-5">
-          {gates.map(([title, detail], index) => (
-            <div key={title} className="relative">
-              <div className="rounded-xl border border-white/10 bg-white/[0.035] p-4 md:p-5" style={{ borderTopColor: index === 4 ? PINK : index === 3 ? AMBER : TEAL, borderTopWidth: 3 }}>
-                <p className="font-mono text-xs text-white/35">0{index + 1}</p>
-                <p className="mt-3 text-lg font-bold text-white">{title}</p>
-                <p className="mt-2 text-sm leading-snug text-white/50">{detail}</p>
+        <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-2 md:gap-4">
+          {stages.map(([label, detail, Icon, color], index) => {
+            const StageIcon = Icon as typeof Check;
+            return (
+              <div key={label as string} className="contents">
+                <Reveal at={index}>
+                  <Surface className="min-h-40 p-4 md:p-5" style={{ borderTopColor: color as string, borderTopWidth: 3 }}>
+                    <StageIcon className="h-6 w-6" style={{ color: color as string }} />
+                    <p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">{label as string}</p>
+                    <p className="mt-3 text-lg font-bold leading-snug text-white">{detail as string}</p>
+                  </Surface>
+                </Reveal>
+                {index < stages.length - 1 && <Reveal at={index + 1}><Arrow /></Reveal>}
               </div>
+            );
+          })}
+        </div>
+        <Reveal at={4} className="mx-auto mt-8"><p className="font-mono text-sm text-white/50">It does not review the whole PR. It reviews one risky change deeply.</p></Reveal>
+      </div>
+    </SlideShell>
+  );
+}
+
+function AutomationSlide() {
+  const layers = [
+    ['Trigger', 'Slack · GitHub · schedules', 'What starts the work.'],
+    ['Agent runtime', 'Devin Automation · Claude Agent SDK', 'Where the agent runs and takes action.'],
+    ['Evidence and feedback', 'CI/CD · logs · metrics · human review', 'What proves the outcome and guides the next step.'],
+  ];
+  return (
+    <SlideShell eyebrow="Automation" title="Design an automation">
+      <div className="flex h-full flex-col justify-center">
+        <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-stretch gap-3 md:gap-5">
+          {layers.map(([title, examples, detail], index) => (
+            <div key={title} className="contents">
+              <Surface className="p-6 md:p-8" style={{ borderTopColor: index === 1 ? PURPLE : index === 2 ? PINK : TEAL, borderTopWidth: 3 }}>
+                <p className="font-mono text-xs uppercase tracking-widest" style={{ color: index === 1 ? PURPLE : index === 2 ? PINK : TEAL }}>{title}</p>
+                <p className="mt-5 text-2xl font-bold leading-snug text-white">{examples}</p>
+                <p className="mt-5 text-base leading-relaxed text-white/55">{detail}</p>
+              </Surface>
+              {index < layers.length - 1 && <Arrow />}
             </div>
           ))}
         </div>
-        <p className="mx-auto mt-9 max-w-3xl text-center text-lg leading-relaxed text-white/60">The confidence comes from the system around the model: live evidence, bounded authority, verification, and a visible path back to human judgement.</p>
+        <div className="mx-auto mt-9 max-w-4xl rounded-xl border border-[#00af9a]/25 bg-[#00af9a]/[0.05] px-6 py-4 text-center">
+          <p className="font-mono text-xs uppercase tracking-widest" style={{ color: TEAL }}>Combine the layers around one focused job</p>
+          <p className="mt-2 text-lg leading-relaxed text-white/70">The agent is one part of the automation—not the automation itself.</p>
+        </div>
+      </div>
+    </SlideShell>
+  );
+}
+
+function NodeCard({ eyebrow, title, detail, accent }: { eyebrow: string; title: string; detail?: string; accent: string }) {
+  return (
+    <Surface className="h-full p-4 md:p-5" style={{ borderTopColor: accent, borderTopWidth: 3 }}>
+      <p className="font-mono text-[10px] uppercase tracking-widest md:text-xs" style={{ color: accent }}>{eyebrow}</p>
+      <p className="mt-3 text-base font-bold leading-snug text-white md:text-xl">{title}</p>
+      {detail && <p className="mt-2 text-xs leading-snug text-white/50 md:text-sm">{detail}</p>}
+    </Surface>
+  );
+}
+
+function DecisionDiamond({ accent, children, small = false }: { accent: string; children: ReactNode; small?: boolean }) {
+  return (
+    <div className={`flex ${small ? 'h-24 w-24' : 'h-28 w-28'} rotate-45 items-center justify-center rounded-xl border`} style={{ borderColor: `${accent}66`, background: `${accent}14` }}>
+      <p className="-rotate-45 text-center font-mono text-xs font-bold leading-tight text-white md:text-sm">{children}</p>
+    </div>
+  );
+}
+
+function DevinLoopSlideV2() {
+  const { act } = useTalkActs();
+  return (
+    <SlideShell eyebrow="Devin automation" title="Automation helping us">
+      <div className="flex h-full flex-col justify-center">
+        <div className="relative mx-auto h-full max-h-[34rem] w-full max-w-6xl">
+          <svg aria-hidden className="absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 1000 560" fill="none" preserveAspectRatio="none">
+            {act >= 0 && <WorkflowConnector key="c0" path="M 200 125 H 240" arrowhead="M 232 117 L 240 125 L 232 133" />}
+            {act >= 1 && <WorkflowConnector key="c1" path="M 437 125 H 472" arrowhead="M 464 117 L 472 125 L 464 133" />}
+            {act >= 2 && <WorkflowConnector key="c2" path="M 595 125 H 693" arrowhead="M 685 117 L 693 125 L 685 133" />}
+            {act >= 3 && <WorkflowConnector key="c3" path="M 535 185 V 240 H 570 V 272" arrowhead="M 562 262 L 570 272 L 578 262" />}
+            {act >= 4 && <WorkflowConnector key="c4" path="M 667 335 H 700" arrowhead="M 692 327 L 700 335 L 692 343" />}
+            {act >= 4 && <WorkflowConnector key="c5" path="M 800 335 H 838" arrowhead="M 830 327 L 838 335 L 830 343" />}
+            {act >= 5 && <WorkflowConnector key="c6" path="M 748 400 V 460 H 570 V 418" arrowhead="M 562 428 L 570 418 L 578 428" />}
+          </svg>
+
+          <Reveal at={0} className="absolute" style={{ left: '3.5%', top: '11%', width: '16%' }}>
+            <NodeCard eyebrow="Developer request" title="A question needs help." accent={PINK} />
+          </Reveal>
+          <Reveal at={0} className="absolute" style={{ left: '24.5%', top: '11%', width: '18.5%' }}>
+            <NodeCard eyebrow="Devin" title="Understands the request." detail="Playbook guidance and constraints." accent={TEAL} />
+          </Reveal>
+          <Reveal at={1} className="absolute" style={{ left: '47.5%', top: '13.5%' }}>
+            <DecisionDiamond accent={PURPLE}>Known<br />answer?</DecisionDiamond>
+          </Reveal>
+          <Reveal at={2} className="absolute" style={{ left: '70%', top: '11%', width: '20%' }}>
+            <NodeCard eyebrow="Yes" title="Answer, then exit." accent={AMBER} />
+          </Reveal>
+          <Reveal at={3} className="absolute" style={{ left: '48%', top: '49%', width: '18%' }}>
+            <NodeCard eyebrow="Devin" title="Prepares the change." accent={TEAL} />
+          </Reveal>
+          <Reveal at={4} className="absolute" style={{ left: '70.5%', top: '52%' }}>
+            <DecisionDiamond accent={PINK} small>Needs a<br />decision?</DecisionDiamond>
+          </Reveal>
+          <Reveal at={4} className="absolute" style={{ left: '84.5%', top: '49%', width: '15%' }}>
+            <NodeCard eyebrow="Outcome" title="Creates a PR." accent={PINK} />
+          </Reveal>
+
+          <Reveal at={2} className="absolute font-mono text-[10px] text-white/40" style={{ left: '63%', top: '21%' }}>yes</Reveal>
+          <Reveal at={3} className="absolute font-mono text-[10px] text-white/40" style={{ left: '46%', top: '40%' }}>no · needs a PR</Reveal>
+          <Reveal at={4} className="absolute font-mono text-[10px] text-white/40" style={{ left: '81%', top: '55%' }}>no</Reveal>
+          <Reveal at={5} className="absolute font-mono text-[10px]" style={{ left: '76%', top: '70.5%', color: PINK }}>yes · asks in Slack</Reveal>
+          <Reveal at={5} className="absolute font-mono text-[10px]" style={{ left: '57%', top: '86%', color: PINK }}>human responds</Reveal>
+        </div>
       </div>
     </SlideShell>
   );
@@ -440,16 +589,19 @@ function CloseSlide() {
 
 export const slides: TalkSlide[] = [
   { id: 'title', content: <TitleSlide />, notes: 'This is a talk about the engineering work behind useful agents. Not a tool roundup, and not a claim that every team should automate everything.' },
-  { id: 'start', content: <StartingSlide />, notes: 'A model can reason over the code you show it. It cannot automatically know what changed in production, which local convention is important, or whether its change had the desired effect.' },
   { id: 'progression', acts: 5, content: <ProgressionSlide />, notes: 'The key is progression. Start with personal leverage, then make the environment reliable enough for a narrow role, then automate only the workflow that has earned it.' },
+  { id: 'prepare-environment', content: <PrepareEnvironmentSlide />, notes: 'We are deliberately starting at Step 02. The next slides are the components of a prepared environment: context, repository guidance, knowledge, tools, and skills.' },
+  { id: 'start', content: <StartingSlide />, notes: 'A model can reason over the code you show it. It cannot automatically know what changed in production, which local convention is important, or whether its change had the desired effect.' },
   { id: 'context', acts: 4, content: <ContextSlide />, notes: 'Context is a layered search: start with the task, then reach for live tools, knowledge, and the smallest relevant code surface only as the task requires.' },
   { id: 'repo', content: <RepositorySlide />, notes: 'The exact file names are less important than the behaviour: an agent finds an entry point, reaches local rules only when it enters that system, and can run the true validation command.' },
   { id: 'knowledge', acts: 5, content: <KnowledgeSlide />, notes: 'Knowledge can be published beside the code when it is repository-specific, or into a shared system when it is useful across the organisation. Both make the next relevant task less blind.' },
-  { id: 'tools', acts: 3, content: <ToolsSlide />, notes: 'Live tools turn stale code context into a view of the current system. CI/CD, logs, and metrics are the core sources. The goal is a decision-ready response rather than broad access to every dashboard and API.' },
-  { id: 'tool-surface', acts: 2, content: <ToolSurfaceSlide />, notes: 'A generic tool surface pushes orchestration decisions into the model. A purpose-shaped capability removes those choices and narrows the blast radius.' },
+  { id: 'tools', acts: 3, content: <ToolsSlide />, notes: 'Use the BFF principle for agents: shape a capability around the job, not the upstream API. CI/CD, logs, and metrics are the live evidence, but a raw tool surface forces the agent to repeat lookups, receive excess context, spend more tokens, and make more routing decisions. A task-shaped tool does the orchestration internally and returns only the evidence it needs.' },
   { id: 'skills', acts: 3, content: <SkillsSlide />, notes: 'Skills are an important middle stage: a person still chooses to run them, but the procedure, verification, and pause points are repeatable.' },
-  { id: 'agent', acts: 4, content: <BoundedAgentSlide />, notes: 'A bounded agent should own one role with defined inputs and outputs. This makes the job easier to inspect, test, and hand back to a human when judgment is needed.' },
+  { id: 'transition', content: <CapabilityTransitionSlide />, notes: 'This is the transition in the talk. Everything so far prepared an environment: context, knowledge, tools, and skills. Now we move to the work that environment enables: focused agents, repeatable workflows, and eventually loops.' },
+  { id: 'agent', acts: 4, content: <FocusedAgentSlide />, notes: 'A focused agent has clear input, one narrow job, and a specific output. This makes it easier to inspect, test, and hand back to a human when judgement is needed.' },
+  { id: 'migration-reviewer', acts: 5, content: <MigrationReviewerSlide />, notes: 'This is a concrete focused-agent example. The migration reviewer does not try to review everything in the PR: a migration change triggers it, it receives migration-specific context, evaluates production safety, and returns a risk level with inline feedback.' },
   { id: 'automation', content: <AutomationSlide />, notes: 'The model is only one component of automation. A trustworthy loop needs a trigger, scoped context, a budget, external verification, and escalation.' },
+  { id: 'devin-loop', acts: 6, content: <DevinLoopSlideV2 />, notes: 'Every developer request reaches Devin first. It uses playbook guidance and constraints to understand the request. If it has a known answer, Devin answers and exits. If it needs a PR, Devin prepares the change. Whenever judgement is needed, Devin asks in Slack; the human response returns the task to Devin.' },
   { id: 'learnings', content: <LearningsSlide />, notes: 'These principles come from building different layers: skills, knowledge systems, task-shaped tools, testing agents, and autonomous workflows.' },
   { id: 'first-step', content: <FirstStepSlide />, notes: 'Pick a task you already understand. Make its context and verification explicit. Run it as a skill until you understand the failure modes. Then consider automation.' },
   { id: 'close', content: <CloseSlide />, notes: 'The deeper Pipeline Optimizer presentation is linked here. This talk is the preparation layer: the work that lets a more autonomous system be trusted later.' },
