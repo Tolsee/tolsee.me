@@ -80,6 +80,15 @@ function FlowArrow({ branch = false, direction = 'right', compact = false }: { b
   );
 }
 
+function WorkflowConnector({ path, arrowhead, delay = 0 }: { path: string; arrowhead: string; delay?: number }) {
+  return (
+    <>
+      <motion.path d={path} initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 0.65 }} transition={{ duration: 0.55, delay, ease: 'easeOut' }} stroke={PURPLE} strokeWidth="1.5" />
+      <motion.path d={arrowhead} initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 0.65 }} transition={{ duration: 0.2, delay: delay + 0.45, ease: 'easeOut' }} stroke={PURPLE} strokeWidth="1.5" />
+    </>
+  );
+}
+
 function Reveal({ at, children, className = '', style }: { at: number; children: ReactNode; className?: string; style?: CSSProperties }) {
   const { act } = useTalkActs();
   const visible = act >= at;
@@ -446,24 +455,33 @@ function DevinLoopSlide() {
   return (
     <SlideShell eyebrow="Devin automation" title="Automation helping us">
       <div className="flex h-full flex-col justify-center">
-        <div className="grid grid-cols-[1fr_auto_.75fr_auto_1fr_auto_.55fr] items-center gap-2 md:gap-4">
-          <Reveal at={0}><Surface className="min-h-32 border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] p-5"><CircleDot className="h-6 w-6" style={{ color: PINK }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Developer request</p><p className="mt-3 text-lg font-bold text-white">A question needs help.</p></Surface></Reveal>
-          <Reveal at={0}><FlowArrow compact /></Reveal>
-          <Reveal at={0}><Surface className="min-h-32 border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-5"><Wrench className="h-6 w-6" style={{ color: TEAL }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Devin automation</p><p className="mt-3 text-lg font-bold text-white">Understands the request.</p></Surface></Reveal>
-          <Reveal at={1}><FlowArrow compact /></Reveal>
-          <Reveal at={1} className="flex justify-center"><div className="flex h-28 w-28 rotate-45 items-center justify-center rounded-xl border border-[#a78bfa]/40 bg-[#a78bfa]/[0.08]"><p className="-rotate-45 text-center font-mono text-sm font-bold text-white">Known<br />answer?</p></div></Reveal>
-          <Reveal at={1}><div className="flex flex-col items-center gap-1"><FlowArrow compact /><p className="font-mono text-[10px] text-white/40">yes</p></div></Reveal>
-          <Reveal at={1}><Surface className="min-h-32 border-white/15 p-5"><Check className="h-6 w-6" style={{ color: AMBER }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Answer</p><p className="mt-3 text-lg font-bold text-white">Known answer, then exit.</p></Surface></Reveal>
+        <div className="relative mx-auto h-[31rem] w-full max-w-6xl">
+          <svg aria-hidden className="absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 1000 560" fill="none" preserveAspectRatio="none">
+            <WorkflowConnector path="M 190 125 H 250" arrowhead="M 240 117 L 250 125 L 240 133" />
+            <WorkflowConnector path="M 430 125 H 475" arrowhead="M 465 117 L 475 125 L 465 133" delay={0.1} />
+            <WorkflowConnector path="M 595 125 H 700" arrowhead="M 690 117 L 700 125 L 690 133" delay={0.2} />
+            <WorkflowConnector path="M 535 185 V 240 H 335 V 275" arrowhead="M 327 265 L 335 275 L 343 265" delay={0.3} />
+            <WorkflowConnector path="M 420 335 H 480" arrowhead="M 470 327 L 480 335 L 470 343" delay={0.4} />
+            <WorkflowConnector path="M 660 335 H 700" arrowhead="M 690 327 L 700 335 L 690 343" delay={0.5} />
+            <WorkflowConnector path="M 800 335 H 845" arrowhead="M 835 327 L 845 335 L 835 343" delay={0.6} />
+            <WorkflowConnector path="M 750 385 V 445 H 570 V 395" arrowhead="M 562 405 L 570 395 L 578 405" delay={0.7} />
+          </svg>
+
+          <Reveal at={0} className="absolute left-[3.5%] top-[11%] w-[15.5%]"><Surface className="min-h-32 border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] p-4"><CircleDot className="h-5 w-5" style={{ color: PINK }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Developer request</p><p className="mt-2 text-base font-bold leading-snug text-white">A question needs help.</p></Surface></Reveal>
+          <Reveal at={0} className="absolute left-[25%] top-[11%] w-[18%]"><Surface className="min-h-32 border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-4"><Wrench className="h-5 w-5" style={{ color: TEAL }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Devin</p><p className="mt-2 text-base font-bold leading-snug text-white">Understands the request.</p></Surface></Reveal>
+          <Reveal at={1} className="absolute left-[47.5%] top-[15%]"><div className="flex h-28 w-28 rotate-45 items-center justify-center rounded-xl border border-[#a78bfa]/40 bg-[#a78bfa]/[0.08]"><p className="-rotate-45 text-center font-mono text-sm font-bold text-white">Known<br />answer?</p></div></Reveal>
+          <Reveal at={1} className="absolute left-[70%] top-[11%] w-[20%]"><Surface className="min-h-32 border-white/15 p-4"><Check className="h-5 w-5" style={{ color: AMBER }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Yes</p><p className="mt-2 text-base font-bold leading-snug text-white">Answer, then exit.</p></Surface></Reveal>
+          <Reveal at={2} className="absolute left-[25%] top-[49%] w-[17%]"><Surface className="min-h-30 border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-4"><FileText className="h-5 w-5" style={{ color: PURPLE }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Playbook</p><p className="mt-2 text-base font-bold leading-snug text-white">Guidance and constraints.</p></Surface></Reveal>
+          <Reveal at={2} className="absolute left-[48%] top-[49%] w-[18%]"><Surface className="min-h-30 border-[#00af9a]/30 bg-[#00af9a]/[0.06] p-4"><Wrench className="h-5 w-5" style={{ color: TEAL }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">Devin</p><p className="mt-2 text-base font-bold leading-snug text-white">Works on the request.</p></Surface></Reveal>
+          <Reveal at={3} className="absolute left-[70%] top-[52%]"><div className="flex h-24 w-24 rotate-45 items-center justify-center rounded-xl border border-[#ffa7c4]/40 bg-[#ffa7c4]/[0.08]"><p className="-rotate-45 text-center font-mono text-xs font-bold text-white">Needs a<br />decision?</p></div></Reveal>
+          <Reveal at={3} className="absolute left-[84.5%] top-[49%] w-[15%]"><Surface className="min-h-30 border-white/15 p-4"><GitPullRequest className="h-5 w-5" style={{ color: PINK }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-white/45">No</p><p className="mt-2 text-base font-bold leading-snug text-white">Creates a PR.</p></Surface></Reveal>
+
+          <Reveal at={1} className="absolute left-[63%] top-[21%]"><p className="font-mono text-[10px] text-white/40">yes</p></Reveal>
+          <Reveal at={2} className="absolute left-[47%] top-[40%]"><p className="font-mono text-[10px] text-white/40">needs a PR</p></Reveal>
+          <Reveal at={3} className="absolute left-[81%] top-[55%]"><p className="font-mono text-[10px] text-white/40">no</p></Reveal>
+          <Reveal at={3} className="absolute left-[75%] top-[76%]"><p className="font-mono text-[10px] text-[#ffa7c4]">asks in Slack</p></Reveal>
+          <Reveal at={3} className="absolute left-[58%] top-[82%]"><p className="font-mono text-[10px] text-[#ffa7c4]">human responds</p></Reveal>
         </div>
-        <Reveal at={2} className="ml-[48%] mt-4 flex items-center gap-2"><p className="font-mono text-[10px] text-white/40">needs a PR</p><FlowArrow direction="down" compact /></Reveal>
-        <Reveal at={2} className="ml-[28%] mt-2">
-          <div className="grid max-w-xl grid-cols-[1fr_auto_1fr] items-center gap-2 md:gap-4">
-            <Surface className="min-h-32 border-[#a78bfa]/30 bg-[#a78bfa]/[0.06] p-5"><FileText className="h-6 w-6" style={{ color: PURPLE }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Playbook</p><p className="mt-3 text-lg font-bold text-white">Guidance and constraints.</p></Surface>
-            <FlowArrow compact />
-            <Surface className="min-h-32 p-5"><GitPullRequest className="h-6 w-6" style={{ color: PINK }} /><p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/45">Devin</p><p className="mt-3 text-lg font-bold text-white">Creates a PR.</p></Surface>
-          </div>
-        </Reveal>
-        <Reveal at={3} className="mx-auto mt-8"><div className="flex items-center gap-3 rounded-full border border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] px-5 py-3 font-mono text-sm text-[#ffa7c4]"><CircleDot className="h-4 w-4" /><span>needs a decision</span><FlowArrow compact /><span>asks in Slack</span><FlowArrow compact /><span>human responds</span><FlowArrow direction="left" compact /><span>back to Devin</span></div></Reveal>
       </div>
     </SlideShell>
   );
