@@ -412,13 +412,13 @@ function AutomationSlide() {
 
 function DevinLoopSlide() {
   const stages = [
-    ['Slack handoff', '@guardian take over', CircleDot, PINK],
+    ['Task', 'A known task needs action', CircleDot, PINK],
     ['Playbook', 'Task guidance and constraints', FileText, PURPLE],
-    ['Guardian', 'Track progress and choose the next action', Wrench, TEAL],
-    ['Green PR', 'CI and reviews provide outside evidence', GitPullRequest, AMBER],
+    ['Devin', 'Works through the task', Wrench, TEAL],
+    ['Verify', 'CI and reviews provide outside evidence', GitPullRequest, AMBER],
   ];
   return (
-    <SlideShell eyebrow="Devin handoff workflow" title="A loop in practice.">
+    <SlideShell eyebrow="Devin automation" title="A loop in practice.">
       <div className="flex h-full flex-col justify-center">
         <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-2 md:gap-4">
           {stages.map(([label, detail, Icon, color], index) => {
@@ -439,7 +439,7 @@ function DevinLoopSlide() {
         </div>
         <Reveal at={4} className="mx-auto mt-10">
           <div className="flex items-center gap-3 rounded-full border border-[#ffa7c4]/30 bg-[#ffa7c4]/[0.06] px-5 py-3 font-mono text-sm text-[#ffa7c4]">
-            <CircleDot className="h-4 w-4" /> needs a decision → human response in Slack → Guardian continues
+            <CircleDot className="h-4 w-4" /> needs a decision → human response → Devin continues
           </div>
         </Reveal>
       </div>
@@ -511,7 +511,7 @@ export const slides: TalkSlide[] = [
   { id: 'agent', acts: 4, content: <FocusedAgentSlide />, notes: 'A focused agent has clear input, one narrow job, and a specific output. This makes it easier to inspect, test, and hand back to a human when judgement is needed.' },
   { id: 'migration-reviewer', acts: 5, content: <MigrationReviewerSlide />, notes: 'This is a concrete focused-agent example. The migration reviewer does not try to review everything in the PR: a migration change triggers it, it receives migration-specific context, evaluates production safety, and returns a risk level with inline feedback.' },
   { id: 'automation', content: <AutomationSlide />, notes: 'The model is only one component of automation. A trustworthy loop needs a trigger, scoped context, a budget, external verification, and escalation.' },
-  { id: 'devin-loop', acts: 5, content: <DevinLoopSlide />, notes: 'This is the handoff loop in practice. An engineer asks Guardian to take over an existing Devin session in Slack. A playbook supplies the task guidance and constraints; Guardian tracks the work and its decisions, then relies on CI and review evidence before treating the PR as green. When it needs judgement, it hands the decision back in Slack and continues with the response.' },
+  { id: 'devin-loop', acts: 5, content: <DevinLoopSlide />, notes: 'This is a basic Devin automation loop. A known task is paired with a playbook that supplies guidance and constraints. Devin works through the task, while CI and review provide evidence outside the model. When it needs judgement, a human responds and the work continues.' },
   { id: 'learnings', content: <LearningsSlide />, notes: 'These principles come from building different layers: skills, knowledge systems, task-shaped tools, testing agents, and autonomous workflows.' },
   { id: 'first-step', content: <FirstStepSlide />, notes: 'Pick a task you already understand. Make its context and verification explicit. Run it as a skill until you understand the failure modes. Then consider automation.' },
   { id: 'close', content: <CloseSlide />, notes: 'The deeper Pipeline Optimizer presentation is linked here. This talk is the preparation layer: the work that lets a more autonomous system be trusted later.' },
