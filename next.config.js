@@ -1,15 +1,13 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: [
+  serverExternalPackages: [
       'prism',
       'gray-matter',
       'remark',
       'remark-html',
       'remark-prism',
     ],
-  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

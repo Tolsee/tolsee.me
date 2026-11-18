@@ -10,7 +10,7 @@ export default function GameEffect({ className = '' }: GameEffectProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseXRef = useRef(50);
   const mouseYRef = useRef(50);
-  const animationIdRef = useRef<number>();
+  const animationIdRef = useRef<number | undefined>(undefined);
   
   useEffect(() => {
     const container = containerRef.current;
