@@ -15,6 +15,13 @@ const talks = [
       'Building an autonomous CI optimizer with agent funnels and purpose-built tools.',
     tags: ['Automation', 'CI/CD', 'Agents'],
   },
+  {
+    title: 'Replace Yourself with Agents (Canberra)',
+    href: '/talks/replace-yourself-with-agents-canberra',
+    description:
+      'Canberra edition: updated numbers (450+ PRs merged across ~50 services) and an animated implementer ↔ reviewer loop.',
+    tags: ['Automation', 'CI/CD', 'Agents'],
+  },
 ];
 
 export const metadata = {
