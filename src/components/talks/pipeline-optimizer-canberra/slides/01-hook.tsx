@@ -37,8 +37,8 @@ function HookHero() {
       </div>
 
       <div className={`${sans.className} text-xl text-white/85 italic mt-6 max-w-2xl leading-relaxed`}>
-        I authored zero of them.
-        <br />I was asleep when most shipped.
+        The bot authored every one of them.
+        <br />No human oversight until review.
       </div>
     </div>
   );
