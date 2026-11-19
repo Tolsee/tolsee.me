@@ -178,7 +178,7 @@ function CycleSlide() {
         className={`${sans.className} text-2xl font-semibold text-center leading-snug mt-1`}
         style={{ color: 'rgb(0,175,154)' }}
       >
-        This time — the last CI project we&apos;d ever run.
+        This time, fix the drift as it happens.
       </motion.div>
     </div>
   );
