@@ -23,7 +23,7 @@ import feedbackLoopSlides from './slides/06b-feedback-loop';
 import whyCi from './slides/04b-why-ci';
 import keyInsight from './slides/05-key-insight';
 import results from './slides/07-results';
-import lessons from './slides/08-lessons';
+import tracing from './slides/08b-tracing';
 import close from './slides/09-close';
 
 // Re-export SlideData so page.tsx can import it from a single path if needed.
@@ -106,9 +106,9 @@ export const slides: SlideData[] = [
   ...playbookSlides,     // 7. Playbooks
   ...funnelSlides,       // 8. Main loop
   ...feedbackLoopSlides, // 9. Verification loop
-  ...naive,              // 10. Learning #1 — Specialized agents, not one big agent
-  ...keyInsight,         // 11. Learning #2 — One custom tool, not a chain of MCP calls
-  ...lessons,            // 12. Learning #3 — AutoResearch
+  ...tracing,            // 10. Learning #1 — Tracing (AutoResearch folded in)
+  ...naive,              // 11. Learning #2 — Specialized agents, not one big agent
+  ...keyInsight,         // 12. Learning #3 — One custom tool, not a chain of MCP calls
   ...results,            // 13. Results
   ...closeSlides,        // 14. Q&A
 ];

@@ -178,7 +178,7 @@ function CustomToolVisual() {
 const slides: SlideData[] = [
   {
     id: 10,
-    title: 'Learning #2: One custom tool, not a chain of MCP calls',
+    title: 'Learning #3: One custom tool, not a chain of MCP calls',
     acts: 4,
     content: <CustomToolVisual />,
     notes:
