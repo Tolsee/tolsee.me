@@ -14,7 +14,6 @@ import {
   Crosshair,
   Layers,
   GitPullRequest,
-  BarChart2,
 } from 'lucide-react';
 import type { SlideData } from './_types';
 import { useSlideActs } from '../slide-acts-context';
@@ -29,13 +28,12 @@ const PINK_BG     = 'rgba(255,167,196,0.08)';
 const PINK_BORDER = 'rgba(255,167,196,0.22)';
 
 // ── Principles ─────────────────────────────────────────────────────────────────
-// 5 load-bearing principles from the research
+// 4 load-bearing principles from the research
 const PRINCIPLES = [
   { Icon: BookOpen,    label: 'Documented — not in heads' },
   { Icon: Crosshair,   label: 'Trigger + recipe' },
   { Icon: Layers,      label: 'Bounded scope' },
   { Icon: GitPullRequest, label: 'Reversible — ships as PR' },
-  { Icon: BarChart2,   label: 'Evidence-backed' },
 ] as const;
 
 // ── Examples ───────────────────────────────────────────────────────────────────
@@ -77,18 +75,18 @@ function PrincipleChip({
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        gap: 7,
+        gap: 10,
         background: TEAL_BG,
         border: `1px solid ${TEAL_BORDER}`,
         borderRadius: 999,
-        padding: '7px 14px',
+        padding: '11px 20px',
         whiteSpace: 'nowrap',
       }}
     >
-      <Icon size={13} color={TEAL} strokeWidth={2} style={{ flexShrink: 0 }} />
+      <Icon size={20} color={TEAL} strokeWidth={2} style={{ flexShrink: 0 }} />
       <span
         style={{
-          fontSize: 13,
+          fontSize: 19,
           fontWeight: 600,
           color: 'rgba(255,255,255,0.85)',
           letterSpacing: '-0.01em',
@@ -240,7 +238,7 @@ function PlaybooksSlide() {
           style={{
             display: 'flex',
             flexWrap: 'wrap',
-            gap: 8,
+            gap: 12,
           }}
         >
           {PRINCIPLES.map(({ Icon, label }, i) => (
@@ -286,7 +284,7 @@ const playbookSlides: SlideData[] = [
     acts: 4,
     content: <PlaybooksSlide />,
     notes:
-      "A playbook is a documented optimization pattern — a named trigger condition and a fix recipe. The agent reads the playbook to know what to look for and exactly how to fix it.\n\nFive principles make a playbook good: it must be documented (not tribal knowledge), it must have a clear trigger and recipe, it must have bounded scope (one focused fix), it must be reversible (ships as a PR that humans can reject), and it must be evidence-backed (we have baseline data to measure the win).\n\nThree examples from the working set: parallelize test steps, make cache keys include lockfile hashes so they auto-invalidate, and set a retry budget on flaky steps so CI noise is bounded.\n\nThe catalog has twelve today. Each one started as a human observation — 'we keep doing this manually.' The playbook format is how you turn that observation into something an agent can act on autonomously.",
+      "A playbook is a documented optimization pattern — a named trigger condition and a fix recipe. The agent reads the playbook to know what to look for and exactly how to fix it.\n\nFour principles make a playbook good: it must be documented (not tribal knowledge), it must have a clear trigger and recipe, it must have bounded scope (one focused fix), and it must be reversible (ships as a PR that humans can reject).\n\nThree examples from the working set: parallelize test steps, make cache keys include lockfile hashes so they auto-invalidate, and set a retry budget on flaky steps so CI noise is bounded.\n\nThe catalog has twelve today. Each one started as a human observation — 'we keep doing this manually.' The playbook format is how you turn that observation into something an agent can act on autonomously.",
   },
 ];
 
